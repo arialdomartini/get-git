@@ -6,12 +6,12 @@ Molte delle guide che ho letto su git si preoccupano di introdurti ai comandi ba
 
 Quello che ho notato, però, è che imparando git partendo dai comandi base, rischi di finire per trovarlo uno strumento vagamente simile a SVN ma provvisto di un set aggiuntivo di comandi esoterici, il cui funzionamento ti resterà sostanzialmente oscuro.
 
-Facci caso: molti di quelli che hanno imparato git abbasanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un rebase, o di non cogliere esattamente che uso fare dello stage. 
+Facci caso: alcuni di quelli che hanno imparato git abbasanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un `rebase`, o di non cogliere esattamente che uso fare dello `stage`. 
 
-La mia impressione è che, una volta capito il modello interno (che è stupefacentemente semplice!), tutto git appaia improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il "rebase" dovrebbe essere un argomento misterioso.
+La mia impressione è che, una volta capito il modello interno (che è stupefacentemente semplice!), tutto git appaia improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il `rebase` dovrebbe essere un argomento misterioso.
 
 
-Questa guida prova a spiegarti git seguendo un percorso contrario a quello adottato di solito: partirai da una breve spiegazione degli internal e finirai per imparare, nello stesso momento, sia comandi base che quelli avanzati, in poco tempo e senza troppi grattacapi.
+Questa guida prova a spiegarti git seguendo un percorso contrario a quello adottato di solito: partirai dalla spiegazione degli internal e finirai per imparare, nello stesso momento, sia comandi base che quelli avanzati, in poco tempo e senza troppi grattacapi.
 
 
 # Non sono parente di SVN
@@ -30,7 +30,7 @@ Sì: 3 branch, non 2.
 
 Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer di database chiave/valore su file system*"?
 
-Per cui: dimentica quello che sai sui branch e sei changeset di SVN, e preparati a concetti completamente nuovi.
+Per cui: dimentica quello che sai sui branch e sui changeset di SVN, e preparati a concetti completamente nuovi.
 
 Se siamo fortunati, li troverai molto più omogenei e potenti di quelli di SVN.
 
@@ -57,11 +57,11 @@ Iniziamo con tre caratteristiche di git con le quali dovresti familiarizzare.
 
 
 1. **Non c'è un server**: il repository è locale. La gran parte delle operazioni è locale e non richiede l'accesso alla rete. Anche per questo troverai git  incredibilmente veloce.
-2. **Il progetto è indivisibile**: git lavora sempre con l'intero codice sorgente del progetto e non su singole directory o su singoli file; con git non c'è differenza tra committare nella directory principale o in una subdirectory. Non esiste il concetto di committare o fare il checkout di un file o di una singola directory. Per git il progetto è l'unità indivisibile di lavoro.
+2. **Il progetto è indivisibile**: git lavora sempre con l'intero codice sorgente del progetto e non su singole directory o su singoli file; con git non c'è differenza tra committare nella directory principale o in una sotto-directory. Non esiste il concetto di fare il checkout di un file o di una singola directory. Per git il progetto è l'unità indivisibile di lavoro.
 3. **git non memorizza i cambiamenti dei file**: git salva sempre i file nella loro interezza. Se in un file di 2 mega modificassi un singolo carattere, git memorizzerebbe per intero la nuova versione del file. Questa è una differenza importante: SVN memorizza le differenze e, all'occorrenza, ricostruisce il file; git memorizza il file e, all'occorrenza, ricostruisce le differenze.
 
 
-### 4 Livelli di nerdosità
+### 4 livelli di nerdosità
 
 Sull'assenza di un server ho un po' mentito: come ti ho già detto e come vedrai più avanti, git è un sistema peer-to-peer, e riesce ad interagire con dei server remoti.
 Nonostante questo resta sostanzialmente un sistema locale.
@@ -124,7 +124,7 @@ Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo memoriz
 
 Siccome il `blob-storage` è un database chiave valore, git cercherà di calcolare una chiave ed un valore per il file che hai aggiunto. Per il valore git userà il contenuto stesso del file; per la chiave, verrà calcolato lo sha1 del contenuto (se sei curioso, nel caso di un file vuoto vale `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`)
 
-Per cui, nel `blob storage` git salverà un oggetto `blob`, univocamente identificabile dalla sua chiave.
+Per cui, nel `blob storage` git salverà un oggetto `blob`, univocamente identificabile dalla sua chiave (che, in assenza di ambiguità, vale la pena di abbreviare)
 
 ![Alt text](img/blob.png)
 
@@ -132,7 +132,7 @@ Adesso aggiungi il secondo file
 
 > git add templates/bar.txt
 
-Ora, siccome `libs/foo.txt` e `templates/bar.txt` hanno lo stesso identico contenuto (sono entrambi vuoti!), nel `blob storage` entrambi verranno conservati in un unico oggetto, identificato dalla sua chiave:
+Ora, siccome `libs/foo.txt` e `templates/bar.txt` hanno lo stesso identico contenuto (sono entrambi vuoti!), nel `blob storage` entrambi verranno conservati in un unico oggetto:
 
 ![Alt text](img/blob.png)
 
@@ -154,10 +154,10 @@ Tutte queste strutture vengono raccolte dentro un contenitore, chiamato `commit`
 ![Alt text](img/commit.png)
 
 
-Come avrai intuito, un `commit` non è altro che un elemento del database chiave/valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è un puntatore al `tree` del progetto, cioè la sua chiave.<br/>
+Come avrai intuito, un `commit` non è altro che un elemento del database chiave/valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è un puntatore al `tree` del progetto, cioè la sua chiave (più un altro po' di informazioni, come il commento e l'autore).<br/>
 Non è troppo complicato, dopo tutto, no?
 
-Quindi, il `commit` è l'attuale fotografia dello stato del file system.
+Quindi, il `commit` è l'attuale fotografia del file system.
 
 Adesso fai
 
@@ -180,7 +180,7 @@ Già da adesso, comunque, dovrebbe risultarti più chiaro il fatto che dentro un
 
 ## L' `index` o `staging area` 
 
-Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il `blob storage` e l'`index`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
+Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funzionano il `blob storage` e l'`index`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
 
 
 L'`index` è una struttura che fa da cuscinetto tra il file system e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo `commit`. 
@@ -190,12 +190,12 @@ L'`index` è una struttura che fa da cuscinetto tra il file system e il reposito
 Non è troppo complicato:
 
  * il `file system` è la directory con i tuoi file.
- * il `repository` è il database locale su file, che conserva la storia del file system
- * l'`index` è lo spazio che git ti mette a disposizione per creare il tuo prossimo commit.
+ * il `repository` è il database locale su file, che conserva i vari `commit`
+ * l'`index` è lo spazio che git ti mette a disposizione per creare il tuo prossimo `commit`.
 
 Fisicamente, l'`index` non è molto diverso dal `repository`: entrambi conservano i dati nel `blob storage`, usando le strutture che hai visto prima.
 
-In questo momento, dopo aver appena completato il tuo primo `commit`, l'`index` conserva una copia del commit e si aspetta che tu lo modifichi.
+In questo momento, appena dopo aver completato il tuo primo `commit`, l'`index` conserva una copia del commit e si aspetta che tu lo modifichi.
 
 ![Alt tex1](img/index2.png)
 
@@ -214,11 +214,11 @@ Proviamo a fare delle modifiche al file `foo.txt`
 
 >  echo "nel mezzo del cammin" >> libs/foo.txt 
 
-e aggiorna lo stage con
+e aggiorna l'`index` con
 
 > git add libs/foo.txt
 
-All'esecuzione di `git add` git ripete quel che aveva già fatto prima: analizza il contenuto di `libs/foo.txt`, vede che c'è un contenuto che non ha mai registrato e quindi aggiunge al `blob storage` un nuovo Blob col nuovo contenuto del file; contestualmente, aggiorna il tree `libs` perché il file `foo.txt` punti al suo nuovo contenuto
+All'esecuzione di `git add` git ripete quel che aveva già fatto prima: analizza il contenuto di `libs/foo.txt`, vede che c'è un contenuto che non ha mai registrato e quindi aggiunge al `blob storage` un nuovo `blob` col nuovo contenuto del file; contestualmente, aggiorna il `tree` `libs` perché il file `foo.txt` punti al suo nuovo contenuto
 
 ![Alt tex1](img/index3.png)
 
@@ -231,16 +231,16 @@ Come prima: git aggiunge un nuovo `blob` object col contenuto del file e, contes
 
 ![Alt tex1](img/index4.png)
 
-Il contenitore di tutta questa struttura è un oggetto `commit` che git tiene posteggiato nella `staging area`.
+Il contenitore di tutta questa struttura è un oggetto `commit` che git tiene parcheggiato nella `staging area`.
 Questa struttura rappresenta esattamente la nuova situazione sul file system.
 
 Siccome però a noi interessa che git conservi anche la storia del nostro file system, ci sarà bisogno di memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dell'`index`) sia figlia della precedente situazione (il precedente `commit`).
 
-In effetti, git aggiunge automaticamente un'informazione al commit posteggiato nella `staging area`: un puntatore al `commit` dal quale si proviene
+In effetti, git aggiunge automaticamente al `commit` posteggiato nella `staging area` un puntatore al `commit` dal quale si proviene
 
 ![Alt tex1](img/index-and-first-commit.png)
 
-La freccia rappresenta il fatto che l'`index` è figlio del `commit A`. È un semplice puntatore. Nessuna sopresa, se ci pensi; tutto git, dopo tutto, utilizza il solito, medesimo, semplicissimo modello: un database chiave/valore per conservare il dato, e l'utilizzo delle chiavi come puntatori tra un elemento e l'altro.
+La freccia rappresenta il fatto che l'`index` è figlio del `commit A`. È un semplice puntatore. Nessuna sopresa, se ci pensi; git, dopo tutto, utilizza il solito, medesimo, semplicissimo modello ovunque: un database chiave/valore per conservare il dato, e una chiave come puntatore tra un elemento e l'altro.
 
 
 Ok. Adesso committa
@@ -249,14 +249,14 @@ Ok. Adesso committa
 >  git commit -m "Commit B, Il mio secondo commit"
 
 
-Con l'operazione di commit si dice a git "*Ok, prendi l'attuale stage e fallo diventare il tuo nuovo commit. Poi restituiscimi lo stage così che possa fare una nuova modifica*"
+Con l'operazione di commit si dice a git "*Ok, prendi l'attuale `index` e falla diventare il tuo nuovo commit. Poi restituiscimi l'`index` così che possa fare una nuova modifica*"
 
 
-Dopo il commita nel database di git ci ritroviamo
+Dopo il `commit` nel database di git avrai
 
 ![Alt tex1](img/index-and-second-commit.png)
 
-Una breve osservazione: spesso le interfacce grafiche di git omettono di visualizzare l'`index`. `gitk`, per esempio, la visualizza solo se ci sono modifiche da committare. Il tuo repository in `gitk` viene visualizzato così
+Una breve osservazione: spesso le interfacce grafiche di git omettono di visualizzare l'`index`. `gitk`, per esempio, la visualizza solo se ci sono modifiche da committare. Il tuo repository in `gitk` adesso viene visualizzato così
 
 ![Alt tex1](img/gitk.png)
 
@@ -291,11 +291,11 @@ In effetti è proprio così.<br/>
 
 Adesso proviamo a tornare indietro nel tempo, al `commit A`, utilizzando il comando `git checkout`.
 
-Il comando checkout prende il commit indicato e lo copia nel file system e nello stage.
+Il comando `checkout` prende il commit indicato e lo copia nel file system e nella `staging area`.
 
 ![Alt tex1](img/index-add-commit-checkout.png)
 
-Già: ma qual è la chiave del commit A?
+Già: ma qual è la chiave del `commit A`?
 Lo scopriamo col comando `git log` che mostra tutto quello che abbiamo fatto fin'ora
 
 > git log --oneline<br/>
@@ -304,7 +304,7 @@ Lo scopriamo col comando `git log` che mostra tutto quello che abbiamo fatto fin
 
 
 
-Ottimo! La chiave del commit A è "b216689". Uhm, un po' scomodo come sistema.<br/>
+La chiave del `commit A` è `b216689`. Uhm, un po' scomodo come sistema.<br/>
 Comunque: torniamo indietro al passato, al momento del commit A
 
 > ls<br/>
@@ -335,7 +335,6 @@ Cioè, si creerebbe questa situazione
 >  &nbsp;&nbsp;\ <br/>
 >  &nbsp;&nbsp;&nbsp;**C**
 
-Cioè: avremmo creato un branch.<br/>
 Proviamolo davvero:
 
 >  echo "ei fu siccome immobile" > README.md<br/>
@@ -349,12 +348,13 @@ Hai ottenuto una diramazione, senza il meccanismo della copia che utilizza SVN: 
 
 Due osservazioni importanti.
  
-La prima per ribadire il concetto chd git non ha mai memorizzato i "diff" tra i file. `A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN qui non valgono.
+La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i file.<br/>
+`A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN qui non valgono.
 
-La seconda è un po' sorprendente: le due linee di sviluppo divergenti che hai appena visto non sono "i `branch`" di git. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
+La seconda è un po' sorprendente: le due linee di sviluppo divergenti che hai appena visto non sono `branch`. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
 
 
-# Obiettivo 2: creare un branch
+# Obiettivo 3: creare un branch
 
 Con il comando checkout hai imparato a spostarti da un commit all'altro
 
