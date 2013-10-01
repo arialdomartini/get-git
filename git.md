@@ -222,45 +222,43 @@ All'esecuzione di `git add` git ripete quel che aveva già fatto prima: analizza
 
 ![Alt tex1](img/index3.png)
 
-Prosegui aggiungendo un nuovo file `doh.html`
+Prosegui aggiungendo un nuovo file `doh.html` alla root del progetto
 
 >  echo "happy happy joy joy" > doh.html<br/>
 >  git add doh.html
 
-Come prima: git aggiunge un nuovo blob object col contenuto del file e, contestualmente, aggiunge nel tree "/" un nuovo puntatore chiamato "doh.html" che punta al nuovo blob object
+Come prima: git aggiunge un nuovo `blob` object col contenuto del file e, contestualmente, aggiunge nel `tree` "/" un nuovo puntatore chiamato `doh.html` che punta al nuovo `blob` object
 
-  xxx disegno
+![Alt tex1](img/index4.png)
 
-Il contenitore di tutta questa struttura è un oggetto Commit che git tiene posteggiato nello Stage.
+Il contenitore di tutta questa struttura è un oggetto `commit` che git tiene posteggiato nella `staging area`.
 Questa struttura rappresenta esattamente la nuova situazione sul file system.
 
-Siccome a noi interessa anche che git conservi la storia del nostro file system, non resta che memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dello stage) sia figlia della precedente situazione (il vecchio commit).
+Siccome però a noi interessa anche che git conservi anche la storia del nostro file system, non resta che memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dell'`index`) sia figlia della precedente situazione (il vecchio `commit`).
 
 In effetti, git aggiunge automaticamente un'informazione al commit posteggiato nello Stage: un puntatore al commit dal quale si proviene
 
->  commit 1</br>
->  &nbsp;&nbsp;&nbsp;&nbsp;   ↑</br>
->  &nbsp; stage</br>
+![Alt tex1](img/index-and-first-commit.png)
 
-La freccia rappresenta il fatto che lo stage sia figlio del "commit 1". È un semplice puntatore. Nessuna sopresa, se ci pensi; tutto git, dopo tutto, utilizza il solito, medesimo, semplicissimo modello: un database chiave/valore per conservare il dato, e l'utilizzo delle chiavi come puntatori tra un elemento e l'altro.
+La freccia rappresenta il fatto che l'`index` sia figlio del `commit A`. È un semplice puntatore. Nessuna sopresa, se ci pensi; tutto git, dopo tutto, utilizza il solito, medesimo, semplicissimo modello: un database chiave/valore per conservare il dato, e l'utilizzo delle chiavi come puntatori tra un elemento e l'altro.
 
 
 Ok. Adesso committa
 
 
->  git commit -m "Il mio secondo commit!"
+>  git commit -m "Commit B, Il mio secondo commit"
 
 
-Con l'operazione di commit si dice a git "Ok, prendi l'attuale stage e fallo diventare il tuo nuovo commit. Poi restituiscimi lo stage così che possa fare una nuova modifica"
+Con l'operazione di commit si dice a git "*Ok, prendi l'attuale stage e fallo diventare il tuo nuovo commit. Poi restituiscimi lo stage così che possa fare una nuova modifica*"
 
 
 Dopo il commita nel database di git ci ritroviamo
 
->   commit 1
->      ↑
->   commit 2
->      ↑
->    stage
+![Alt tex1](img/index-and-second-commit.png)
+
+Una breve osservazione: spesso le interfacce grafiche di git omettono di visualizzare l'`index`. `gitk` la visualizza solo se ci sono modifiche da committare. Per esempio: il tuo repository in `gitk` viene visualizzato così
+
+![Alt tex1](img/gitk.png)
 
 
 Ricapitolando:
@@ -268,8 +266,8 @@ Ricapitolando:
 1. git memorizza sempre i file nella loro interezza
 2. il `commit` è uno dei tanti oggetti conservati dentro il database chiave/valore di git. È un contenitore di tanti puntatori ad altri oggetti del database: i `tree` che rappresentano directory con nomi di file che a loro volta puntano ad altri `tree` (sottodirectory) o a dei `blob` (il contenuto dei file)
 3. ogni oggetto `commit` ha un puntatore al `commit` padre da cui deriva
-3. l'`index` è uno spazio di appoggio nel quale costruiamo a colpi di `git add` il nuovo `commit`
-4. con `git commit` registriamo l'attuale `index` facendolo diventare il nuovo `commit`.
+3. l'`index` è uno spazio di appoggio nel quale puoi costruire, a colpi di `git add`, il nuovo `commit`
+4. con `git commit` registri l'attuale `index` facendolo diventare il nuovo `commit`.
 
 
 
