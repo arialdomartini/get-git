@@ -28,7 +28,7 @@ Per esempio: ci crederesti che questo repository ha 3 branch?
 
 Sì: 3 branch, non 2.
 
-Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer di database chiave/valore su filesystem*"?
+Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer di database chiave/valore su file system*"?
 
 Per cui: dimentica quello che sai sui branch e sei changeset di SVN, e preparati a concetti completamente nuovi.
 
@@ -70,7 +70,7 @@ Per capire quanto questo possa avvantaggiarti, prova a vederla così: quando il 
 
 1. Lasci tutto il codice sul computer remoto e vi accedi con ssh per editare un singolo file
 2. Trovi il modo di ottenere una copia del singolo file per poterci lavorare più comodamente in locale e lasci tutto il resto sul computer remoto
-3. Trovi il modo di ottenere una copia locale di un intero albero del filesystem e lasci il resto della storia dei commit sul computer remoto
+3. Trovi il modo di ottenere una copia locale di un intero albero del file system e lasci il resto della storia dei commit sul computer remoto
 4. Ottenieni una copia locale dell'intero repository con tutta la storia del progetto e lavori in locale
 
 Avrai notato due cose.
@@ -95,7 +95,7 @@ Se vuoi evitare tanti grattacapi con git, il miglior suggerimento che tu possa s
 
 Apri una console e vediamolo nel concreto.
 
-Mettiti nella condizione di avere 2 file vuoti sul filesystem: 
+Mettiti nella condizione di avere 2 file vuoti sul file system: 
 
 > mkdir progetto<br/>
 > cd progetto<br/>
@@ -120,7 +120,7 @@ Aggiungi il primo file a git
 
 > git add libs/foo.txt
 
-Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo memorizza nel suo database chiave/valore, chiamato `blob storage` e conservato su filesystem nella directory nascosta `.git`. 
+Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo memorizza nel suo database chiave/valore, chiamato `blob storage` e conservato su file system nella directory nascosta `.git`. 
 
 Siccome il `blob-storage` è un database chiave valore, git cercherà di calcolare una chiave ed un valore per il file che hai aggiunto. Per il valore git userà il contenuto stesso del file; per la chiave, verrà calcolato lo sha1 del contenuto (se sei curioso, nel caso di un file vuoto vale `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`)
 
@@ -157,7 +157,7 @@ Tutte queste strutture vengono raccolte dentro un contenitore, chiamato `commit`
 Come avrai intuito, un `commit` non è altro che un elemento del database chiave/valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è un puntatore al `tree` del progetto, cioè la sua chiave.<br/>
 Non è troppo complicato, dopo tutto, no?
 
-Quindi, il `commit` è l'attuale fotografia dello stato del filesystem.
+Quindi, il `commit` è l'attuale fotografia dello stato del file system.
 
 Adesso fai
 
@@ -173,37 +173,33 @@ Il tuo repository adesso ha questo aspetto
 
 La riga col pallino che vedi sulla sinistra rappresenta l'oggetto `commit`. Nel pannello sulla destra, invece, puoi vedere la chiave del `commit`.
 
-A partire da adesso non ci sarà più bisogno di rappresentare tutta la struttura interna dei `commit` e potrai inziare a trattare i `commit` come l'unità di base del nostro lavoro: dovrebbe risultarti più chiaro che dentro un commit c'è l'intero filesystem.
+A partire da adesso non ci sarà più bisogno di rappresentare tutta la struttura interna dei `commit` e potrai inziare a trattare i `commit` come l'unità di base del nostro lavoro: dovrebbe risultarti più chiaro che dentro un commit c'è l'intero file system.
 
 
-## Lo `stage` 
+## L' `index` o `staging area` 
 
-Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: l'`index` o lo `stage`. Lo `stage` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il `blob storage`e e lo `stage`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
+Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o lo `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il `blob storage`e e l'`index`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
 
 
-Lo `stage` è una struttura che fa da cuscinetto tra il filesystem e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo `commit`. 
+L'`index` è una struttura che fa da cuscinetto tra il file system e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo `commit`. 
 
-   xxx qui disegno
-    filesystem   |   stage   |   repository
+![Alt text](img/stage.png)
 
 Non è troppo complicato:
 
- * il `filesystem` è la directory con i tuoi file.
- * il `repository` è il database locale su file, che conserva la storia del filesystem
- * lo `stage` è lo spazio che git ti mette a disposizione per creare il tuo prossimo commit.
+ * il `file system` è la directory con i tuoi file.
+ * il `repository` è il database locale su file, che conserva la storia del file system
+ * l'`index` è lo spazio che git ti mette a disposizione per creare il tuo prossimo commit.
 
-Fisicamente, lo `stage` è equivalente al `repository`: entrambi conservano i dati nel `blob storage`, usando le strutture che hai visto prima.
-In questo momento, adesso che hai fatto il tuo primo commit, lo `stage` conserva una copia del commit che hai appena fatto e si aspetta che tu lo modifichi.
+Fisicamente, l'`index` è equivalente al `repository`: entrambi conservano i dati nel `blob storage`, usando le strutture che hai visto prima.
+In questo momento, adesso che hai fatto il tuo primo commit, l'`index` conserva una copia del commit che hai appena fatto e si aspetta che tu lo modifichi.
 
-    filesystem   |   stage   |   repository
-                        \           \
-                         NEXT------> commit A
-
+xxx qui figura
 
 
 Proviamo a fare delle modifiche al file system
 
-Sul filesystem hai
+Sul file system hai
 
     /
     ├──libs
@@ -218,9 +214,9 @@ Il tuo `blob storage` contiene:
    
 
 Lo stage contiene la situazione dalla quale parti, quindi il tuo primo commit, con tutti i suoi tree object e i suoi blob.
-Lo stage sta lì, in attesa di accogliere le modifiche che farai sul filesystem.
+Lo stage sta lì, in attesa di accogliere le modifiche che farai sul file system.
 
-Modifica "foo.txt"
+Modifica `foo.txt`
 
 >  echo "un contenuto" >> libs/foo.txt 
 
@@ -232,8 +228,7 @@ All'esecuzione di "git add" git ripete quel che aveva già fatto prima: analizza
 
   xxx disegno
 
-
-Prosegui aggiungendo un nuovo file "doh.html"
+Prosegui aggiungendo un nuovo file `doh.html`
 
 >  echo "happy happy joy joy" > doh.html<br/>
 >  git add doh.html
@@ -245,7 +240,7 @@ Come prima: git aggiunge un nuovo blob object col contenuto del file e, contestu
 Il contenitore di tutta questa struttura è un oggetto Commit che git tiene posteggiato nello Stage.
 Questa struttura rappresenta esattamente la nuova situazione sul file system.
 
-Siccome a noi interessa anche che git conservi la storia del nostro filesystem, non resta che memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dello stage) sia figlia della precedente situazione (il vecchio commit).
+Siccome a noi interessa anche che git conservi la storia del nostro file system, non resta che memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dello stage) sia figlia della precedente situazione (il vecchio commit).
 
 In effetti, git aggiunge automaticamente un'informazione al commit posteggiato nello Stage: un puntatore al commit dal quale si proviene
 
@@ -279,8 +274,8 @@ Ricapitolando:
 1. git memorizza sempre i file nella loro interezza
 2. il `commit` è uno dei tanti oggetti conservati dentro il database chiave/valore di git. È un contenitore di tanti puntatori ad altri oggetti del database: i `tree` che rappresentano directory con nomi di file che a loro volta puntano ad altri `tree` (sottodirectory) o a dei `blob` (il contenuto dei file)
 3. ogni oggetto `commit` ha un puntatore al `commit` padre da cui deriva
-3. lo `stage` è uno spazio di appoggio nel quale costruiamo a colpi di `git add` il nuovo `commit`
-4. con `git commit` registriamo l'attuale `stage` facendolo diventare il nuovo `commit`.
+3. l'`index` è uno spazio di appoggio nel quale costruiamo a colpi di `git add` il nuovo `commit`
+4. con `git commit` registriamo l'attuale `index` facendolo diventare il nuovo `commit`.
 
 
 
@@ -344,7 +339,7 @@ Adesso proviamo a tornare indietro nel tempo, al commit A, utilizzando il comand
              ---add--->         ---commit--->
              <------------checkout-----------
 
-Il comando checkout prende il commit indicato e lo copia nel filesystem e nello stage.
+Il comando checkout prende il commit indicato e lo copia nel file system e nello stage.
 Già: ma qual è la chiave del commit A?
 Lo scopriamo col comando "git log" che mostra tutto quello che abbiamo fatto fin'ora
 
@@ -430,7 +425,7 @@ Praticamente, avresti qualcosa di simile ad un'etichetta da applicare ad un comm
    * 621f0a8 inizio
 
 git aggiunge da solo 2 etichette: HEAD e master.
-HEAD è l'etichetta che punta al commit corrente, quello che si sta visualizzando nel proprio filesystem.
+HEAD è l'etichetta che punta al commit corrente, quello che si sta visualizzando nel proprio file system.
 L'etichetta "master", invece, è aggiunta automaticamente da git alla creazione del repository.
 In questo momento "master" punta al commit 00c6637
 
