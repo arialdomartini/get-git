@@ -16,7 +16,7 @@ Questa guida prova a spiegarti git seguendo un percorso contrario a quello adott
 
 # Non sono parente di SVN
 
-Per chi arriva da SVN, git presenta una sola difficoltà: ha molti comandi identici. Ma è una somiglianza superficiale e ingannevole: sotto il cofano git è totalmente differente.
+Per chi arrivi da SVN, git presenta una sola difficoltà: ha molti comandi identici. Ma è una somiglianza superficiale e ingannevole: sotto il cofano git è totalmente differente.
 
 Per questo ti suggerisco di rifuggire sempre dalla tentazione di fare dei paralleli con SVN, perché sarebbero solo fuorvianti. Troverai comandi come `add`, `checkout`, `commit` e `branch` che ti sembrerà di conoscere. Ecco: fai tabula rasa di quel che conosci, perché in git quei comandi significano cose molto molto differenti.
 
@@ -37,7 +37,7 @@ Se siamo fortunati, li troverai molto più omogenei e potenti di quelli di SVN.
 
 ## Setup
 
-Installa git. xxx qui link
+Installa [git](http://git-scm.com/downloads).
 
 Poi configuralo perché ti riconosca
 
