@@ -143,33 +143,32 @@ Il tuo repository adesso ha questo aspetto
 
 == Index o stage == 
 
-Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git e tra pochissimo potremmo passare a vedere i vari comandi. Ma prima vediamo un altro meccanismo interno: l'"index" o lo "stage". Lo stage risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il blob storage e lo stage, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
+Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git e tra pochissimo passiamo a vedere i vari comandi. Ma prima vorrei introdurti ad un altro meccanismo interno: l'"index" o lo "stage". Lo stage risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il blob storage e lo stage, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
 
 
+Lo stage è una struttura che fa da cuscinetto tra il filesystem e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo commit. 
 
-Lo stage è una struttura che fa da cuscinetto tra il filesystem e il repository.
-
-
+   xxx qui disegno
     filesystem   |   stage   |   repository
 
+Non è troppo complicato:
 
-Il file system è la directory con i nostri file.
-Il repository è un database su file, locale, che conserva la storia del filesystem
-Lo stage è lo spazio che git mette a disposizione per creare il prossimo commit.
+ - il file system è la directory con i tuoi file.
+ - il repository è il database locale su file, che conserva la storia del filesystem
+ - lo stage è lo spazio che git ti mette a disposizione per creare il tuo prossimo commit.
 
-Fisicamente, lo stage assomiglia molto al repository: entrambi conservano i dati nel blob storage, usando le strutture che hai visto prima.
-
+Fisicamente, lo stage è equivalente al repository: entrambi conservano i dati nel blob storage, usando le strutture che hai visto prima.
+In questo momento, adesso che hai fatto il tuo primo commit, lo stage conserva una copia del commit che hai appena fatto e si aspetta che tu lo modifichi.
 
     filesystem   |   stage   |   repository
-                        \          |
-                         \__ Blob storage
+                        \           \
+                         NEXT------> commit A
 
 
 
-Proviamo a fare delle modifiche ai nostri due file (magari aggiungendone un terzo) e committarle.
+Proviamo a fare delle modifiche al file system
 
-Avevamo
-
+Sul filesystem hai
 
     /
     ├──libs
@@ -178,84 +177,41 @@ Avevamo
     ├──templates
             └──bar.txt
 
+Il tuo Blob storage contiene:
 
-e nel blob storage avevamo
-
-     [ commit 1 ]
-       |    |
-       |     \
-       |      └── tree object  "libs" 
-       |          contains "foo.txt"
-       |                        |
-       |                        └────────────────────────────────────────
-       |                                                                 \
-       └──── tree oject (name=templates)                                  \
-                        (contains: bar.txt)                                \       
-                                  |                                         \ 
-                                  └────────────────────────────────────── blob object (contenuto del file)
-
+ xxx disegno
    
 
+Lo stage contiene la situazione dalla quale parti, quindi il tuo primo commit, con tutti i suoi tree object e i suoi blob.
+Lo stage sta lì, in attesa di accogliere le modifiche che farai sul filesystem.
+
+Modifica "foo.txt"
+
+  echo "un contenuto" >> libs/foo.txt 
+
+e aggiorna lo stage con
+
+  git add libs/foo.txt
+
+All'esecuzione di "git add" git ripete quel che aveva già fatto prima: analizza il contenuto di "libs/foo.txt", vede che c'è un contenuto che non ha mai registrato e quindi aggiunge al Blob storage un nuovo Blob col nuovo contenuto del file; contestualmente, aggiorna il tree "libs" perché il file "foo.txt" punti al suo nuovo contenuto
+
+  xxx disegno
 
 
-A bocce ferme, lo stage contiene la situazione dalla quale partiamo, quindi il primo commit che avevamo fatto, con tutti i suoi tree object e i suoi blob.
-Lo stage sta lì, in attesa di accogliere le modifiche che abbiamo fatto sul filesystem.
+Prosegui aggiungendo un nuovo file "doh.html"
 
-Modifichiamo "foo.txt", e aggiorniamo lo stage con
-
-  git add foo.txt
-
-All'esecuzione di "git add foo.txt" lo stage aggiunge al blob storage il un nuovo blob col nuovo contenuto di "foo.txt" e, contestualmente, aggiorna il tree "libs" perché il file "foo.txt" punti al suo nuovo contenuto
-
-
-
-     [ stage ]  
-       |    |
-       |     \
-       |      └── tree object  "libs" 
-       |          contains "foo.txt"
-       |                        |
-       |                        └────────────────────────────────────────
-       |                                                                 \
-       └──── tree oject (name=templates)                                  blob object (nuovo contenuto di foo.txt)
-                        (contains: bar.txt)                                   
-                                  |                           
-                                  └────────────────────────────────────── blob object (contenuto iniziale dei file)
-
-
-Proseguiamo a modificare il file system aggiungendo un nuovo file "doh.html"
-
-
+  echo "happy happy joy joy" > doh.html
   git add doh.html
 
-Come prima: git aggiunge un nuovo blob object col contenuto del file e, contestualmente, aggiunge nel tree "libs" un nuovo puntatore chiamato "doh.html" che punta al nuovo blob object
+Come prima: git aggiunge un nuovo blob object col contenuto del file e, contestualmente, aggiunge nel tree "/" un nuovo puntatore chiamato "doh.html" che punta al nuovo blob object
 
+  xxx disegno
 
+Il contenitore di tutta questa struttura è un oggetto Commit che git tiene posteggiato nello Stage.
+Questa struttura rappresenta esattamente la nuova situazione sul file system.
+Siccome a noi interessa anche che git conservi la storia del nostro filesystem, non resta che memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dello stage) sia figlia della precedente situazione (il vecchio commit).
 
-
-     [ stage ]  
-       |    |                                      ────────────────────── blob object (contenuto di doh.html)
-       |     \                                   /
-       |      └── tree object  "libs"           /
-       |          contains "foo.txt"  +  contains "doh.html" 
-       |                        |
-       |                        └────────────────────────────────────────
-       |                                                                 \
-       └──── tree oject (name=templates)                                  blob object (nuovo contenuto di foo.txt)
-                        (contains: bar.txt)                                   
-                                  |                           
-                                  └────────────────────────────────────── blob object (contenuto iniziale dei file)
-
-
-
-
-
-
-Siamo a posto. Questa struttura rappresenta esattamente la nuova situazione sul file system.
-Ma a noi interessa anche che git conservi la storia.
-Perché git possa anche conservare la situazione passata del nostro filesystem, non resta che memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dello stage) sia figlia della precedente situazione (il vecchio commit).
-
-In effetti, git aggiunge automaticamente un'informazione sullo stage: un puntatore al commit dal quale si proviene
+In effetti, git aggiunge automaticamente un'informazione al commit posteggiato nello Stage: un puntatore al commit dal quale si proviene
 
   commit 1
      ↑
