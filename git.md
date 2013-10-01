@@ -18,7 +18,9 @@ Questa guida prova a spiegarti git seguendo un percorso contrario a quello adott
 
 Per chi arriva da SVN, git presenta una sola difficoltà: ha molti comandi identici. Ma è una somiglianza superficiale e ingannevole: sotto il cofano git è totalmente differente.
 
-Per questo ti suggerisco di rifuggire sempre dalla tentazione di fare dei paralleli con SVN, perché sarebbero solo fuorvianti. Troverai comandi come add, checkout, commit, branch che ti sembrerà di conoscere. Ecco: fai tabula rasa di quel che conosci, perché in git quei comandi significano cose molto molto differenti.
+Per questo ti suggerisco di rifuggire sempre dalla tentazione di fare dei paralleli con SVN, perché sarebbero solo fuorvianti. Troverai comandi come `add`, `checkout`, `commit` e `branch` che ti sembrerà di conoscere. Ecco: fai tabula rasa di quel che conosci, perché in git quei comandi significano cose molto molto differenti.
+
+Cercare di capire git usando SVN come modello, a volte, porta semplicemente fuori strada.
 
 Per esempio: ci crederesti che questo repository ha 3 branch?
 
@@ -26,7 +28,7 @@ Per esempio: ci crederesti che questo repository ha 3 branch?
 
 Sì: 3 branch, non 2.
 
-Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer di database chiave-valore su filesystem*"?
+Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer di database chiave/valore su filesystem*"?
 
 Per cui: dimentica quello che sai sui branch e sei changeset di SVN, e preparati a concetti completamente nuovi.
 
@@ -35,7 +37,7 @@ Se siamo fortunati, li troverai molto più omogenei e potenti di quelli di SVN.
 
 ## Setup
 
-Installa git.
+Installa git. xxx qui link
 
 Poi configuralo perché ti riconosca
 
@@ -54,7 +56,7 @@ Iniziamo con tre caratteristiche di git con le quali dovresti familiarizzare.
 
 
 
-1. **Non c'è un server**: il repository è locale. La gran parte delle operazioni è locale e non richiede l'accesso alla rete. Anche per questo troverai che git sia incredibilmente veloce.
+1. **Non c'è un server**: il repository è locale. La gran parte delle operazioni è locale e non richiede l'accesso alla rete. Anche per questo troverai git  incredibilmente veloce.
 2. **Il progetto è indivisibile**: git lavora sempre con l'intero codice sorgente del progetto e non su singole directory o su singoli file; con git non c'è differenza tra committare nella directory principale o in una subdirectory. Non esiste il concetto di committare o fare il checkout di un file o di una singola directory. Per git il progetto è l'unità indivisibile di lavoro.
 3. **git non memorizza i cambiamenti dei file**: git salva sempre i file nella loro interezza. Se in un file di 2 mega modificassi un singolo carattere, git memorizzerebbe per intero la nuova versione del file. Questa è una differenza importante: SVN memorizza le differenze e, all'occorrenza, ricostruisce il file; git memorizza il file e, all'occorrenza, ricostruisce le differenze.
 
@@ -62,35 +64,38 @@ Iniziamo con tre caratteristiche di git con le quali dovresti familiarizzare.
 ### 4 Livelli di nerdosità
 
 Sull'assenza di un server ho un po' mentito: come ti ho già detto e come vedrai più avanti, git è un sistema peer-to-peer, e riesce ad interagire con dei server remoti.
-Nonostante questo resta, sostanzialmente, un sistema locale.
+Nonostante questo resta sostanzialmente un sistema locale.
 
 Per capire quanto questo possa avvantaggiarti, prova a vederla così: quando il codice sorgente di un progetto è ospitato su un computer remoto hai 4 modi per editare il codice
 
 1. Lasci tutto il codice sul computer remoto e vi accedi con ssh per editare un singolo file
-2. Trovi il modo di ottenere una copia locale del singolo file per poterci lavorare più comodamente e lasci tutto il resto sul computer remoto
+2. Trovi il modo di ottenere una copia del singolo file per poterci lavorare più comodamente in locale e lasci tutto il resto sul computer remoto
 3. Trovi il modo di ottenere una copia locale di un intero albero del filesystem e lasci il resto della storia dei commit sul computer remoto
-4. Ottenieni una copia locale dell'intero repository con tutta la storia del progetto e lavori tutto in locale
+4. Ottenieni una copia locale dell'intero repository con tutta la storia del progetto e lavori in locale
 
 Avrai notato due cose.
 
 La prima, che SVN e i sistemi di versionamento ai quali sei probabilmente abituato operano al livello 3.
 
-La seconda, che i 4 sistemi sono elencati in ordine di comodità: quando il materiale è conservato sul sistema remoto, normalmente, il tuo lavoro è più macchinoso e scomodo. SVN ti permette di fare il checkout di un'intera directory proprio perché così ti risulti più comodo passare da un file all'altro senza dover continuamente interagire col server remoto.
+La seconda, che i 4 sistemi sono elencati in ordine di comodità: quando il materiale è conservato sul sistema remoto, normalmente, il tuo lavoro è più macchinoso, lento e scomodo. SVN ti permette di fare il checkout di un'intera directory proprio perché così ti risulti più comodo passare da un file all'altro senza dover continuamente interagire col server remoto.
 
-Ecco: git è ancora più estremo; preferisce farti avere tutto a disposizione, sul tuo computer locale; non solo il singolo checkout, ma l'intera storia del progetto, dal primo all'ultimo commit.
+Ecco: git è ancora più estremo; preferisce farti avere a disposizione tutto sul tuo computer locale; non solo il singolo checkout, ma l'intera storia del progetto, dal primo all'ultimo commit.
 
-Qualunque cosa tu voglia fare, git chiede normalmente di ottenere una copia completa di quel che è presente sul server remoto. Ma non preoccuparti: git è più veloce a ottenere l'intera storia del progetto di quanto SVN lo sia ad ottenere un singolo checkout.
+In effetti, qualunque cosa tu voglia fare, git chiede normalmente di ottenere una copia completa di quel che è presente sul server remoto. Ma non preoccuparti troppo: git è più veloce a ottenere l'intera storia del progetto di quanto SVN lo sia ad ottenere un singolo checkout.
 
 
-### Modello di storage
+### Il modello di storage
 
-Passiamo dalla terza differenza. 
-SVN memorizza i file e la collezione delle varie patch (o diff) applicate nel tempo. 
-git invece memorizza i file così come sono, nella loro interezza. All'occorrenza, come vedrai, calcolerà le diff.
+Passiamo dalla terza differenza. E preparati a conoscere il vero motivo per cui git sta sostituendo molto velocemente SVN come nuovo standard *de-facto*.
 
-Se vuoi evitare tanti grattacapi con git, il miglior suggerimento che tu possa seguire è di trattarlo come un database chiave-valore. 
+* SVN memorizza la collezione delle varie patch (o diff) applicate nel tempo ai file; all'occorrenza ricostruisce lo stato attuale;
+* git memorizza i file così come sono, nella loro interezza; all'occorrenza ne calcola le diff.
 
-Mettiamo di avere 2 file vuori sul filesystem 
+Se vuoi evitare tanti grattacapi con git, il miglior suggerimento che tu possa seguire è di trattarlo come un **database chiave/valore**. 
+
+Apri una console e vediamolo nel concreto.
+
+Mettiti nella condizione di avere 2 file vuoti sul filesystem: 
 
 > mkdir progetto<br/>
 > cd progetto<br/>
@@ -115,7 +120,11 @@ Aggiungi il primo file a git
 
 > git add libs/foo.txt
 
-Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo memorizza nel suo database chiave-valore, che è conservato su filesystem nella directory nascosta `.git`. Il database si chiama `blob storage`; git associa al file un identificativo unico, la chiave; banalmente, la chiave è lo sha1 del file; in questo caso la chiave è `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`. Il  valore è il contenuto (vuoto) del file. Nel blob storage ci sarà un oggetto `blob`, univocamente identificabile dalla chiave, che rappresenta il contenuto del tuo file.
+Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo memorizza nel suo database chiave/valore, chiamato `blob storage` e conservato su filesystem nella directory nascosta `.git`. 
+
+Siccome il `blob-storage` è un database chiave valore, git cercherà di calcolare una chiave ed un valore per il file che hai aggiunto. Per il valore git userà il contenuto stesso del file; per la chiave, verrà calcolato lo sha1 del contenuto (se sei curioso, nel caso di un file vuoto vale `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`)
+
+Per cui, nel `blob storage` git salverà un oggetto `blob`, univocamente identificabile dalla sua chiave.
 
 ![Alt text](img/blob.png)
 
@@ -123,21 +132,21 @@ Adesso aggiungi il secondo file
 
 > git add templates/bar.txt
 
-Ora, siccome `libs/foo.txt` e `templates/bar.txt` hanno lo stesso contenuto (sono entrambi vuoti!), nel blob storage entrambi verranno conservati in un unico oggetto, identificato dalla sua chiave:
+Ora, siccome `libs/foo.txt` e `templates/bar.txt` hanno lo stesso identico contenuto (sono entrambi vuoti!), nel `blob storage` entrambi verranno conservati in un unico oggetto, identificato dalla sua chiave:
 
 ![Alt text](img/blob.png)
 
 
-Nel Blob git memorizza solo il contenuto del file, non il suo nome né la sua posizione.
+Come vedi, nel `blob storage` git ha memorizzato solo il contenuto del file, non il suo nome né la sua posizione.
 
 Naturalmente, però, a noi il nome dei file e la loro posizione interessano eccome.
-Per questo, nel blob storage, git memorizza anche altri oggetti, chiamati "tree" che servono proprio a memorizzare il contenuto delle varie directory e i nomi dei file.
+Per questo, nel `blob storage`, git memorizza anche altri oggetti, chiamati `tree` che servono proprio a memorizzare il contenuto delle varie directory e i nomi dei file.
 
 Nel nostro caso, avremo 3 tree 
 
 ![Alt text](img/tree.png)
 
-Come ogni altro oggetto, anche i tree sono memorizzati come chiave/valore.
+Come ogni altro oggetto, anche i `tree` sono memorizzati come chiave/valore.
 
 Tutte queste strutture vengono raccolte dentro un contenitore, chiamato `commit`.
 
@@ -145,7 +154,7 @@ Tutte queste strutture vengono raccolte dentro un contenitore, chiamato `commit`
 ![Alt text](img/commit.png)
 
 
-Come avrai intuito, un `commit` non è altro che un elemento del database chiave-valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è un puntatore al `tree` del progetto, cioè la sua chiave.
+Come avrai intuito, un `commit` non è altro che un elemento del database chiave/valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è un puntatore al `tree` del progetto, cioè la sua chiave.<br/>
 Non è troppo complicato, dopo tutto, no?
 
 Quindi, il `commit` è l'attuale fotografia dello stato del filesystem.
@@ -154,22 +163,25 @@ Adesso fai
 
 > git commit -m "commit A, il mio primo commit"
 
-Stai dicendo a git: "memorizza nel repository, cioè nella storia del progetto, il commit che ti ho preparato a colpi di add"
+Stai dicendo a git: 
+
+*memorizza nel repository, cioè nella storia del progetto, il commit che ti ho preparato a colpi di add*
+
 Il tuo repository adesso ha questo aspetto
 
 ![Alt text](img/first-commit.png)
 
 La riga col pallino che vedi sulla sinistra rappresenta l'oggetto `commit`. Nel pannello sulla destra, invece, puoi vedere la chiave del `commit`.
 
-A partire da adesso non ci sarà più bisogno di rappresentare tutta la struttura interna del `commit` e inizieremo a trattare i `commit` come l'unità di base del nostro lavoro.
+A partire da adesso non ci sarà più bisogno di rappresentare tutta la struttura interna dei `commit` e potrai inziare a trattare i `commit` come l'unità di base del nostro lavoro: dovrebbe risultarti più chiaro che dentro un commit c'è l'intero filesystem.
 
 
 ## Lo `stage` 
 
-Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git e tra pochissimo passiamo a vedere i vari comandi. Ma prima vorrei introdurti ad un altro meccanismo interno: l'"index" o lo "stage". Lo stage risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il blob storage e lo stage, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
+Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: l'`index` o lo `stage`. Lo `stage` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il `blob storage`e e lo `stage`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
 
 
-Lo stage è una struttura che fa da cuscinetto tra il filesystem e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo commit. 
+Lo `stage` è una struttura che fa da cuscinetto tra il filesystem e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo `commit`. 
 
    xxx qui disegno
     filesystem   |   stage   |   repository
@@ -200,7 +212,7 @@ Sul filesystem hai
     ├──templates
             └──bar.txt
 
-Il tuo Blob storage contiene:
+Il tuo `blob storage` contiene:
 
  xxx disegno
    
@@ -216,7 +228,7 @@ e aggiorna lo stage con
 
 > git add libs/foo.txt
 
-All'esecuzione di "git add" git ripete quel che aveva già fatto prima: analizza il contenuto di "libs/foo.txt", vede che c'è un contenuto che non ha mai registrato e quindi aggiunge al Blob storage un nuovo Blob col nuovo contenuto del file; contestualmente, aggiorna il tree "libs" perché il file "foo.txt" punti al suo nuovo contenuto
+All'esecuzione di "git add" git ripete quel che aveva già fatto prima: analizza il contenuto di "libs/foo.txt", vede che c'è un contenuto che non ha mai registrato e quindi aggiunge al `blob storage` un nuovo Blob col nuovo contenuto del file; contestualmente, aggiorna il tree "libs" perché il file "foo.txt" punti al suo nuovo contenuto
 
   xxx disegno
 
@@ -265,7 +277,7 @@ Dopo il commita nel database di git ci ritroviamo
 Ricapitolando:
 
 1. git memorizza sempre i file nella loro interezza
-2. il `commit` è uno dei tanti oggetti conservati dentro il database chiave-valore di git. È un contenitore di tanti puntatori ad altri oggetti del database: i `tree` che rappresentano directory con nomi di file che a loro volta puntano ad altri `tree` (sottodirectory) o a dei `blob` (il contenuto dei file)
+2. il `commit` è uno dei tanti oggetti conservati dentro il database chiave/valore di git. È un contenitore di tanti puntatori ad altri oggetti del database: i `tree` che rappresentano directory con nomi di file che a loro volta puntano ad altri `tree` (sottodirectory) o a dei `blob` (il contenuto dei file)
 3. ogni oggetto `commit` ha un puntatore al `commit` padre da cui deriva
 3. lo `stage` è uno spazio di appoggio nel quale costruiamo a colpi di `git add` il nuovo `commit`
 4. con `git commit` registriamo l'attuale `stage` facendolo diventare il nuovo `commit`.
