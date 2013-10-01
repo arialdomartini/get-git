@@ -173,12 +173,14 @@ Il tuo repository adesso ha questo aspetto
 
 La riga col pallino che vedi sulla sinistra rappresenta l'oggetto `commit`. Nel pannello sulla destra, invece, puoi vedere la chiave del `commit`.
 
-A partire da adesso non ci sarà più bisogno di rappresentare tutta la struttura interna dei `commit` e potrai inziare a trattare i `commit` come l'unità di base del nostro lavoro: dovrebbe risultarti più chiaro che dentro un commit c'è l'intero file system.
+In generale, a meno che non si debba parlare proprio del modello interno, non c'è una grande necessità di rappresentare tutta la struttura di `blob` e `tree` che costituisce un `commit`. Difatti, dopo il prossimo paragrafo inizieremo a rappresentare i `commit` come nella figura qui sopra: con un semplice pallino.
+
+Già da adesso, comunque, dovrebbe risultarti più chiaro il fatto che dentro un commit ci sia l'intera fotografia del progetto e che, di fatto, un commit sia l'unità minima ed indivisibile di lavoro.
 
 
 ## L' `index` o `staging area` 
 
-Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o lo `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il `blob storage`e e l'`index`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
+Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il `blob storage` e l'`index`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
 
 
 L'`index` è una struttura che fa da cuscinetto tra il file system e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo `commit`. 
@@ -191,8 +193,8 @@ Non è troppo complicato:
  * il `repository` è il database locale su file, che conserva la storia del file system
  * l'`index` è lo spazio che git ti mette a disposizione per creare il tuo prossimo commit.
 
-Fisicamente, l'`index` è equivalente al `repository`: entrambi conservano i dati nel `blob storage`, usando le strutture che hai visto prima.
-In questo momento, adesso che hai fatto il tuo primo commit, l'`index` conserva una copia del commit che hai appena fatto e si aspetta che tu lo modifichi.
+Fisicamente, l'`index` non è molto diverso dal `repository`: entrambi conservano i dati nel `blob storage`, usando le strutture che hai visto prima.
+In questo momento, adesso che hai fatto il tuo primo `commit`, l'`index` conserva una copia del commit che hai appena fatto e si aspetta che tu lo modifichi.
 
 xxx qui figura
 
