@@ -73,12 +73,18 @@ Qualunque cosa tu voglia fare, git chiede normalmente di ottenere una copia comp
 
 Passiamo dalla terza differenza. 
 SVN memorizza i file e la collezione delle varie patch (o diff) applicate nel tempo. 
-git invece memorizza i file così come sono, nella loro interezza.
+git invece memorizza i file così come sono, nella loro interezza. All'occorrenza, come vedrai, calcolerà le diff.
 
 Se vuoi evitare tanti grattacapi con git, il miglior suggerimento che tu possa seguire è di trattarlo come un database chiave-valore. 
 
-Mettiamo di avere 2 file sul filesystem 
+Mettiamo di avere 2 file vuori sul filesystem 
 
+  mkdir progetto
+  cd progetto
+  mkdir libs
+  touch libs/foo.txt
+  mkdir templates
+  touch templates/bar.txt
 
     /
     ├──libs
@@ -88,60 +94,56 @@ Mettiamo di avere 2 file sul filesystem
             └──bar.txt
 
 
-e di volerli aggiungere a git.
+Decidiamo di gestire il progetto con git
 
   git init
+
+Aggiungi il primo file a git
+
   git add libs/foo.txt
+
+Con questo comando, git ispeziona il contenuto del file e lo memorizza nel suo database chiave-valore, che è conservato su filesystem nella directory nascosta .git. Il database si chiama "blob storage"; git associa al file un identificativo unico, la chiave (banalmente: è lo sha1 del file). Il  valore è il contenuto (vuoto) del file. Nel blob storage ci sarà un oggetto Blob, univocamente identificabile dalla chiave, che rappresenta il contenuto del tuo file.
+
+  xxx qui disegno
+
+Adesso aggiungi il secondo file
+
   git add templates/bar.txt
 
+Ora, siccome libs/foo.txt e templates/bar.txt hanno lo stesso contenuto (sono entrambi vuoti!), nel blob storage entrambi verranno conservati in un unico oggetto, identificato dal suo sha1: xxx
 
-Con questi comandi, git prende il contenuto dei 2 file e li memorizza nel suo database chiave-valore, che è conservato su filesystem (nella directory nascosta .git) . Il database si chiama "blob storage"; git guarda il contenuto di ogni file git e gli associa un identificativo unico, la chiave (banalmente: è lo sha1 del file). Il  valore sarà il contenuto del file.
+  xxx disegno
 
-    git add libs/foo.txt       ===> git salva nel Blob storage qualcosa come { chiave: ae6757ff, valore: contenuto di foo.txt}
-    git add templates/bar.txt  ===> git salva nel Blob storage { chiave: bbe51002, valore: contenuto di bar.txt}
-
-Ora, come vedi, il Blob storage conserva solo il contenuto dei file, non il loro nome. Per cui, se libs/foo.txt e templates/bar.txt avessero lo stesso contenuto, nel blob storage entrambi verrebbero conservati in un unico oggetto, identificato dal suo sha1: ae6757ff
-
-    git add libs/foo.txt              ===> Blob storage { chiave: ae6757ff, valore: contenuto_comune}
-    git add templates/bar.txt         ===> Blob storage { chiave: ae6757ff, valore: contenuto_comune} 
-
-
+Nel Blob git memorizza solo il contenuto del file, non il suo nome né la sua posizione.
 Naturalmente, però, a noi il nome dei file e la loro posizione interessano eccome.
-Per questo, nel blob storage, git memorizza anche vari altri oggetti, chiamati "tree" che servono proprio a memorizzare il contenuto delle varie directory e i nomi dei file.
+Per questo, nel blob storage, git memorizza anche altri oggetti, chiamati "tree" che servono proprio a memorizzare il contenuto delle varie directory e i nomi dei file.
 
 Nel nostro caso, avremo 3 tree 
 
-   /
-   libs
-   template
+  xxx qui disegno
 
-git memorizzerà che "libs" contiene "foo.txt", "template" contiene "bar.txt" e "/" contiene le directory "libs" e "templates".
 Come ogni altro oggetto, anche i tree sono memorizzati come chiave/valore.
-
-   /         => contiene libs e template
-   libs      => contiene foo.txt
-   template  => contiene bar.txt
-
-
-Essendo un database chiave-valore, per fare riferimento ad un elemento, git userà sempre la sua chiave.
 
 Tutte queste strutture vengono raccolte dentro un contenitore, chiamato "commit".
 
-Come forse avrai intuito, un "commit" è un altro oggetto chiave-valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è la collezione dei puntatori ai tree contenuti, cioè l'elenco delle loro chiavi.
+Come avrai intuito, un "commit" è un altro oggetto chiave-valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è la collezione dei puntatori ai tree contenuti, cioè l'elenco delle loro chiavi.
 Non è troppo complicato, dopo tutto, no?
 
 Quindi, il commit è l'attuale fotografia dello stato del filesystem.
 
-Quando facciamo
+Adesso fai
 
-       git commit -m "il mio primo commit"
+  git commit -m "commit A, il mio primo commit"
 
-stiamo dicendo a git: "memorizza nel repository, cioè nella storia del progetto, il commit che ti ho preparato a colpi di add"
+Stai dicendo a git: "memorizza nel repository, cioè nella storia del progetto, il commit che ti ho preparato a colpi di add"
+Il tuo repository adesso ha questo aspetto
+
+  xxx qui disegno
 
 
 == Index o stage == 
 
-Fino ad ora ti ho parlato degli internal di git. Tra pochissimo arriviamo ai comandi. Ma prima vediamo un altro meccanismo interno: l'"index" o lo "stage". Lo stage risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il blob storage e lo stage, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
+Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git e tra pochissimo potremmo passare a vedere i vari comandi. Ma prima vediamo un altro meccanismo interno: l'"index" o lo "stage". Lo stage risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funziona il blob storage e lo stage, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
 
 
 
