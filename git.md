@@ -185,7 +185,7 @@ Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage
 
 L'`index` è una struttura che fa da cuscinetto tra il file system e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo `commit`. 
 
-![Alt text](img/stage.png)
+![Alt text](img/index1.png)
 
 Non è troppo complicato:
 
@@ -194,12 +194,11 @@ Non è troppo complicato:
  * l'`index` è lo spazio che git ti mette a disposizione per creare il tuo prossimo commit.
 
 Fisicamente, l'`index` non è molto diverso dal `repository`: entrambi conservano i dati nel `blob storage`, usando le strutture che hai visto prima.
+
 In questo momento, adesso che hai fatto il tuo primo `commit`, l'`index` conserva una copia del commit che hai appena fatto e si aspetta che tu lo modifichi.
 
-xxx qui figura
+![Alt tex1](img/index2.png)
 
-
-Proviamo a fare delle modifiche al file system
 
 Sul file system hai
 
@@ -210,25 +209,18 @@ Sul file system hai
     ├──templates
             └──bar.txt
 
-Il tuo `blob storage` contiene:
 
- xxx disegno
-   
+Proviamo a fare delle modifiche al file `foo.txt`
 
-Lo stage contiene la situazione dalla quale parti, quindi il tuo primo commit, con tutti i suoi tree object e i suoi blob.
-Lo stage sta lì, in attesa di accogliere le modifiche che farai sul file system.
-
-Modifica `foo.txt`
-
->  echo "un contenuto" >> libs/foo.txt 
+>  echo "nel mezzo del cammin" >> libs/foo.txt 
 
 e aggiorna lo stage con
 
 > git add libs/foo.txt
 
-All'esecuzione di "git add" git ripete quel che aveva già fatto prima: analizza il contenuto di "libs/foo.txt", vede che c'è un contenuto che non ha mai registrato e quindi aggiunge al `blob storage` un nuovo Blob col nuovo contenuto del file; contestualmente, aggiorna il tree "libs" perché il file "foo.txt" punti al suo nuovo contenuto
+All'esecuzione di `git add` git ripete quel che aveva già fatto prima: analizza il contenuto di `libs/foo.txt`, vede che c'è un contenuto che non ha mai registrato e quindi aggiunge al `blob storage` un nuovo Blob col nuovo contenuto del file; contestualmente, aggiorna il tree `libs` perché il file `foo.txt` punti al suo nuovo contenuto
 
-  xxx disegno
+![Alt tex1](img/index3.png)
 
 Prosegui aggiungendo un nuovo file `doh.html`
 
