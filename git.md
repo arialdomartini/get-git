@@ -1,12 +1,13 @@
 = Introduzione =
 
 Questa guida è un po' differente.
-Tutte le guide che ho letto su git si preoccupano di introdurti ai comandi base di git e lasciano ai capitoli più avanzati la descrizione degli internal e del modello di funzionamento.
-Quello che ho notato, però, è che imparando git così, molti finiscono per valutarlo uno strumento simile a SVN provvisto di un set aggiuntivo di comandi complicati, il cui funzionamento resta sostanzialmente oscuro.
-Facci caso: chiedi ai colleghi che già conoscono git se abbiano mai capito cosa sia l'index e se saprebbero spiegarti la differenza tra merge e rebase. Alcuni ti risponderanno di aver imparato git abbasanza da riuscire ad usarlo quotidianamente, ma di aver fatto molta fatica a capire cosa sia un rebase, o di non cogliere esattamente che uso fare dello stage. 
-La mia impressione è che, una volta capito il modello interno (che è stupefacentemente semplice!) tutto git diventi improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il "rebase" dovrebbe essere un argomento misterioso.
+Molte delle guide che ho letto su git si preoccupano di introdurti ai comandi base e lasciano ai capitoli più avanzati la descrizione degli internal e del modello di funzionamento.
+Quello che ho notato, però, è che imparando git partendo dai comandi base, rischi di finire per valutarlo uno strumento vagamente simile a SVN ma provvisto di un set aggiuntivo di comandi esoterici, il cui funzionamento ti resterà sostanzialmente oscuro.
+Facci caso: molti di quelli che hanno imparato git abbasanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un rebase, o di non cogliere esattamente che uso fare dello stage. 
+La mia impressione è che, una volta capito il modello interno (che è stupefacentemente semplice!) tutto git appaia improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il "rebase" dovrebbe essere un argomento misterioso.
 
-Questa guida prova a spiegare git seguendo un percorso contrario a quello adottato di solito: partirai da una breve spiegazione degli internal, e finirai per imparare i comandi base e quelli avanzati (insieme!) in poco tempo e senza alcun grattacapo.
+
+Questa guida prova a spiegarti git seguendo un percorso contrario a quello adottato di solito: partirai da una breve spiegazione degli internal e finirai per imparare, nello stesso momento, sia comandi base che quelli avanzati, in poco tempo e senza troppi grattacapi.
 
 
 == Non sono parente di SVN ==
