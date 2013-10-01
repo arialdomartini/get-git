@@ -260,6 +260,10 @@ Una breve osservazione: spesso le interfacce grafiche di git omettono di visuali
 
 ![Alt tex1](img/gitk.png)
 
+Guarda tu stesso. Lancia
+
+>  gitk
+
 
 Ricapitolando:
 
@@ -272,125 +276,85 @@ Ricapitolando:
 
 
 Bene: adesso hai tutta la teoria per capire i concetti più astrusi di git come il `rebase`, il `cherrypick`, l'`octopus-merge`, l'`interactive rebase`, il `revert` e il `reset`.
+
 Passiamo al pratico.
 
 
 
 # I comandi di git
 
-## Obiettivo 1 : creare un repository e due commit
+## Obiettivo 1: tornare indietro nel tempo
 
-Crea da qualche parte una directory e lancia "git init"
+Dunque, se in git tutto è conservato in un database chiave/valore, probabilmente ci saà modo per referenziare un qualunque oggetto del database usando la sua chiave.
 
-  cd /tmp
-  mkdir progetto
-  cd progetto
-  git init
+In effetti è proprio così.<br/>
 
- 
-
-La directory "progetto" è diventata un repository git. Fisicamente il repository è conservato in una directory nascosta, chiamata ".git", dentro "progetto"
-
-  ls -A
-    .git
-
-Dentro ".git" c'è lo stage, il blog storage e un sacco di altra roba. Ma non avrai mai bisogno di accederci. Sappi solo che quello *è* il repository sul quale lavorerai.
-
-Creiamo un file e committiamolo
-
-  echo inizio > file.txt           # creo il file
-  git add file.txt                 # aggiungo il file allo stage
-  git commit -m "inizio"           # committo lo stage
-
-
-|   file system    |    stage       |   repository
-             ---add--->         ---commit--->
-
-
-Sul repository si crea il commit A
-
-    A
-
-Proseguiamo modificando il file
-
-  echo nuova riga >> file.txt
-  git add file.txt
-  git commit -m "cambiamento B"
-
-Sul repository si crea il commit B figlio del commit A
-
-   A--B
-
-=== Obiettivo 2: tornare indietro nel tempo ===
-
-Ricordi che in git tutto è conservato in un database chiave/valore?
-Puoi usare la chiave per referenziare un qualunque oggetto.
-Adesso proviamo a tornare indietro nel tempo, al commit A, utilizzando il comando "checkout".
-
-|   file system    |    stage       |   repository
-             ---add--->         ---commit--->
-             <------------checkout-----------
+Adesso proviamo a tornare indietro nel tempo, al `commit A`, utilizzando il comando `git checkout`.
 
 Il comando checkout prende il commit indicato e lo copia nel file system e nello stage.
+
+![Alt tex1](img/index-add-commit-checkout.png)
+
 Già: ma qual è la chiave del commit A?
-Lo scopriamo col comando "git log" che mostra tutto quello che abbiamo fatto fin'ora
+Lo scopriamo col comando `git log` che mostra tutto quello che abbiamo fatto fin'ora
 
-  git log  --oneline
-  00c6637 cambiamento B
-  621f0a8 inizio
+> git log --oneline<br/>
+>**06e3cdc** Commit B, Il mio secondo commit<br/>
+>**b216689** commit A, il mio primo commit<br/>
 
 
-Ottimo! La chiave del commit A è "621f0a8". Uhm, un po' scomodo come sistema.
+
+Ottimo! La chiave del commit A è "b216689". Uhm, un po' scomodo come sistema.<br/>
 Comunque: torniamo indietro al passato, al momento del commit A
 
-  git checkout 621f0a8 
-  cat file.txt
-    inizio
+> ls<br/>
+> **doh.html&nbsp;&nbsp;&nbsp;&nbsp;libs&nbsp;&nbsp;&nbsp;&nbsp;templates**<br/>
+> git checkout b216689<br/>
+> ls<br/>
+> **libs&nbsp;&nbsp;&nbsp;&nbsp;templates**<br/>
 
-effettivamente, il file.txt è tornato allo stato del primo commit.
+Effettivamente, a parte un misterioso e prolisso messaggio di con cui git si lamenta di essere in `'detached HEAD' state` (poi chiariremo questo punto), il file system è tornato allo stato del primo commit e, infatti, il file `doh.html` è scomparso.
 
 
 
-=== Obiettivo 3: creare un branch in modalità detached ===
+##Obiettivo 2: divergere
 
-Potremmo rappresentare la nostra situazione attuale con
+Usando una convenzione grafica molto comune nella letteratura su git, potremmo rappresentare la situazione attuale del tuo repository con
 
-  A*---B
+> **A**---B
 
-Cioè: ci sono due commit, A e B. Il commit B è figlio di A. Noi al momento siamo sul commit A.
-Che succederebbe se adesso facessimo qualche modifica e committassimo?
-Accadrebbe che divergeremmo dalla linea A---B e di fatto divergeremmo.
+Cioè: ci sono due `commit`, `A` e `B`. Il `commit B` è figlio di `A` (il tempo scorre verso destra). Il `commit` in grassetto indica il punto dove ti trovi attualmente.
+
+
+Che succederebbe se adesso facessi qualche modifica e committassi?<br/>
+Accadrebbe che il nuovo `commit C` che andresti a generare sarebbe figlio di `A` (perché è da lì che parti), ma la linea di svilupppo proseguirebbe divergendo dalla linea `A---B`.
+
 Cioè, si creerebbe questa situazione
 
-  A---B
-   \
-    C*
+>  A---B<br/>
+>  &nbsp;&nbsp;\ <br/>
+>  &nbsp;&nbsp;&nbsp;**C**
 
-Cioè: avremmo creato un branch. Proviamo
+Cioè: avremmo creato un branch.<br/>
+Proviamolo davvero:
 
+>  echo "ei fu siccome immobile" > README.md<br/>
+>  git add README.md<br/>
+>  git commit -m "Ecco il commit C"<br/>
 
-  echo foobar > altrofile.txt
-  git add altrofile.txt
-  git commit -m "creo un branch"
-  git log --graph --all --oneline
-
-   * b8b1146 creo un branch
-   | * 00c6637 cambiamento B
-   |/
-   * 621f0a8 inizio
-
-Hai ottenuto un branch, senza il meccanismo della copia che utilizza SVN: il modello a chiave/valore e puntatori di git rende molto economico rappresentare un branch; semplicemente, basta memorizzare che i commit C e B abbiano come padre comune il commit A
-
-  A---B
-   \
-    C
-
-Due osservazioni importanti. 
-La prima per ribadire il concetto chd git non ha mai memorizzato i "diff" tra i file. A, B e C sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN qui non valgono.
-La seconda è un po' sorprendente: i rami che hai appena visto non sono "i branch" di git. In git i rami sono delle etichette. Te ne parlerò a brevissimo, ma abituati giù a ripeterti: in git i branch non sono rami di sviluppo.
+xxx qui disegno.
 
 
-=== Obiettivo 3: creare un branch  ===
+Hai ottenuto una diramazione, senza il meccanismo della copia che utilizza SVN: il modello a chiave/valore e puntatori di git rende molto economico rappresentare una linea di sviluppo che diverge.
+
+Due osservazioni importanti.
+ 
+La prima per ribadire il concetto chd git non ha mai memorizzato i "diff" tra i file. `A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN qui non valgono.
+
+La seconda è un po' sorprendente: le due linee di sviluppo divergenti che hai appena visto non sono "i `branch`" di git. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
+
+
+# Obiettivo 2: creare un branch
 
 Con il comando checkout hai imparato a spostarti da un commit all'altro
 
