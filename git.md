@@ -117,32 +117,38 @@ Aggiungi il primo file a git
 
 Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo memorizza nel suo database chiave-valore, che è conservato su filesystem nella directory nascosta `.git`. Il database si chiama `blob storage`; git associa al file un identificativo unico, la chiave; banalmente, la chiave è lo sha1 del file; in questo caso la chiave è `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`. Il  valore è il contenuto (vuoto) del file. Nel blob storage ci sarà un oggetto `blob`, univocamente identificabile dalla chiave, che rappresenta il contenuto del tuo file.
 
-  xxx qui disegno
+![Alt text](img/blob.png)
 
 Adesso aggiungi il secondo file
 
 > git add templates/bar.txt
 
-Ora, siccome libs/foo.txt e templates/bar.txt hanno lo stesso contenuto (sono entrambi vuoti!), nel blob storage entrambi verranno conservati in un unico oggetto, identificato dal suo sha1: xxx
+Ora, siccome `libs/foo.txt` e `templates/bar.txt` hanno lo stesso contenuto (sono entrambi vuoti!), nel blob storage entrambi verranno conservati in un unico oggetto, identificato dalla sua chiave:
 
-  xxx disegno
+![Alt text](img/blob.png)
+
 
 Nel Blob git memorizza solo il contenuto del file, non il suo nome né la sua posizione.
+
 Naturalmente, però, a noi il nome dei file e la loro posizione interessano eccome.
 Per questo, nel blob storage, git memorizza anche altri oggetti, chiamati "tree" che servono proprio a memorizzare il contenuto delle varie directory e i nomi dei file.
 
 Nel nostro caso, avremo 3 tree 
 
-  xxx qui disegno
+![Alt text](img/tree.png)
 
 Come ogni altro oggetto, anche i tree sono memorizzati come chiave/valore.
 
-Tutte queste strutture vengono raccolte dentro un contenitore, chiamato "commit".
+Tutte queste strutture vengono raccolte dentro un contenitore, chiamato `commit`.
 
-Come avrai intuito, un "commit" è un altro oggetto chiave-valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è la collezione dei puntatori ai tree contenuti, cioè l'elenco delle loro chiavi.
+ 
+![Alt text](img/commit.png)
+
+
+Come avrai intuito, un `commit` non è altro che un elemento del database chiave-valore, la cui chiave è uno SHA1, come per tutti gli altri oggetti, e il cui valore è un puntatore al `tree` del progetto, cioè la sua chiave.
 Non è troppo complicato, dopo tutto, no?
 
-Quindi, il commit è l'attuale fotografia dello stato del filesystem.
+Quindi, il `commit` è l'attuale fotografia dello stato del filesystem.
 
 Adesso fai
 
@@ -151,7 +157,11 @@ Adesso fai
 Stai dicendo a git: "memorizza nel repository, cioè nella storia del progetto, il commit che ti ho preparato a colpi di add"
 Il tuo repository adesso ha questo aspetto
 
-  xxx qui disegno
+![Alt text](img/first-commit.png)
+
+La riga col pallino che vedi sulla sinistra rappresenta l'oggetto `commit`. Nel pannello sulla destra, invece, puoi vedere la chiave del `commit`.
+
+A partire da adesso non ci sarà più bisogno di rappresentare tutta la struttura interna del `commit` e inizieremo a trattare i `commit` come l'unità di base del nostro lavoro.
 
 
 ## Lo `stage` 
