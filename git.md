@@ -12,47 +12,61 @@ Questa guida prova a spiegarti git seguendo un percorso contrario a quello adott
 
 == Non sono parente di SVN ==
 
-Per chi arriva da SVN, git presenta una sola difficoltà: gli assomiglia vagamente. Ma è una somiglianza superficiale e ingannevole: sotto il cofano è totalmente differente.
+Per chi arriva da SVN, git presenta una sola difficoltà: ha molti comandi con gli stessi nomi. Ma è una somiglianza superficiale e ingannevole: sotto il cofano git è totalmente differente.
 
-Per questo ti suggerisco di rifuggire sempre dalla tentazione di fare dei paralleli: sarebbero solo fuorvianti. Troverai comandi come add, checkout, commit, branch che ti sembrerà di conoscere. Ecco: fai tabula rasa di quel che conosci, perché in git quei comandi significano cose molto molto differenti.
+Per questo ti suggerisco di rifuggire sempre dalla tentazione di fare dei paralleli con SVN, perché sarebbero solo fuorvianti. Troverai comandi come add, checkout, commit, branch che ti sembrerà di conoscere. Ecco: fai tabula rasa di quel che conosci, perché in git quei comandi significano cose molto molto differenti.
+
+Per esempio: ci crederesti che questo repository ha 3 branch?
+
+xxx qui figura
+
+Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "sistema peer-to-peer di database chiave/valore su filesystem"?
+
+Per cui: dimentica quello che sai sui branch e sei changeset di SVN, e preparati a concetti completamente nuovi.
+Se siamo fortunati, li troverai molto più omogenei e potenti di quelli di SVN.
+
 
 == Setup ==
 
-Installa git.
+Installa git. xxx qui link.
 Poi configuralo perché ti riconosca
 
   git config --global user.name "Arialdo Martini"
   git config --global user.emal arialdomartini@gmail.com
 
-Se vuoi, installa anche un client grafico. Io ti suggerisco SmartGit, che è gratuito per progetti OpenSource.
-Sei pronto per usare git.
+Se vuoi, installa anche un client grafico. Io ti suggerisco SmartGit, che è gratuito per progetti OpenSource. Altrimenti appoggiati al tool "gitx" che trovi in bundle insieme all'installazione di git.
+
+Fantastico. Partiamo.
 
 
 
 == 3 differenze principali ==
 
-1. Non c'è un server: il repository è locale; git lavora al livello di nerdosità 4. La gran parte delle operazioni è locale e non richiede l'accesso alla rete. Anche per questo git è veloce a bestia.
-2. Snapshot: git lavora sempre con l'intero codice sorgente del progetto e non singole directory o singoli file; con git non c'è differenza tra committare nella root o in una subdirectory. Non esiste il concetto di committare o fare il checkout di un file o di una directory: git lavora sempre sull'intero snapshot del progetto.
-3. Blob, non diff: non memorizza diff ma l'intero file. Se in un file di 2 mega cambiassi un singolo carattere, git memorizzerebbe per intero la nuova versione del file. Questa è una differenza importante: SVN memorizza le differenze e, all'occorrenza, ricostruisce il file; git memorizza il file e, all'occorrenza, ricostruisce le differenze.
+Iniziamo con tre caratteristiche di git con le quali dovresti familiarizzare.
+
+1. Non c'è un server: il repository è locale. La gran parte delle operazioni è locale e non richiede l'accesso alla rete. Anche per questo troverai che git sia incredibilmente veloce.
+2. git lavora sempre con l'intero codice sorgente del progetto e non su singole directory o su singoli file; con git non c'è differenza tra committare nella directory principale o in una subdirectory. Non esiste il concetto di committare o fare il checkout di un file o di una singola directory. Per git il progetto è l'unità indivisibile di lavoro.
+3. git non memorizza i cambiamenti dei file: git salva sempre i file nella loro interezza. Se in un file di 2 mega modificassi un singolo carattere, git memorizzerebbe per intero la nuova versione del file. Questa è una differenza importante: SVN memorizza le differenze e, all'occorrenza, ricostruisce il file; git memorizza il file e, all'occorrenza, ricostruisce le differenze.
 
 
 == Livelli di nerdosità ==
 
-Sull'assenza di un server ho un po' mentito: come vedrai più avanti, git è un sistema peer-to-peer, e riesce ad interagire con dei server remoti.
-Ma resta, sostanzialmente, un sistema locale.
+Sull'assenza di un server ho un po' mentito: come ti ho già detto e come vedrai più avanti, git è un sistema peer-to-peer, e riesce ad interagire con dei server remoti.
+Nonostante questo resta, sostanzialmente, un sistema locale.
 
-Per capire quanto questo possa avvantaggiarti, pensa a questo: quando il codice sorgente di un progetto è ospitato su un computer remoto hai 4 modi per editare il codice
+Per capire quanto questo possa avvantaggiarti, prova a vederla così: quando il codice sorgente di un progetto è ospitato su un computer remoto hai 4 modi per editare il codice
 
-1. lasci tutto il codice sul computer remoto e vi accedi con ssh per editare i file
-2. trovi il modo di ottenere una copia locale del (singolo) file e lasci tutto il resto sul computer remoto
-3. ottieni una copia locale di un intero albero del filesystem  e lasci il resto della storia dei commit sul computer remoto
-4. ottenieni una copia locale dell'intero repository con tutti i suoi commit e lavori tutto in locale
+1. lasci tutto il codice sul computer remoto e vi accedi con ssh per editare un singolo file
+2. trovi il modo di ottenere una copia locale del singolo file per poterci lavorare più comodamente e lasci tutto il resto sul computer remoto
+3. trovi il modo di ottenere una copia locale di un intero albero del filesystem e lasci il resto della storia dei commit sul computer remoto
+4. ottenieni una copia locale dell'intero repository con tutta la storia del progetto e lavori tutto in locale
 
 Avrai notato due cose.
 La prima, che SVN e i sistemi di versionamento ai quali sei probabilmente abituato operano al livello 3.
-La seconda, che i 4 sistemi sono elencati in ordine di comodità: quando il materiale è conservato sul sistema remoto, normalmente, il tuo lavoro è più macchinoso e scomodo.
-git preferisce farti avere tutto a disposizione, sul tuo computer locale.
-Qualunque cosa tu faccia, git chiede normalmente di ottenere una copia completa di quel che è presente sul server remoto. Ma non preoccuparti: git è più veloce a ottenere l'intera storia del progetto di quanto SVN lo sia ad ottenere un singolo checkout.
+La seconda, che i 4 sistemi sono elencati in ordine di comodità: quando il materiale è conservato sul sistema remoto, normalmente, il tuo lavoro è più macchinoso e scomodo. SVN ti permette di fare il checkout di un'intera directory proprio perché così ti risulti più comodo passare da un file all'altro senza dover continuamente interagire col server remoto.
+Ecco: git è ancora più estremo; preferisce farti avere tutto a disposizione, sul tuo computer locale; non solo il singolo checkout, ma l'intera storia del progetto, dal primo all'ultimo commit.
+
+Qualunque cosa tu voglia fare, git chiede normalmente di ottenere una copia completa di quel che è presente sul server remoto. Ma non preoccuparti: git è più veloce a ottenere l'intera storia del progetto di quanto SVN lo sia ad ottenere un singolo checkout.
 
 
 = Modello di storage =
