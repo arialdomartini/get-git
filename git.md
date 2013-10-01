@@ -142,7 +142,7 @@ Come vedi, nel `blob storage` git ha memorizzato solo il contenuto del file, non
 Naturalmente, però, a noi il nome dei file e la loro posizione interessano eccome.
 Per questo, nel `blob storage`, git memorizza anche altri oggetti, chiamati `tree` che servono proprio a memorizzare il contenuto delle varie directory e i nomi dei file.
 
-Nel nostro caso, avremo 3 tree 
+Nel nostro caso, avremo 3 `tree` 
 
 ![Alt text](img/tree.png)
 
@@ -167,15 +167,15 @@ Stai dicendo a git:
 
 *memorizza nel repository, cioè nella storia del progetto, il commit che ti ho preparato a colpi di add*
 
-Il tuo repository adesso ha questo aspetto
+Il tuo repository, visto da SmartGit, adesso ha questo aspetto
 
 ![Alt text](img/first-commit.png)
 
 La riga col pallino che vedi sulla sinistra rappresenta l'oggetto `commit`. Nel pannello sulla destra, invece, puoi vedere la chiave del `commit`.
 
-In generale, a meno che non si debba parlare proprio del modello interno, non c'è una grande necessità di rappresentare tutta la struttura di `blob` e `tree` che costituisce un `commit`. Difatti, dopo il prossimo paragrafo inizieremo a rappresentare i `commit` come nella figura qui sopra: con un semplice pallino.
+In generale, a meno che non si debba parlare proprio del modello interno come stiamo facendo adesso, non c'è una grande necessità di rappresentare tutta la struttura di `blob` e `tree` che costituisce un `commit`. Difatti, dopo il prossimo paragrafo inizieremo a rappresentare i `commit` come nella figura qui sopra: con un semplice pallino.
 
-Già da adesso, comunque, dovrebbe risultarti più chiaro il fatto che dentro un commit ci sia l'intera fotografia del progetto e che, di fatto, un commit sia l'unità minima ed indivisibile di lavoro.
+Già da adesso, comunque, dovrebbe risultarti più chiaro il fatto che dentro un `commit` ci sia l'intera fotografia del progetto e che, di fatto, un `commit` sia l'unità minima ed indivisibile di lavoro.
 
 
 ## L' `index` o `staging area` 
@@ -195,7 +195,7 @@ Non è troppo complicato:
 
 Fisicamente, l'`index` non è molto diverso dal `repository`: entrambi conservano i dati nel `blob storage`, usando le strutture che hai visto prima.
 
-In questo momento, adesso che hai fatto il tuo primo `commit`, l'`index` conserva una copia del commit che hai appena fatto e si aspetta che tu lo modifichi.
+In questo momento, dopo aver appena completato il tuo primo `commit`, l'`index` conserva una copia del commit e si aspetta che tu lo modifichi.
 
 ![Alt tex1](img/index2.png)
 
@@ -234,13 +234,13 @@ Come prima: git aggiunge un nuovo `blob` object col contenuto del file e, contes
 Il contenitore di tutta questa struttura è un oggetto `commit` che git tiene posteggiato nella `staging area`.
 Questa struttura rappresenta esattamente la nuova situazione sul file system.
 
-Siccome però a noi interessa anche che git conservi anche la storia del nostro file system, non resta che memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dell'`index`) sia figlia della precedente situazione (il vecchio `commit`).
+Siccome però a noi interessa che git conservi anche la storia del nostro file system, ci sarà bisogno di memorizzare da qualche parte il fatto che questa nuova situazione (lo stato attuale dell'`index`) sia figlia della precedente situazione (il precedente `commit`).
 
-In effetti, git aggiunge automaticamente un'informazione al commit posteggiato nello Stage: un puntatore al commit dal quale si proviene
+In effetti, git aggiunge automaticamente un'informazione al commit posteggiato nella `staging area`: un puntatore al `commit` dal quale si proviene
 
 ![Alt tex1](img/index-and-first-commit.png)
 
-La freccia rappresenta il fatto che l'`index` sia figlio del `commit A`. È un semplice puntatore. Nessuna sopresa, se ci pensi; tutto git, dopo tutto, utilizza il solito, medesimo, semplicissimo modello: un database chiave/valore per conservare il dato, e l'utilizzo delle chiavi come puntatori tra un elemento e l'altro.
+La freccia rappresenta il fatto che l'`index` è figlio del `commit A`. È un semplice puntatore. Nessuna sopresa, se ci pensi; tutto git, dopo tutto, utilizza il solito, medesimo, semplicissimo modello: un database chiave/valore per conservare il dato, e l'utilizzo delle chiavi come puntatori tra un elemento e l'altro.
 
 
 Ok. Adesso committa
@@ -256,7 +256,7 @@ Dopo il commita nel database di git ci ritroviamo
 
 ![Alt tex1](img/index-and-second-commit.png)
 
-Una breve osservazione: spesso le interfacce grafiche di git omettono di visualizzare l'`index`. `gitk` la visualizza solo se ci sono modifiche da committare. Per esempio: il tuo repository in `gitk` viene visualizzato così
+Una breve osservazione: spesso le interfacce grafiche di git omettono di visualizzare l'`index`. `gitk`, per esempio, la visualizza solo se ci sono modifiche da committare. Il tuo repository in `gitk` viene visualizzato così
 
 ![Alt tex1](img/gitk.png)
 
@@ -266,8 +266,8 @@ Ricapitolando:
 1. git memorizza sempre i file nella loro interezza
 2. il `commit` è uno dei tanti oggetti conservati dentro il database chiave/valore di git. È un contenitore di tanti puntatori ad altri oggetti del database: i `tree` che rappresentano directory con nomi di file che a loro volta puntano ad altri `tree` (sottodirectory) o a dei `blob` (il contenuto dei file)
 3. ogni oggetto `commit` ha un puntatore al `commit` padre da cui deriva
-3. l'`index` è uno spazio di appoggio nel quale puoi costruire, a colpi di `git add`, il nuovo `commit`
-4. con `git commit` registri l'attuale `index` facendolo diventare il nuovo `commit`.
+4. l'`index` è uno spazio di appoggio nel quale puoi costruire, a colpi di `git add`, il nuovo `commit` 
+5. con `git add` aggiungi un file all'`index`; con `git commit` registri l'attuale `index` facendolo diventare il nuovo `commit`.  ![Alt tex1](img/index-add-commit.png)  
 
 
 
