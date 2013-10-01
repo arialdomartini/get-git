@@ -24,9 +24,12 @@ Per esempio: ci crederesti che questo repository ha 3 branch?
 
 ![Alt text](img/3-branches.png)
 
-Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer di database chiave/valore su filesystem*"?
+Sì: 3 branch, non 2.
+
+Oppure: ci crederesti che git, più che un sistema di versionamento del codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer di database chiave-valore su filesystem*"?
 
 Per cui: dimentica quello che sai sui branch e sei changeset di SVN, e preparati a concetti completamente nuovi.
+
 Se siamo fortunati, li troverai molto più omogenei e potenti di quelli di SVN.
 
 
@@ -89,12 +92,12 @@ Se vuoi evitare tanti grattacapi con git, il miglior suggerimento che tu possa s
 
 Mettiamo di avere 2 file vuori sul filesystem 
 
-  mkdir progetto
-  cd progetto
-  mkdir libs
-  touch libs/foo.txt
-  mkdir templates
-  touch templates/bar.txt
+> mkdir progetto<br/>
+> cd progetto<br/>
+> mkdir libs<br/>
+> touch libs/foo.txt<br/>
+> mkdir templates<br/>
+> touch templates/bar.txt<br/>
 
     /
     ├──libs
@@ -112,7 +115,7 @@ Aggiungi il primo file a git
 
 > git add libs/foo.txt
 
-Con questo comando, git ispeziona il contenuto del file e lo memorizza nel suo database chiave-valore, che è conservato su filesystem nella directory nascosta .git. Il database si chiama "blob storage"; git associa al file un identificativo unico, la chiave (banalmente: è lo sha1 del file). Il  valore è il contenuto (vuoto) del file. Nel blob storage ci sarà un oggetto Blob, univocamente identificabile dalla chiave, che rappresenta il contenuto del tuo file.
+Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo memorizza nel suo database chiave-valore, che è conservato su filesystem nella directory nascosta `.git`. Il database si chiama `blob storage`; git associa al file un identificativo unico, la chiave; banalmente, la chiave è lo sha1 del file; in questo caso la chiave è `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`. Il  valore è il contenuto (vuoto) del file. Nel blob storage ci sarà un oggetto `blob`, univocamente identificabile dalla chiave, che rappresenta il contenuto del tuo file.
 
   xxx qui disegno
 
