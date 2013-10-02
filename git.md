@@ -341,10 +341,10 @@ Proviamolo davvero:
 >  git add README.md<br/>
 >  git commit -m "Ecco il commit C"<br/>
 
-xxx qui disegno.
+![Alt tex1](img/repo1.png)
 
 
-Hai ottenuto una diramazione, senza il meccanismo della copia che utilizza SVN: il modello a chiave/valore e puntatori di git rende molto economico rappresentare una linea di sviluppo che diverge.
+Hai ottenuto una diramazione, senza il meccanismo della copia utilizzato da SVN: il modello a chiave/valore e puntatori di git rende molto economico rappresentare una linea di sviluppo che diverge.
 
 Due osservazioni importanti.
  
