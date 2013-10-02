@@ -440,8 +440,23 @@ Guardalo nel concreto. Torna a `master` ed apporta qualche modifica.
 
 ![Alt tex1](img/angular.png)
 
+Adesso c'è una certa equivalenza tra le linee di sviluppo e i `branch`. Nonostante questo, ti conviene sempre tenere mentalmente separati i due concetti, perché ti faciliterà molto la gestione della storia del tuo progetto
 
+Per esempio: non c'è dubbio che il `commit` col commento "*angular.js rocks*" sia contenuto nel `branch master`, giusto?<br/>
+Che dire però di `A` e di `B`? A quale `branch` appartengono?
 
+Occhio, perché questo è un altro dei concetti che procurano dei mal di testa agli utenti di SVN, e perfino a quelli di Mercurial. 
+
+In effetti, per rispondere a questo interrogativo gli utenti di git si pongono una domanda differente: 
+
+"*il `commit A` è raggiungibile da `master`?*"
+
+Cioè: percorrendo a ritroso la storia dei `commit` partendo da `master`, si passa da `A`?<br/>
+Se la risposta è *sì* si può afferamere che `master` contenga le modifiche introdotte da `A`.
+
+Una cosa che i fan di Mercurial e di SVN potrebbero trovare disorientante è che, siccome il `commit A` è raggiungibile anche da `dev`, appartiene *sia* a `master` che a `dev`.
+
+Pensaci su. Se tratti i `branch` come puntatori a `commit` dovrebbe sembrarti tutto molto lineare.
 
 * il merge
 * il cherrypick
