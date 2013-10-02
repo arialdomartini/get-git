@@ -353,18 +353,20 @@ La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i 
 La seconda è un po' sorprendente: le due linee di sviluppo divergenti che hai appena visto non sono `branch`. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
 
 
-# Obiettivo 3: creare un branch
+## Obiettivo 3: creare un branch
 
 Con il comando `checkout` hai imparato a spostarti da un `commit` all'altro
 
-![Alt tex1](img/repo1.png)
+
 
 Basta conoscere la chiave di ogni `commit`
 > git log --oneline --all<br/>
 >**deaddd3** Ecco il commit C<br/>
 >**2a17c43** Commit B, Il mio secondo commit<br/>
 >**56674fb** commit A, il mio primo commit<br/>
-><br/>
+
+![Alt tex1](img/repo1.png)
+
 >git checkout **56674fb** # vai al `commit A`<br/>
 >git checkout **2a17c43** # vai al `commit B`<br/>
 >git checkout **300c737** # vai al `commit C`<br/>
@@ -384,7 +386,7 @@ Vedi che c'è un'etichetta chiamata `master` proprio in corrispondenza del `comm
 
 > git checkout master
 
-Ora attento, perché siamo di nuovo in una di quelle occasioni dove la conoscenza di SVN fornisce solo dei grattacapi: queste etichette in git si chiamano `branch`. Ripetiti mille volte: un `branch` in git non è un ramo, è un'etichetta, un puntatore ad un commit, una variabile valorizzata alla chiave di un `commit`. Tanti comportamenti di git che appaiono assurdi e complicati diventano molto semplici se eviti di pensare ai `branch` di git come ad un equivalente dei branch di SVN.
+Ora attento, perché siamo di nuovo in una di quelle occasioni dove la conoscenza di SVN fornisce solo dei grattacapi: queste etichette in git si chiamano `branch`. Ripetiti mille volte: un `branch` in git non è un ramo, è un'etichetta, un puntatore ad un `commit`, una variabile che contiene la chiave di un `commit`. Tanti comportamenti di git che appaiono assurdi e complicati diventano molto semplici se eviti di pensare ai `branch` di git come ad un equivalente dei branch di SVN.
 
 Dovrebbe iniziare a risultarti chiaro perché molti dicano che "*i branch su git sono molto economici*": per forza! Sono delle semplicissime variabili!
 
@@ -401,8 +403,10 @@ Nota un'altra cosa: vedi che accanto a `master` SmartGit aggiunge un segnaposto 
 Potresti spostarti su `dev` con
 
 >git checkout dev
-a
+
 ![Alt tex1](img/branch-dev2.png)
+
+Il segnaposto si è spostato su `dev`.
 
 Di default git aggiunge sempre una variabile: il puntatore `HEAD`, che punta sempre all'elemento del `repository` sul quale ti trovi. Sostanzialmente, il segnaposto visualizzato da SmartGit indica la posizione di HEAD. Altri editor grafici utilizzano differenti rappresentazioni. `gitk`, per esempio, visualizza in grassetto il `branch` sul quale ti trovi.<br/>
 Per sapere su quale `branch` ti trovi, dalla linea di comando, ti basta eseguire
@@ -415,9 +419,9 @@ L'asterisco suggerisce che `HEAD` adesso stia puntanto a `dev`.
 
 Non dovresti essere troppo sorpreso nel verificare che, nonostante tu abbia cambiato `branch` da `master` a `dev` il tuo `file system` non sia cambiato di una virgola: in effetti, sia `dev` che `master` stanno puntando allo stesso identico `commit`.
 
-Non di meno, ti domanderai probabilmente a cosa mai possa servire passare da un `branch` all'altro, se non sortisce alcun effetto visibile.
+Non di meno, ti domanderai probabilmente a cosa mai possa servire passare da un `branch` all'altro, se non sortisce alcun effetto sul progetto.
 
-Il fatto è che quando esegui il `checkout` di `branch`, in qualche modo ti *agganci* all'etichetta; l'etichetta del `branch`, in altre parole, inizierà a seguirti, `commit` dopo `commit`.
+Il fatto è che quando esegui il `checkout` di un `branch`, in qualche modo ti *agganci* all'etichetta; l'etichetta del `branch`, in altre parole, inizierà a seguirti, `commit` dopo `commit`.
 
 Guarda: adesso sei su `dev`. Apporta una modifica qualsiasi e committa
 
@@ -440,6 +444,8 @@ Guardalo nel concreto. Torna a `master` ed apporta qualche modifica.
 
 ![Alt tex1](img/angular.png)
 
+Come c'era da aspettarselo, l'etichetta `master` è avanzata di un posto, per puntare al tuo nuovo `commit`.
+
 Adesso c'è una certa equivalenza tra le linee di sviluppo e i `branch`. Nonostante questo, ti conviene sempre tenere mentalmente separati i due concetti, perché ti faciliterà molto la gestione della storia del tuo progetto
 
 Per esempio: non c'è dubbio che il `commit` col commento "*angular.js rocks*" sia contenuto nel `branch master`, giusto?<br/>
@@ -457,6 +463,9 @@ Se la risposta è *sì* si può afferamere che `master` contenga le modifiche in
 Una cosa che i fan di Mercurial e di SVN potrebbero trovare disorientante è che, siccome il `commit A` è raggiungibile anche da `dev`, appartiene *sia* a `master` che a `dev`.
 
 Pensaci su. Se tratti i `branch` come puntatori a `commit` dovrebbe sembrarti tutto molto lineare.
+
+
+# Obiettivo 4: fare i giocolieri con i `commit`
 
 * il merge
 * il cherrypick
