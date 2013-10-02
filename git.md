@@ -438,7 +438,7 @@ Guardalo nel concreto. Torna a `master` ed apporta qualche modifica.
 >git add angular.js<br/>
 >git commit -m "angular.js rocks" 
 
-xxx disegno
+![Alt tex1](img/angular.png)
 
 
 
