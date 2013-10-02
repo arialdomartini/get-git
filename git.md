@@ -620,7 +620,7 @@ Infatti, molti raccontano che git sia capace di riscrivere la storia e che quest
 
 Voglio farti vedere un'altra magia del `cherry-pick`, per dissipare il velo di mistero di cui è inspiegabilmente circondato il comando `rebase`.
 
-Riprendi il tuo `repository` e torna a sviluppare i tuoi css sul ramo `dev`
+Riprendi il tuo `repository`. Mettiamo che ti vada di proseguire a sviluppare i tuoi css, per cui farai un nuovo commit su `dev`
 
 ![Alt tex1](img/rebase-1.png)
 
@@ -631,30 +631,37 @@ Riprendi il tuo `repository` e torna a sviluppare i tuoi css sul ramo `dev`
 
 ![Alt tex1](img/rebase-2.png)
 
-Ottimo. I tuoi css sono perfetti. Peccato che il ramo `dev` sia rimasto un po' indietro rispetto alla `feature`. Del resto, cosa potevi fare? Quando hai staccato il ramo `dev` il ramo `feature` ancora non esisteva.
+Ottimo. I tuoi css sono perfetti. Peccato che il ramo `dev` sia rimasto un po' indietro rispetto a `master`. Del resto, cosa potevi farci? `master` è andato avanti e `dev` è rimasto lì dove lo avevi creato.
 
-Certo, se esistesse il modo di riapplicare le modifiche dei css al ramo `feature`… Cioè, se si potesse spostare il ramo dev *sopra* feature…
+Certo, se si potesse spostare il ramo `dev` *sopra* `master`…
 
-Ti torna in mente `cherry-pick`. Dai, è un caso come quello precedente: solo che invece di viaggiare nel passato devi avere un po' di fantasia e immaginare di viaggiare nel futuro. Riscrivi la storia facendo come se i commit di `dev` siano stati scritti *dopo* la creazione di `feature`. 
+Non ti torna in mente `cherry-pick`? È un caso come quello precedente: solo che invece di viaggiare nel passato devi avere un po' di fantasia e immaginare di viaggiare nel futuro. Devi riportare i `commit` di `dev` (scritti nel passato) sull'ultimo commit di `master`, che relativamente a `dev` è il futuro.
 
-Vai su `feature` e spostaci il ramo `dev`. Come sempre, avrai bisogno dei valori delle chiavi dei 2 commit di dev
+Cioè: riscrivi la storia facendo come se i commit di `dev` siano stati scritti *dopo* i `commit` di `master`. 
 
->git log dev --oneline<br/>
->**eaca9a5** i link sono rossi<br/>
->**6bd333b** Adesso ho anche il css<br/>
->84b2d68 Commit B, il mio secondo commit<br/>
->eafbb9f commit A, il mio primo commit<br/>
+Ok. Si tratta di spostare 2 `commit`. A colpi di `cherry-pick` sposterai i due commit del ramo blue sopra `master`.
 
->git checkout feature<br/>
->git branch -f dev<br/>
->git checkout dev
+Il risultato sarà questo:
 
 ![Alt tex1](img/rebase-3.png)
 
-Ok. Adesso `dev` è insieme a `feature`. Se ci riporti i 2 `commit` originari, farai come se questi fossero stati creati *dopo* la creazione di `feature`.
+Confrontalo con la situazione di partenza
 
->git cherry-pick 6bd333b<br/>
->git cherry-pick eaca9a5<br/>
+![Alt tex1](img/rebase-2.png)
+
+Vedi cosa è successo? Il ramo `dev`, è stato staccato ed è stato impiantato sopra master.
+
+Uno shortcut per evitare di spostare un `commit` alla volta da un ramo all'altro è il comando `git-rebase`.
+
+Applicato al `repository`
+
+![Alt tex1](img/rebase-2.png)
+
+> git rebase master
+
+dice a git: "sposta il ramo corrente su una nuova base, su `master`".<br/>
+Sotto sotto, git non fa altro che una serie di `cherry-pick`: prende tutti i `commit` di `dev` che `master` ancora non ha e ce li applica in ordine.
+
 
 
 * il merge
