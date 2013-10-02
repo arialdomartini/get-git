@@ -348,15 +348,14 @@ Hai ottenuto una diramazione, senza il meccanismo della copia utilizzato da SVN:
 
 Due osservazioni importanti.
  
-La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i file.<br/>
-`A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN qui non valgono.
+La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i file: `A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN qui non valgono.
 
 La seconda è un po' sorprendente: le due linee di sviluppo divergenti che hai appena visto non sono `branch`. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
 
 
 # Obiettivo 3: creare un branch
 
-Con il comando checkout hai imparato a spostarti da un commit all'altro
+Con il comando `checkout` hai imparato a spostarti da un `commit` all'altro
 
 ![Alt tex1](img/repo1.png)
 
@@ -370,7 +369,7 @@ Basta conoscere la chiave di ogni `commit`
 >git checkout **2a17c43** # vai al `commit B`<br/>
 >git checkout **300c737** # vai al `commit C`<br/>
 
-Sì, però, bisogna ammetterlo: gestire i commit A, B e C dovendoli chiamare `56674fb`, `2a17c43` e `deaddd3` è di una scomodità unica.
+Sì, però, bisogna ammetterlo: gestire i `commit` `A`, `B` e `C` dovendoli chiamare `56674fb`, `2a17c43` e `deaddd3` è di una scomodità unica.
 
 git risolve il problema facendo quello che farebbe ogni programmatore di buon senso: dal momento che quei numeri sono dei puntatori ad oggetti, git permette di salvarli in delle variabili.
 
@@ -381,13 +380,13 @@ Lo puoi verificare chiaramente dalla rappresentazione grafica:
 ![Alt tex1](img/repo2.png)
 
 
-Vedi che c'è un'etichetta chiamata `master` proprio in corrispondenza del `commit B`? Ecco: quell'etichetta ti permette di andare sul `commit B` scrivendo:
+Vedi che c'è un'etichetta chiamata `master` proprio in corrispondenza del `commit B`? Ecco: quell'etichetta ti permette di andare sul quel `commit` scrivendo:
 
 > git checkout master
 
-Ora attento, perché siamo di nuovo in una di quelle occasioni dove la conoscenza di SVN fornisce solo dei grattacapi: queste etichette in git si chiamano `branch`. Ripetiti mille volte: un branch in git non è un ramo, è un'etichetta, un puntatore ad un commit, una variabile valorizzata alla chiave di un commit. Tanti comportamenti di git che appaiono assurdi e complicati diventano molto semplici se eviti di pensare ai branch di git come ad un equivalente dei branch di SVN.
+Ora attento, perché siamo di nuovo in una di quelle occasioni dove la conoscenza di SVN fornisce solo dei grattacapi: queste etichette in git si chiamano `branch`. Ripetiti mille volte: un `branch` in git non è un ramo, è un'etichetta, un puntatore ad un commit, una variabile valorizzata alla chiave di un `commit`. Tanti comportamenti di git che appaiono assurdi e complicati diventano molto semplici se eviti di pensare ai `branch` di git come ad un equivalente dei branch di SVN.
 
-Dovrebbe iniziare a risultarti chiaro perché molti dicano che "*i branch su git sono molto economici*": per forza! Sono delle semplicissime variabili.
+Dovrebbe iniziare a risultarti chiaro perché molti dicano che "*i branch su git sono molto economici*": per forza! Sono delle semplicissime variabili!
 
 Divertiti ad aggiungerne altre
 
@@ -397,12 +396,12 @@ Divertiti ad aggiungerne altre
 
 Voilà: hai aggiunto un `branch`.
 
-Nota un'altra cosa: vedi che accanto al branch `master` SmartGit aggiunge un segnaposto triangolare verde? Quel simbolo indica che in questo momento sei *agganciato* al `branch` `master`, perché il tuo ultimo comando di spostamento è stato `git checkout master`.
+Nota un'altra cosa: vedi che accanto a `master` SmartGit aggiunge un segnaposto triangolare verde? Quel simbolo indica che in questo momento sei *agganciato* al `branch` `master`, perché il tuo ultimo comando di spostamento è stato `git checkout master`.
 
 Potresti spostarti su `dev` con
 
 >git checkout dev
-
+a
 ![Alt tex1](img/branch-dev2.png)
 
 Di default git aggiunge sempre una variabile: il puntatore `HEAD`, che punta sempre all'elemento del `repository` sul quale ti trovi. Sostanzialmente, il segnaposto visualizzato da SmartGit indica la posizione di HEAD. Altri editor grafici utilizzano differenti rappresentazioni. `gitk`, per esempio, visualizza in grassetto il `branch` sul quale ti trovi.<br/>
@@ -418,7 +417,7 @@ Non dovresti essere troppo sorpreso nel verificare che, nonostante tu abbia camb
 
 Non di meno, ti domanderai probabilmente a cosa mai possa servire passare da un `branch` all'altro, se non sortisce alcun effetto visibile.
 
-Il fatto è che quando esegui il `checkout` di `branch`, in qualche modo ti ci *agganci*; l'etichetta del `branch`, in altre parole, inizierà a seguirti, `commit` dopo `commit`.
+Il fatto è che quando esegui il `checkout` di `branch`, in qualche modo ti *agganci* all'etichetta; l'etichetta del `branch`, in altre parole, inizierà a seguirti, `commit` dopo `commit`.
 
 Guarda: adesso sei su `dev`. Apporta una modifica qualsiasi e committa
 
@@ -429,6 +428,17 @@ Guarda: adesso sei su `dev`. Apporta una modifica qualsiasi e committa
 ![Alt tex1](img/branch-dev3.png)
 
 Visto cosa è successo? L'etichetta `dev` si è spostata in avanti e si è agganciata al tuo nuovo `commit`.
+
+Ti domanderai anche perché mai git chiami quelle etichette `branch`. Il motivo è che, anche se le linee di sviluppo che divergono in git non sono `branch`, i `branch` vengono normalmente usati proprio per dar loro un nome.
+
+Guardalo nel concreto. Torna a `master` ed apporta qualche modifica.
+
+>git checkout master<br/>
+>touch jquery.js<br/>
+>git add angular.js<br/>
+>git commit -m "angular.js rocks" 
+
+xxx disegno
 
 
 
