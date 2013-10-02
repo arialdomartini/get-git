@@ -467,11 +467,32 @@ Pensaci su. Se tratti i `branch` come puntatori a `commit` dovrebbe sembrarti tu
 
 # Obiettivo 4: fare i giocolieri con i `commit`
 
+Come hai visto, git riesce a conservare la storia delle modifiche dei file senza mai salvarne le differenze.<br/>
+All'inizio della guida avevi visto che
+
+* SVN memorizza la collezione delle varie diff applicate nel tempo ai file; all'occorrenza ricostruisce lo stato attuale;
+* git memorizza i file così come sono, nella loro interezza; all'occorrenza ne calcola le diff.
+
+Per cui, quando nel `repository`
+
+![Alt tex1](img/angular.png)
+
+fai riferimento al `commit` `dev`, sai di fare riferimento alla "*situazione dell'intero progetto, così come è stata fotografata al momento di quel commit*".
+
+Se la stessa situazione fosse su SVN diresti che quel commit "*contiene tutte le modifiche apportate ai file, partendo dal commit immediatamente precedente*".  
+
+
+![Alt tex1](img/angular-highlighted.png)
+
+
 * il merge
 * il cherrypick
 
 * rebase
-* eliminare un commit sbagliato
+* eliminare un c
+* 
+* 
+* ommit sbagliato
 
 * p2p
 * fetch
