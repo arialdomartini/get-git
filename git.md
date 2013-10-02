@@ -390,7 +390,7 @@ Quando crei un'etichetta, se non specifichi un valore, git userà la chiave del 
 
 L'eliminazine di una variabile è ugualmente banale:
 
->git branch -d teddy
+>git branch -d teddy<br/>
 >git branch -d piccio
 
 
@@ -456,7 +456,7 @@ Ti domanderai anche perché mai git chiami quelle etichette `branch`. Il motivo 
 Guardalo nel concreto. Torna a `master` ed apporta qualche modifica.
 
 >git checkout master<br/>
->touch jquery.js<br/>
+>touch angular.js<br/>
 >git add angular.js<br/>
 >git commit -m "angular.js rocks" 
 
@@ -527,14 +527,24 @@ Bene. Tieni a mente questo modello. Adesso ti mostrerò uno dei comandi più fol
 
 Vediamolo subito con un esempio.
 
+> git checkout dev<br/>
+> git checkout -b experiment&nbsp;&nbsp;&nbsp;# esegue sia branch che checkout<br/>
+> touch experiment<br/>
+> git add experiment<br/>
+> git commit -m "un commit con un esperimento"<br/>
+
+![Alt tex1](img/cherry-pick-1.png)
+
+Ci interesserebbe applicare l'esperimento anche al ramo `master`
+
 > git checkout master<br/>
-> git cherry-pick dev
+> git cherry-pick experiment
 
-![Alt tex1](img/cherry-pick.png)
+![Alt tex1](img/cherry-pick-2.png)
 
-git ha applicato il cambiamento introdotto dal commit `dev` (la linea evidenziata in rosso) al commit `master`, e poi ha fatto un `commit`. `cherry-pick` "coglie" il `commit` che gli indichi e lo applica sul `commit` dove ti trovi.
+git ha applicato il cambiamento introdotto dal commit `dev` (la linea evidenziata in rosso xxx) al commit `master`, e poi ha fatto un `commit`. `cherry-pick` "coglie" il `commit` che gli indichi e lo applica sul `commit` dove ti trovi.
 
-Se guardi sul `file system`, infatti, ti accorgi che git ha aggiunto il file `style.css`
+Se guardi sul `file system`, infatti, ti accorgi che git ha aggiunto il file `style.css` xxxx
 
 Inizi a immaginare che giocolerie potrai fare con questo strumento?<br/>
 Voglio darti qualche spunto.
@@ -576,7 +586,7 @@ Inizia a tonare indietro nel tempo. Riposizionati su `master`
 
 e sposta il `feature` indietro, nella posizione dove lo avevi creato prima di fare i `commit`
 
->git branch --force feature-1 
+>git branch --force feature 
 
 ![Alt tex1](img/bug-2.png)
 
@@ -587,7 +597,7 @@ Non ti resta che prenderti, con `cherry-pick` i soli `commit` che ti interessano
 
 ![Alt tex1](img/bug-3.png)
 
->git cherry-pick 8f41bb8&nbsp;&nbsp;&nbsp;# prendo ""altra feature"
+>git cherry-pick 8f41bb8&nbsp;&nbsp;&nbsp;# prendo "altra feature"
 
 ![Alt tex1](img/bug-4.png)
 
@@ -606,6 +616,45 @@ Urca! L'impressione è che git abbia riscritto la storia eliminando un `commit` 
 Infatti, molti raccontano che git sia capace di riscrivere la storia e che questo suo comportamento sia estremamente pericoloso. Ecco: tu hai visto che non è così; git è estremamente conservativo e quando ti permette di manipolare i `commit` non fa altro che agire *in append*, costruendo *nuovi* rami. 
 
 
+### Spostare un ramo di sviluppo
+
+Voglio farti vedere un'altra magia del `cherry-pick`, per dissipare il velo di mistero di cui è inspiegabilmente circondato il comando `rebase`.
+
+Riprendi il tuo `repository` e torna a sviluppare i tuoi css sul ramo `dev`
+
+![Alt tex1](img/rebase-1.png)
+
+>git checkout dev<br/>
+>echo "a { color:red; }" >> style.css<br/>
+>git commit -am "i link sono rossi"
+>&nbsp;&nbsp;&nbsp;# commit -am è uno shortcut per git add + commit
+
+![Alt tex1](img/rebase-2.png)
+
+Ottimo. I tuoi css sono perfetti. Peccato che il ramo `dev` sia rimasto un po' indietro rispetto alla `feature`. Del resto, cosa potevi fare? Quando hai staccato il ramo `dev` il ramo `feature` ancora non esisteva.
+
+Certo, se esistesse il modo di riapplicare le modifiche dei css al ramo `feature`… Cioè, se si potesse spostare il ramo dev *sopra* feature…
+
+Ti torna in mente `cherry-pick`. Dai, è un caso come quello precedente: solo che invece di viaggiare nel passato devi avere un po' di fantasia e immaginare di viaggiare nel futuro. Riscrivi la storia facendo come se i commit di `dev` siano stati scritti *dopo* la creazione di `feature`. 
+
+Vai su `feature` e spostaci il ramo `dev`. Come sempre, avrai bisogno dei valori delle chiavi dei 2 commit di dev
+
+>git log dev --oneline<br/>
+>**eaca9a5** i link sono rossi<br/>
+>**6bd333b** Adesso ho anche il css<br/>
+>84b2d68 Commit B, il mio secondo commit<br/>
+>eafbb9f commit A, il mio primo commit<br/>
+
+>git checkout feature<br/>
+>git branch -f dev<br/>
+>git checkout dev
+
+![Alt tex1](img/rebase-3.png)
+
+Ok. Adesso `dev` è insieme a `feature`. Se ci riporti i 2 `commit` originari, farai come se questi fossero stati creati *dopo* la creazione di `feature`.
+
+>git cherry-pick 6bd333b<br/>
+>git cherry-pick eaca9a5<br/>
 
 
 * il merge
