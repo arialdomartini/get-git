@@ -369,20 +369,38 @@ Basta conoscere la chiave di ogni `commit`
 
 >git checkout **56674fb** # vai al `commit A`<br/>
 >git checkout **2a17c43** # vai al `commit B`<br/>
->git checkout **300c737** # vai al `commit C`<br/>
+>git checkout **deaddd3** # vai al `commit C`<br/>
 
 Sì, però, bisogna ammetterlo: gestire i `commit` `A`, `B` e `C` dovendoli chiamare `56674fb`, `2a17c43` e `deaddd3` è di una scomodità unica.
 
-git risolve il problema facendo quello che farebbe ogni programmatore di buon senso: dal momento che quei numeri sono dei puntatori ad oggetti, git permette di salvarli in delle variabili.
+git risolve il problema facendo quello che farebbe ogni programmatore di buon senso: dal momento che quei numeri sono dei puntatori ad oggetti, git permette di salvarli in delle variabili. Assegnare un valore ad una variabile è semplice:
 
-git crea di default alcune di queste variabili. Per esempio, in questo momento la variabile `master` contiene il puntatore a `B`.
+>git branch bob 56674fb
 
-Lo puoi verificare chiaramente dalla rappresentazione grafica:
+![Alt tex1](img/bob.png)
+
+Vedi l'etichetta `bob` proprio in corrispondenza del `commit B`? Sta ad indicare che l'etichetta `bob` punta a quel `commit`.
+
+Quando crei un'etichetta, se non specifichi un valore, git userà la chiave del `commit` sul quale ti trovi al momento
+
+>git checkout 300c737<br/>
+>git branch piccio 
+
+![Alt tex1](img/piccio.png)
+
+L'eliminazine di una variabile è ugualmente banale:
+
+>git branch -d teddy
+>git branch -d piccio
+
+
+Avrai notato che di default git crea alcune di queste variabili. Per esempio, nelle figure sopra appariva anche la variabile `master`, puntata su `B`.
+
 
 ![Alt tex1](img/repo2.png)
 
 
-Vedi che c'è un'etichetta chiamata `master` proprio in corrispondenza del `commit B`? Ecco: quell'etichetta ti permette di andare sul quel `commit` scrivendo:
+L'etichetta `master` ti permette di andare sul quel `commit` scrivendo:
 
 > git checkout master
 
@@ -408,7 +426,7 @@ Potresti spostarti su `dev` con
 
 Il segnaposto si è spostato su `dev`.
 
-Di default git aggiunge sempre una variabile: il puntatore `HEAD`, che punta sempre all'elemento del `repository` sul quale ti trovi. Sostanzialmente, il segnaposto visualizzato da SmartGit indica la posizione di HEAD. Altri editor grafici utilizzano differenti rappresentazioni. `gitk`, per esempio, visualizza in grassetto il `branch` sul quale ti trovi.<br/>
+Di default git aggiunge sempre anche un'altra variabile: il puntatore `HEAD`, che punta sempre all'elemento del `repository` sul quale ti trovi. Sostanzialmente, il segnaposto visualizzato da SmartGit indica la posizione di HEAD. Altri editor grafici utilizzano differenti rappresentazioni. `gitk`, per esempio, visualizza in grassetto il `branch` sul quale ti trovi.<br/>
 Per sapere su quale `branch` ti trovi, dalla linea di comando, ti basta eseguire
 
 >git branch<br/>
@@ -468,21 +486,126 @@ Pensaci su. Se tratti i `branch` come puntatori a `commit` dovrebbe sembrarti tu
 # Obiettivo 4: fare i giocolieri con i `commit`
 
 Come hai visto, git riesce a conservare la storia delle modifiche dei file senza mai salvarne le differenze.<br/>
-All'inizio della guida avevi visto che
+All'inizio della guida ti avevo anticipato il comportamento diametralmente opposto di SVN e di git, su questo punto:
 
-* SVN memorizza la collezione delle varie diff applicate nel tempo ai file; all'occorrenza ricostruisce lo stato attuale;
-* git memorizza i file così come sono, nella loro interezza; all'occorrenza ne calcola le diff.
+* SVN memorizza le diff e, all'occorrenza, ricostruisce lo stato attuale;
+* git memorizza lo stato attuale e, all'occorrenza, calcola le diff.
 
-Per cui, quando nel `repository`
+Per cui, quando nel `repository` fai riferimento al `commit` `dev`, intendi "*l'intero progetto, così come è stato fotografato al momento di quel commit*".
+
 
 ![Alt tex1](img/angular.png)
 
-fai riferimento al `commit` `dev`, sai di fare riferimento alla "*situazione dell'intero progetto, così come è stata fotografata al momento di quel commit*".
 
-Se la stessa situazione fosse su SVN diresti che quel commit "*contiene tutte le modifiche apportate ai file, partendo dal commit immediatamente precedente*".  
+Se la stessa situazione fosse su SVN diresti che il commit `dev` "*contiene tutte le modifiche apportate ai file, partendo dal commit immediatamente precedente*".  
 
+Per git, calcolare le modifiche apportate ai file da un `commit` all'altro non è poi difficile. Per esempio, puoi ricavarle con
+
+> git diff dev master
+
+Con `git diff FROM TO` chiedi a git "*qual è l'elenco delle modifiche ai file che devo applicare a `FROM` perché il progetto diventi identico a quello di `TO`*"? 
+
+
+Con un po' di immaginazione puoi pensare che le linee tra i commit rappresentino le modifiche che tu hai apportato ai file e alle directory per ottenere un `commit`.<br/>
+Per esempio, qui in rosso ho evidenziato la linea che rappresenta quel che hai fatto quando sei partito da `B` e hai creato il commit `dev`.
 
 ![Alt tex1](img/angular-highlighted.png)
+
+Se rammenti, avevi fatto 
+
+>touch style.css<br/>
+>git add style.css<br/>
+>git commit -m "Adesso ho anche il css"<br/>
+
+
+Quindi, potresti dire che quella linea rossa rappresenti l'aggiunta del file `style.css`.
+
+
+Bene. Tieni a mente questo modello. Adesso ti mostrerò uno dei comandi più folli e versatili di git: `cherry-pick`.
+
+`cherry-pick` applica i cambiamenti introdotti da un commit sopra un altro commit.
+
+Vediamolo subito con un esempio.
+
+> git checkout master<br/>
+> git cherry-pick dev
+
+![Alt tex1](img/cherry-pick.png)
+
+git ha applicato il cambiamento introdotto dal commit `dev` (la linea evidenziata in rosso) al commit `master`, e poi ha fatto un `commit`. `cherry-pick` "coglie" il `commit` che gli indichi e lo applica sul `commit` dove ti trovi.
+
+Se guardi sul `file system`, infatti, ti accorgi che git ha aggiunto il file `style.css`
+
+Inizi a immaginare che giocolerie potrai fare con questo strumento?<br/>
+Voglio darti qualche spunto.
+
+### Correggere un bug a metà di un ramo
+
+Proviamo a creare una linea di sviluppo con 3 `commit`
+
+
+> git checkout -b feature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# scorciatoria per fare branch + checkout<br/>
+> touch feature<br/>
+> git add feature<br/>
+> git commit -m "feature"<br/>
+><br/>
+> touch orribile-baco<br/>
+> git add orribile-baco<br/>
+> git commit -m "orrore e raccapriccio"<br/>
+><br/>
+> touch altra-feature<br/>
+> git add altra-feature<br/>
+> git commit -m "altra feature"<br/>
+
+
+![Alt tex1](img/bug-1.png)
+
+Oh, no! il secondo `commit` è stato un errore madornale!  Ah, se solo si potesse riscrivere la storia ed evitarlo!
+
+L'idea è di tornare indietro nel tempo, su `master`, ed usare `cherry-pick` per riapplicarvi le modifiche, avendo cura però di non applicare le modifiche introdotte da `orrore e raccapriccio`. Questo è uno dei casi in cui ti sarà necessario conoscere i valori delle chiavi:
+
+>git log master..feature --oneline<br/>
+>**8f41bb8** altra feature<br/>
+>**ec0e615** orrore e raccapriccio<br/>
+>**b5041f3** feature<br/>
+
+
+Inizia a tonare indietro nel tempo. Riposizionati su `master`
+
+>git checkout master<br/>
+
+e sposta il `feature` indietro, nella posizione dove lo avevi creato prima di fare i `commit`
+
+>git branch --force feature-1 
+
+![Alt tex1](img/bug-2.png)
+
+Non ti resta che prenderti, con `cherry-pick` i soli `commit` che ti interessano
+
+>git checkout feature<br/>
+>git cherry-pick b5041f3&nbsp;&nbsp;&nbsp;# prendo "feature"
+
+![Alt tex1](img/bug-3.png)
+
+>git cherry-pick 8f41bb8&nbsp;&nbsp;&nbsp;# prendo ""altra feature"
+
+![Alt tex1](img/bug-4.png)
+
+Et voilà. Hai ricostruiro il ramo di sviluppo saltando il `commit` sbagliato. Resta un ramo orfano, cioè, senza alcun `branch`: verrà cancellato prima o poi dal garbage collector di git. I rami orfani di solito non vengono mostrati dagli editor grafici per cui, a cose normali, dovresti vedere questa situazione:
+
+Partivi da 
+
+![Alt tex1](img/bug-1.png)
+
+e finisci con
+
+![Alt tex1](img/bug-5.png)
+
+Urca! L'impressione è che git abbia riscritto la storia eliminando un `commit` a metà di un ramo, vero?<br/>
+ 
+Infatti, molti raccontano che git sia capace di riscrivere la storia e che questo suo comportamento sia estremamente pericoloso. Ecco: tu hai visto che non è così; git è estremamente conservativo e quando ti permette di manipolare i `commit` non fa altro che agire *in append*, costruendo *nuovi* rami. 
+
+
 
 
 * il merge
