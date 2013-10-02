@@ -299,17 +299,17 @@ Già: ma qual è la chiave del `commit A`?
 Lo scopriamo col comando `git log` che mostra tutto quello che abbiamo fatto fin'ora
 
 > git log --oneline<br/>
->**06e3cdc** Commit B, Il mio secondo commit<br/>
->**b216689** commit A, il mio primo commit<br/>
+>**2a17c43** Commit B, Il mio secondo commit<br/>
+>**56674fb** commit A, il mio primo commit<br/>
 
+Occhio! Siccome nel commit vengono memorizzati anche la data e l'autore, le tue chiavi risulteranno diverse dalle mie.
 
-
-La chiave del `commit A` è `b216689`. Uhm, un po' scomodo come sistema.<br/>
+La chiave del `commit A` è `56674fb`. Uhm, un po' scomodo come sistema.<br/>
 Comunque: torniamo indietro al passato, al momento del commit A
 
 > ls<br/>
 > **doh.html&nbsp;&nbsp;&nbsp;&nbsp;libs&nbsp;&nbsp;&nbsp;&nbsp;templates**<br/>
-> git checkout b216689<br/>
+> git checkout 56674fb<br/>
 > ls<br/>
 > **libs&nbsp;&nbsp;&nbsp;&nbsp;templates**<br/>
 
@@ -358,50 +358,80 @@ La seconda è un po' sorprendente: le due linee di sviluppo divergenti che hai a
 
 Con il comando checkout hai imparato a spostarti da un commit all'altro
 
-  git log --graph --all --oneline
+![Alt tex1](img/repo1.png)
 
-   * b8b1146 creo un branch
-   | * 00c6637 cambiamento B
-   |/
-   * 621f0a8 inizio
+Basta conoscere la chiave di ogni `commit`
+> git log --oneline --all<br/>
+>**deaddd3** Ecco il commit C<br/>
+>**2a17c43** Commit B, Il mio secondo commit<br/>
+>**56674fb** commit A, il mio primo commit<br/>
+><br/>
+>git checkout **56674fb** # vai al `commit A`<br/>
+>git checkout **2a17c43** # vai al `commit B`<br/>
+>git checkout **300c737** # vai al `commit C`<br/>
 
-   git checkout 621f0a8
-   git checkout b8b1146 
-   git checkout 00c6637
+Sì, però, bisogna ammetterlo: gestire i commit A, B e C dovendoli chiamare `56674fb`, `2a17c43` e `deaddd3` è di una scomodità unica.
 
-Sì, però, ammettiamolo: gestire i commit A, B e C dovendoli chiamare b8b1146, 00c6637 e 621f0a8 è di una scomodità unica.
-Per fortuna git fornisce uno strumento molto comodo.
-Il modello è sempre lo stesso: un puntatore ad un elemento del database chiave/valore.
-Immagina di avere a disposizione una variabile, con un certo nome, nella quale conservare la chiave di un certo commit.
-Praticamente, avresti qualcosa di simile ad un'etichetta da applicare ad un commit per poterlo chiamare con un nome invece che con la sua chiave
+git risolve il problema facendo quello che farebbe ogni programmatore di buon senso: dal momento che quei numeri sono dei puntatori ad oggetti, git permette di salvarli in delle variabili.
 
-   * b8b1146 creo un branch
-   | * 00c6637 cambiamento B  <== master
-   |/
-   * 621f0a8 inizio
+git crea di default alcune di queste variabili. Per esempio, in questo momento la variabile `master` contiene il puntatore a `B`.
 
-git aggiunge da solo 2 etichette: HEAD e master.
-HEAD è l'etichetta che punta al commit corrente, quello che si sta visualizzando nel proprio file system.
-L'etichetta "master", invece, è aggiunta automaticamente da git alla creazione del repository.
-In questo momento "master" punta al commit 00c6637
+Lo puoi verificare chiaramente dalla rappresentazione grafica:
 
-A---B master
+![Alt tex1](img/repo2.png)
 
 
-Per cui, per andare sul commit 00c6637 puoi eseguire
+Vedi che c'è un'etichetta chiamata `master` proprio in corrispondenza del `commit B`? Ecco: quell'etichetta ti permette di andare sul `commit B` scrivendo:
 
-  git checkout master
+> git checkout master
+
+Ora attento, perché siamo di nuovo in una di quelle occasioni dove la conoscenza di SVN fornisce solo dei grattacapi: queste etichette in git si chiamano `branch`. Ripetiti mille volte: un branch in git non è un ramo, è un'etichetta, un puntatore ad un commit, una variabile valorizzata alla chiave di un commit. Tanti comportamenti di git che appaiono assurdi e complicati diventano molto semplici se eviti di pensare ai branch di git come ad un equivalente dei branch di SVN.
+
+Dovrebbe iniziare a risultarti chiaro perché molti dicano che "*i branch su git sono molto economici*": per forza! Sono delle semplicissime variabili.
+
+Divertiti ad aggiungerne altre
+
+>git branch dev
+
+![Alt tex1](img/branch-dev.png)
+
+Voilà: hai aggiunto un `branch`.
+
+Nota un'altra cosa: vedi che accanto al branch `master` SmartGit aggiunge un segnaposto triangolare verde? Quel simbolo indica che in questo momento sei *agganciato* al `branch` `master`, perché il tuo ultimo comando di spostamento è stato `git checkout master`.
+
+Potresti spostarti su `dev` con
+
+>git checkout dev
+
+![Alt tex1](img/branch-dev2.png)
+
+Di default git aggiunge sempre una variabile: il puntatore `HEAD`, che punta sempre all'elemento del `repository` sul quale ti trovi. Sostanzialmente, il segnaposto visualizzato da SmartGit indica la posizione di HEAD. Altri editor grafici utilizzano differenti rappresentazioni. `gitk`, per esempio, visualizza in grassetto il `branch` sul quale ti trovi.<br/>
+Per sapere su quale `branch` ti trovi, dalla linea di comando, ti basta eseguire
+
+>git branch<br/>
+>* dev<br/>
+>  master<br/>
+
+L'asterisco suggerisce che `HEAD` adesso stia puntanto a `dev`.
+
+Non dovresti essere troppo sorpreso nel verificare che, nonostante tu abbia cambiato `branch` da `master` a `dev` il tuo `file system` non sia cambiato di una virgola: in effetti, sia `dev` che `master` stanno puntando allo stesso identico `commit`.
+
+Non di meno, ti domanderai probabilmente a cosa mai possa servire passare da un `branch` all'altro, se non sortisce alcun effetto visibile.
+
+Il fatto è che quando esegui il `checkout` di `branch`, in qualche modo ti ci *agganci*; l'etichetta del `branch`, in altre parole, inizierà a seguirti, `commit` dopo `commit`.
+
+Guarda: adesso sei su `dev`. Apporta una modifica qualsiasi e committa
+
+>touch style.css<br/>
+>git add style.css<br/>
+>git commit -m "Adesso ho anche il css"<br/>
+
+![Alt tex1](img/branch-dev3.png)
+
+Visto cosa è successo? L'etichetta `dev` si è spostata in avanti e si è agganciata al tuo nuovo `commit`.
 
 
-Ora attento: queste etichette in git si chiamano "branch". Ripetiti mille volte: un branch in git non è un ramo, è un'etichetta che punta ad un commit. Tanti comportamenti di git che appaiono assurdi e complicati diventano molto semplici se eviti di pensare ai branch di git come ad un equivalente dei branch di SVN.
 
-
-
-
-
-* torno ad A e cremo un branch
-* checkout
-* etichette
 
 * il merge
 * il cherrypick
