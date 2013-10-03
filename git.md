@@ -702,19 +702,24 @@ Il risulato è
 
 ![Alt tex1](img/rebase-6.png)
 
-Vedi? Gli ultimi 3 `commit` introducono le stesse identiche modifiche che avevi apportato tu nel tuo ramo, ma tutto appare come se tu avessi staccato il ramo dall'ultima versione di `dev`.
+Vedi? Gli ultimi 3 `commit` introducono le stesse identiche modifiche che avevi apportato tu nel tuo ramo, ma tutto appare come se tu avessi staccato il ramo dall'ultima versione di `dev`. Di nuovo: apparentemente hai riscritto la storia.
 
+Via via che prenderai la mano con git scoprirai di poter usare `cherry-pick` (ed altri comandi, che spesso sono una sorta di combinazioni di comandi di più basso livello) per manipolare i tuoi `commit` e ottenere risultati che sono letteralmente impossibili con altri sistemi di versionamento: invertire l'ordine di una serie di `commit`, spezzare in due rami separati una singola linea di sviluppo, scambiare `commit` tra un ramo e l'altro, aggiungere un `commit` con un bugfix a metà di un ramo, spezzare un `commit` in due e così via.
+
+Questa versatilità non dovrebbe poi stupirti troppo: alla fine git non è altro che un database chiave/valore e i suoi comandi non sono altro che delle macro per creare oggetti e applicare l'aritmetica dei puntatori.<br/>
+Per cui, tutto quel che può venirti in mente di fare con oggetti e puntatori, tendenzialmente, puoi farlo con git.<br/>
+Fico, no?
 
 ## Obiettivo 5: unire due rami
 
+Passiamo ad un'operazione che farai spessissimo.<br/>
 Confronta le ultime due immagini.<br>
 
 ![Alt tex1](img/rebase-5-6.png)
 
-
 Nella prima si vede chiaramente come `sviluppo` non contenga i due contributi `developer 1` e `developer 2` dei tuoi colleghi. Quei due `commit` non sono *raggiungibili* dal tuo ramo. Cioè: percorrendo a ritroso la storia a partire dal tuo ramo `sviluppo` non incontrerai quei due `commit`.
 
-Guarda adesso la seconda immagina, cioè la storia che hai ottenuto dopo il `rebase`: adesso i due `commit` sono *raggiungibili* da `sviluppo`. Beh, avevi fatto `rebase` appositamente per allinearti con il lavoro dei tuoi colleghi quindi, giustamente, git ha fatto in modo che il tuo ramo contenesse anche i loro contributi.
+Guarda adesso la seconda immagine, cioè la storia che hai ottenuto dopo il `rebase`: adesso i due `commit` sono *raggiungibili* da `sviluppo`. Beh, avevi fatto `rebase` appositamente per allinearti con il lavoro dei tuoi colleghi quindi, giustamente, git ha fatto in modo che il tuo ramo contenesse anche i loro contributi.
 
 `rebase` e `cherry-pick` non sono i soli strumenti con i quali puoi *integrare* nel tuo ramo il contenuto di altri rami. Anzi: uno degli strumenti che utilizzerai più spesso è `merge`
 
@@ -788,13 +793,16 @@ Ecco: hai visto un caso di `fast-forward`. Tieni a mente questo comportamento: d
 
 ### `octopus merge`
 
-E per chiudere l'argomento `merge` vediamo l'`octopus merge`. Ma ci vorranno pochi secondi, perché è una cosa di una semplicità sconcertante.
+E per chiudere l'argomento vediamo l'`octopus merge`. Ma ci vorranno pochi secondi, perché è una cosa di una semplicità sconcertante.
 
 Guarda un `commit` nato da un `merge`: non è diverso dagli altri `commit` se non per il fatto di avere due genitori invece di uno solo.
 
-Ecco: su git un `commit` può avere un numero arbitrario di genitori. In altre parole, puoi mergiare tra loro più `branch` in un colpo solo.
 
-Guarda
+![Alt tex1](img/fast-forward.png)
+
+Ecco: su git il numero di genitori di un `commit` non è limitato a due. In altre parole, puoi mergiare tra loro quanti `branch` vuoi, in un colpo solo.
+
+Guarda. Crea 4 `branch` qualsiasi
 
 >git branch uno<br/>
 >git branch due<br/>
@@ -807,14 +815,21 @@ Guarda
 
 ![Alt tex1](img/octopus-1.png)
 
-Bene. Hai 4 rami. Chiedi a dev di mergiarli tutti, in un colpo solo
+Bene. Hai 4 rami. Adesso chiedi a `dev` di mergiarli tutti, in un colpo solo
 
 >git checkout dev<br/>
 >git merge uno due tre quattro<br/>
 
 ![Alt tex1](img/octopus-2.png)
 
-Et voilà! Un `merge` di 4 `branch`
+Et voilà! Un `merge` di 4 `branch`.
+
+E ora qualcosa di completamente diverso. Vediamo un po' come si comporta git con i server remoti.
+
+
+## Obiettivo 6: inviare un ramo ad un altro `repository`
+
+Ti avevo anticipato che git è un sistema *peer-to-peer*.
 
 
 
