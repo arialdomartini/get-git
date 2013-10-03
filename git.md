@@ -783,9 +783,39 @@ Prova a confrontare la storia prima e dopo il merge
 
 Vedi cosa è accaduto? Che l'etichetta `dev` è stata *spinta in avanti*.
 
-Ecco: hai visto un caso di `fast-forward`. Tieni a mente questo comportamento: di tanto in tanto capita di averne a che fare.
+Ecco: hai visto un caso di `fast-forward`. Tieni a mente questo comportamento: di tanto in tanto capita di averne a che fare, soprattutto quando vuoi evitare che avvenga. Per esempio: il `merge` che hai appena fatto, e che è risultato in un `fast-forward`, ha creato una storia nella quale risulta un po' difficile capire *quando* il ramo `dev` sia stato staccato. Non si vede nemmeno bene quando il `merge` sia stato effettuato, perché manca un `commit` con un commento tipo `merge branch 'dev' into sviluppo`.
+
 
 ### `octopus merge`
+
+E per chiudere l'argomento `merge` vediamo l'`octopus merge`. Ma ci vorranno pochi secondi, perché è una cosa di una semplicità sconcertante.
+
+Guarda un `commit` nato da un `merge`: non è diverso dagli altri `commit` se non per il fatto di avere due genitori invece di uno solo.
+
+Ecco: su git un `commit` può avere un numero arbitrario di genitori. In altre parole, puoi mergiare tra loro più `branch` in un colpo solo.
+
+Guarda
+
+>git branch uno<br/>
+>git branch due<br/>
+>git branch tre<br/>
+>git branch quattro<br/>
+>git checkout uno && touch uno && git add uno && git commit -m "uno"<br/>
+>git checkout due && touch due && git add due&& git commit -m "due"<br/>
+>git checkout tre && touch tre&& git add tre && git commit -m "tre"<br/>
+>git checkout quattro && touch quattro && git add quattro && git commit -m "e quattro"<br/>
+
+![Alt tex1](img/octopus-1.png)
+
+Bene. Hai 4 rami. Chiedi a dev di mergiarli tutti, in un colpo solo
+
+>git checkout dev<br/>
+>git merge uno due tre quattro<br/>
+
+![Alt tex1](img/octopus-2.png)
+
+Et voilà! Un `merge` di 4 `branch`
+
 
 
 * fast-forward
