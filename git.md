@@ -546,7 +546,7 @@ git ha applicato il cambiamento introdotto dal commit `dev` (la linea evidenziat
 
 Se guardi sul `file system`, infatti, ti accorgi che git ha aggiunto il file `style.css` xxxx
 
-Inizi a immaginare che giocolerie potrai fare con questo strumento?<br/>
+Inizi a intuire le giocolerie che potrai fare con questo strumento?<br/>
 Voglio darti qualche spunto.
 
 ### Correggere un bug a metà di un ramo
@@ -704,7 +704,28 @@ Il risulato è
 
 Vedi? Gli ultimi 3 `commit` introducono le stesse identiche modifiche che avevi apportato tu nel tuo ramo, ma tutto appare come se tu avessi staccato il ramo dall'ultima versione di `dev`.
 
+
+## Obiettivo 5: unire due rami
+
+Confronta le ultime due immagini.<br>
+
+![Alt tex1](img/rebase-5-6.png)
+
+
+Nella prima si vede chiaramente come `sviluppo` non contenga i due contributi `developer 1` e `developer 2` dei tuoi colleghi. Quei due `commit` non sono *raggiungibili* dal tuo ramo. Cioè: percorrendo a ritroso la storia a partire dal tuo ramo `sviluppo` non incontrerai quei due `commit`.
+
+Guarda adesso la seconda immagina, cioè la storia che hai ottenuto dopo il `rebase`: adesso i due `commit` sono *raggiungibili* da `sviluppo`. Beh, avevi fatto `rebase` appositamente per allinearti con il lavoro dei tuoi colleghi quindi, giustamente, git ha fatto in modo che il tuo ramo contenesse anche i loro contributi.
+
+`rebase` e `cherry-pick` non sono i soli strumenti con i quali puoi *integrare* nel tuo ramo il contenuto di altri rami. Anzi: uno degli strumenti che utilizzerai più spesso è `merge`
+
+`merge` funziona come te lo aspetti. Ci sono solo 3 particolarità sulle quali credo valga la pena di soffermarsi. La prima è che il `merge` di git funziona spaventosamente bene. Merito del fatto che git memorizzi i file invece delle diff. Ma non entriamo nel dettaglio: goditi la potenza di `git merge` e dimentica tutte le difficoltà che hai sempre incontrato con SVN.
+
+Le altre due particolarità sono il `fast-forward` e l'`octopus merge`.
+
+
+
 * il merge
+* fast-forward
 * p2p
 * fetch
 * push
