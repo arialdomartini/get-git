@@ -6,7 +6,7 @@ Molte delle guide che ho letto su git si preoccupano di introdurti ai comandi ba
 
 Quello che ho notato, però, è che imparando git partendo dai comandi base, rischi di finire per trovarlo uno strumento vagamente simile a SVN ma provvisto di un set aggiuntivo di comandi esoterici, il cui funzionamento ti resterà sostanzialmente oscuro.
 
-Facci caso: alcuni di quelli che hanno imparato git abbasanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un `rebase`, o di non cogliere esattamente che uso fare dello `stage`. 
+Facci caso: alcuni di quelli che hanno imparato git abbasanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un `rebase`, o di non cogliere esattamente che uso fare dell'`index`. 
 
 La mia impressione è che, una volta capito il modello interno (che è stupefacentemente semplice!), tutto git appaia improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il `rebase` dovrebbe essere un argomento misterioso.
 
@@ -718,13 +718,76 @@ Guarda adesso la seconda immagina, cioè la storia che hai ottenuto dopo il `reb
 
 `rebase` e `cherry-pick` non sono i soli strumenti con i quali puoi *integrare* nel tuo ramo il contenuto di altri rami. Anzi: uno degli strumenti che utilizzerai più spesso è `merge`
 
-`merge` funziona come te lo aspetti. Ci sono solo 3 particolarità sulle quali credo valga la pena di soffermarsi. La prima è che il `merge` di git funziona spaventosamente bene. Merito del fatto che git memorizzi i file invece delle diff. Ma non entriamo nel dettaglio: goditi la potenza di `git merge` e dimentica tutte le difficoltà che hai sempre incontrato con SVN.
+`merge` funziona come te lo aspetti. Ci sono solo 3 particolarità sulle quali credo valga la pena di soffermarsi. La prima è che il `merge` di git funziona spaventosamente bene. Merito del modello di storage di git: durante i merge git non deve stare ad impazzire, come SVN, per capire se una diff sia già stata applicata o no, perché parte dal confronto di fotografie del progetto. Ma non entriamo nel dettaglio: goditi la potenza di `git merge` e dimentica tutte le difficoltà che hai sempre incontrato con SVN.
 
 Le altre due particolarità sono il `fast-forward` e l'`octopus merge`.
 
+Ma preferisco mostrarteli subito con degli esempi
+
+Stacca un ramo da `dev` e aggiungi un paio di `commit`
+
+>git checkout -b bugfix dev
+
+Nota: qui ho usato una forma super concisa equivalente ai comandi:
+
+> git checkout dev<br/>
+> git branch bugfix<br/>
+> git checkout bugfix<br/> 
+
+Prosegui aggiungendo i due `commit`
+
+>touch fix1 && git add fix1 && git commit -m "bugfixing  1"<br/>
+>touch fix2 && git add fix2 && git commit -m "bugfixing  2"<br/>
+
+![Alt tex1](img/merge-1.png)
+
+Dopo di che, annunci ai tuoi colleghi di aver completato il bugfixing e inviti tutti a integrare il tuo lavoro nel loro.
+
+Per integrare il bugfix in `sviluppo` un tuo collega potrebbe fare
+
+>git checkout sviluppo<br/>
+>git merge bugfix
+
+![Alt tex1](img/merge-2.png)
+
+Semplice, non trovi?<br/>
+Con `git merge bugfix` hai chiesto a git: "*procurami un `commit` che contenga tutto quello che c'è nel mio `branch` corrente e aggiungici tutte le modifiche introdotte dal ramo `bugfix`*".
+
+Prima di eseguire il merge, git guarda nel suo `blob storage` e cerca se per caso esista già un `commit` contenente entrambi i rami. Dal momento che non lo trova, git lo crea, fonde i due file system e poi assegna come genitori del nuovo `commit` entrambi i `commit` di provenienza.<br/>
+In effetti, il risultato è un nuovo `commit` che ha due genitori. Nota anche che l'etichetta del tuo ramo, `sviluppo` si è spostata sul nuovo `commit`. Non dovrebbe essere una sopresa: il `branch` corrente è pensato per seguirti, `commit` dopo `commit`.
+
+### `fast-forward`
+
+Se ti torna questo ragionamento, non avrai difficoltà a capire il `fast-forward`. Mettiti alla prova e vediamo. Prova a rispondere a questa domanda: cosa accadrebbe se ti spostassi sul ramo `dev` e chiedessi un `merge` col ramo `sviluppo` con `git merge sviluppo`?
+
+Per risponderti, ripeti il ragionamento sopra: stai chiedendo a git "*procurami un `commit` che contenga sia il mio ramo corrente `dev` che il ramo `sviluppo`*". git consulterebbe i `commit` nel suo database per asicurarsi che un `commit` con queste caratteristiche sia già presente.
+
+E lo troverebbe!<br/>
+Guarda il `commit` puntato proprio dal ramo `sviluppo`: senza dubbio contiene `sviluppo` (per definizione!); e, siccome percorrendo la storia verso il basso da `sviluppo` è possibile raggiungere `dev`, non c'è nemmeno dubbio che `sviluppo` contenga già le modifiche introdotte da `dev`.<br/>
+Ti torna?
+
+Quindi, git non ha motivo per creare un nuovo `commit` e si limiterà a spostarvi sopra la tua etichetta corrente.
+
+Prova:
+
+>git checkout dev<br/>
+>git merge sviluppo
+
+ 
+![Alt tex1](img/fast-forward.png)
+
+Prova a confrontare la storia prima e dopo il merge
+
+![Alt tex1](img/fast-forward-2.png)
 
 
-* il merge
+Vedi cosa è accaduto? Che l'etichetta `dev` è stata *spinta in avanti*.
+
+Ecco: hai visto un caso di `fast-forward`. Tieni a mente questo comportamento: di tanto in tanto capita di averne a che fare.
+
+### `octopus merge`
+
+
 * fast-forward
 * p2p
 * fetch
