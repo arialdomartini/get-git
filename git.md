@@ -653,26 +653,58 @@ Vedi cosa è successo? Il ramo `dev`, è stato staccato ed è stato impiantato s
 
 Uno shortcut per evitare di spostare un `commit` alla volta da un ramo all'altro è il comando `git-rebase`.
 
-Applicato al `repository`
+Provalo. Sul tuo `repository`
 
 ![Alt tex1](img/rebase-2.png)
 
+esegui
+
 > git rebase master
 
-dice a git: "sposta il ramo corrente su una nuova base, su `master`".<br/>
-Sotto sotto, git non fa altro che una serie di `cherry-pick`: prende tutti i `commit` di `dev` che `master` ancora non ha e ce li applica in ordine.
+dice a git: "*sposta il ramo corrente sulla nuova base: *`master`".<br/>
+Sotto sotto, git non fa altro che eseguire una serie di `cherry-pick`: prende tutti i `commit` di `dev` che `master` ancora non ha e ce li applica in ordine.
 
+Il risultato sarà
 
+![Alt tex1](img/rebase-3.png)
+
+Vedi? È del tutto equivalente a spostare uno per uno i `commit` con `cherry-pick`.
+
+Riesci ad immaginare a cosa potrebbe servire un tool simile?<br/>
+Guarda, provo a descriverti una situazione molto comune.
+
+Stacchi un ramo da `dev` e inizi a lavorarci
+
+>git checkout -b sviluppo<br/>
+>touch file1 && git add file1 && git commit -m "avanzamento 1"<br/>
+>touch file2 && git add file2 && git commit -m "avanzamento 2"<br/>
+>touch file3 && git add file3 && git commit -m "avanzamento 3"<br/>
+
+![Alt tex1](img/rebase-4.png)
+
+Peccato che, come accade nel mondo reale, i tuoi colleghi nel frattempo abbiano fatto avanzare il ramo `dev` con i loro `commit`
+
+>git checkout dev<br/>
+>touch dev1 && git add dev1 && git commit -m "developer 1"<br/>
+>touch dev2 && git add dev2 && git commit -m "developer 2"<br/>
+
+![Alt tex1](img/rebase-5.png)
+
+Riconosci questa situazione? È sostanzialmente inevitabile, a causa della natura fortemente non lineare del processo di sviluppo<br/>
+`rebase` ti permette di renderla nuovamente lineare. Con
+
+>git checkout sviluppo<br/>
+>git rebase dev
+
+chiedi a git "*riapplica tutto il lavoro che ho fatto nel mio ramo come se lo avessi staccato dall'ultimo commit di sviluppo, ma non costringermi a spostare i commit uno per uno con cherry-pick*"
+
+Il risulato è
+
+![Alt tex1](img/rebase-6.png)
+
+Vedi? Gli ultimi 3 `commit` introducono le stesse identiche modifiche che avevi apportato tu nel tuo ramo, ma tutto appare come se tu avessi staccato il ramo dall'ultima versione di `dev`.
 
 * il merge
-* il cherrypick
-
-* rebase
-* eliminare un c
-* 
-* 
-* ommit sbagliato
-
 * p2p
 * fetch
 * push
