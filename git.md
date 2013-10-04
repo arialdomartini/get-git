@@ -2,16 +2,18 @@
 
 Questa guida è un po' diversa dalle altre.
 
-Molte delle guide che ho letto su git si preoccupano di introdurti ai comandi base e lasciano ai capitoli più avanzati la descrizione del modello di funzionamento interno.
+Molte delle guide che ho letto su git si preoccupano di introdurti ai comandi base e lasciano ai capitoli più avanzati la descrizione del modello di funzionamento interno, oppure la saltano del tutto.
 
-Quello che ho notato, però, è che imparando git partendo dai comandi base, rischi di finire per trovarlo uno strumento vagamente simile a SVN ma provvisto di un set aggiuntivo di comandi esoterici, il cui funzionamento ti resterà sostanzialmente oscuro.
+Quello che ho notato, però, è che imparando git partendo dai comandi base, rischi di finire per usarlo come uno strumento vagamente simile a SVN ma provvisto di un set aggiuntivo di comandi esoterici, il cui funzionamento ti resterà sostanzialmente oscuro.
 
 Facci caso: alcuni di quelli che hanno imparato git abbasanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un `rebase`, o di non cogliere esattamente che uso fare dell'`index`. 
 
-La mia impressione è che, una volta capito il modello interno (che è stupefacentemente semplice!), tutto git appaia improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il `rebase` dovrebbe essere un argomento misterioso.
+La mia impressione è che, una volta capito il modello interno (che è sorprendentemente semplice!), tutto git appaia improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il `rebase` dovrebbe essere un argomento misterioso.
 
 
 Questa guida prova a spiegarti git seguendo un percorso contrario a quello adottato di solito: partirai dalla spiegazione degli internal e finirai per imparare, nello stesso momento, sia comandi base che quelli avanzati, in poco tempo e senza troppi grattacapi.
+
+Non imparerai tutti i comandi. Piuttosto che mostrarti tutte le opzioni di un comando, questa guida si sforza di farti comprendere i concetti e il modello sottostante e darti gli strumenti per essere autonomo quando vorrai approfondire un comando sulle man page o vorrai fare qualcosa di fuori dall'ordinario con il tuo `repository`
 
 
 # Non sono parente di SVN
@@ -180,8 +182,7 @@ Già da adesso, comunque, dovrebbe risultarti più chiaro il fatto che dentro un
 
 ## L' `index` o `staging area` 
 
-Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando si sa come funzionano il `blob storage` e l'`index`, git passa da sembrare un tool contorto e incomprensibile ad essere un oggetto molto lineare e coerente.
-
+Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando saprai come funzionano il `blob storage` e l'`index`, git passa dal sembrarti un tool contorto e incomprensibile a uno strumento molto coerente e prevedibile.
 
 L'`index` è una struttura che fa da cuscinetto tra il file system e il repository. È un piccolo buffer che puoi utilizzare per costruire il prossimo `commit`. 
 
@@ -790,6 +791,22 @@ Vedi cosa è accaduto? Che l'etichetta `dev` è stata *spinta in avanti*.
 
 Ecco: hai visto un caso di `fast-forward`. Tieni a mente questo comportamento: di tanto in tanto capita di averne a che fare, soprattutto quando vuoi evitare che avvenga. Per esempio: il `merge` che hai appena fatto, e che è risultato in un `fast-forward`, ha creato una storia nella quale risulta un po' difficile capire *quando* il ramo `dev` sia stato staccato. Non si vede nemmeno bene quando il `merge` sia stato effettuato, perché manca un `commit` con un commento tipo `merge branch 'dev' into sviluppo`.
 
+`fast-forward` è un argomento cruciale nell'interazione con altri `repository`. Ne parleremo nel paragrafo su `push`.<br/>
+Per adesso tieni a mente solo il concetto: 
+
+* un branch può essere mergiato ad un commit in fast-forward quando è possibile spostarcelo semplicemente spingengolo in avanti
+* il merge non può essere fast-forward quando il tuo `branch` e il `commit` sul quale vorresti portartlo si trovano su linee di sviluppo separate
+
+Un esempio potrebbe aiutarti a fissare il concetto
+ 
+In questo `repository`, un merge di `bugfix` su  `dev` avverrà in `fast-forward`
+
+![Alt tex1](img/fast-forward.png)
+
+In quest'altro caso, un merge di `sviluppo` su `bugfix` non potrà essere in `fast-forward`, e risulterà in un nuovo `commit`
+
+![Alt tex1](img/merge-1.png)
+
 
 ### `octopus merge`
 
@@ -827,11 +844,112 @@ Et voilà! Un `merge` di 4 `branch`.
 E ora qualcosa di completamente diverso. Vediamo un po' come si comporta git con i server remoti.
 
 
-## Obiettivo 6: inviare un ramo ad un altro `repository`
+## Obiettivo 6: mettere il `repository` in rete
 
-Ti avevo anticipato che git è un sistema *peer-to-peer*.
+Fino ad ora hai interagito solo con il tuo `repository` locale, ma ti avevo anticipato che git è un sistema *peer-to-peer*.
+
+In generale, questo significa che il tuo `repository` è un nodo che può entrare a far parte di una rete e scambiare informazioni con altri nodi, cioè con altri `repository`.
+
+A parte il tuo `repository` locale, qualsiasi altro `repository`, non importa che si trovi su GitHub, su un server aziendale o semplicemente in un'altra directory del tuo computer, per git, è un `remote`.
+
+Per collegare il tuo `repository` locale ad un nodo remoto ti basta fornigli l'indirizzo con il comando `git remote` (naturalmente, devi anche disporre dei permessi di lettura o scrittura sul `remote`)
+
+Per rendere le cose semplici, non stiamo a coinvolgere server esterni e internet; crea un altro `repository` da qualche parte sul tuo stesso computer
+
+>cd ..<br/>
+>mkdir repo-remoto<br/>
+>cd repo-remoto<br/>
+>git init<br/>
 
 
+In questo caso, dalla directory del tuo progetto il `repository` remoto sarà raggiungibile tramite `../repo-remoto` o col suo path assoluto.<br/>
+Più comunemente, però, avrai a che fare con `repository` remoti raggiungibili, a seconda del protocollo utilizzato, con indirizzi come 
+
+* `https://azienda.com/repositories/cool-project2.git`
+* `git@github.com:johncarpenter/mytool.git`.
+
+Per esempio, il `repository` di questa guida ha l'indirizzo
+
+* `git@github.com:arialdomartini/get-git.git`.
+
+Torna nel tuo progetto
+
+>cd ../progetto
+
+Bene. Aggiungi all'elenco dei `remote` il `repository` appena creato, indicando a git un nome qualsiasi e l'indirizzo
+
+>git remote add foobar ../repo-remoto
+
+Ottimo. Hai connesso il tuo `repository` ad un altro nodo. Sei ufficialmente in una rete peer-to-peer di `repository`.<br/>
+Da questo momento, quando vuoi riferirti a quel `repository` remoto utilizzerai il nome `foobar`.
+
+Il nome è necessario perché, a differenza di SVN che ha il concetto di "*server centrale*" in git puoi essere collegato ad un numero qualsiasi di`repository` remoti contemporaneamente.
+
+Sono due le cose che fondamentalmente puoi fare con un `remote`: allinearsi al suo contenuto o chiedere che sia lui ad allinearsi a te.
+
+Hai a disposizione due comandi: `push` e `fetch`.
+
+Con `push` puoi *spedire* un set di `commit` al `repository` remoto.<br/>
+Con `fetch` puoi *riceverli* dal `repository` remoto
+
+Sia `push` che `fetch`, in realtà, permettono al tuo `repository` e al `remote` di scambiarsi delle etichette. Ma per gradi: iniziamo a vedere in concreto cosa accada.
+
+
+Al momento il `remote` che hai chiamato `foobar` è un `repository` completamente vuoto: lo hai appena creato.<br>
+Il tuo `repository` locale, invece, contiene molti `commit` e molti `branch`:
+
+
+![Alt tex1](img/local-1.png)
+
+
+Prova a chiedere al `repository` remoto di darti i `commit` e i `branch` di cui dispone e che tu non hai. Se non indichi un `branch` specifico il `repository` remoto cercherà di darteli tutti. Nel tuo caso il `remote` è vuoto, quindi non dovrebbe restituirti nulla
+
+>git fetch foobar
+
+Infatti. Non ricevi nulla.<br/>
+Prova, invece, a spedire il ramo `experiment`
+
+>git push foobar experiment<br/>
+><br/>
+>Counting objects: 14, done.<br/>
+>Delta compression using up to 4 threads.<br/>
+>Compressing objects: 100% (8/8), done.<br/>
+>Writing objects: 100% (14/14), 1.07 KiB | 0 bytes/s, done.<br/>
+>Total 14 (delta 3), reused 0 (delta 0)<br/>
+>To ../repo-remoto<br/>
+>** * [new branch]      experiment -> experiment<br/>**
+
+Wow! Qualcosa è sucesso!<br/>
+Di tutti i messaggi di risposta, quello più interessante in questo momento è l'ultimo
+
+>** * [new branch]      experiment -> experiment<br/>**
+
+Ti aiuto a interpretare quello che è successo:
+
+* quando hai scritto `git push foobar experiment` git ha preso in considerazione il tuo ramo `experiment` ed ha ricavato l'elenco di tutti i `commit` raggiunbibili da quel ramo (come al solito: sono tutti i `commit` che puoi trovare partendo da `experiment` e seguendo a ritroso nel tempo qualsiasi percorso tu possa percorrere)
+* git ha poi contattato il `repository` remoto `foobar` per sapere quali di quei `commit` non fossero presenti remotamente
+* dopo di che, ha creato un pacchetto con tutti i `commit` necessari, li ha inviati  ed ha chiesto al `repository` remoto di aggiungerli al proprio database
+* il `remote` ha poi posizionato il proprio branch `experiment` esattamente sullo stesso `commit` in cui si trova sul tuo `repository` locale. Il `remote` non aveva quel `branch`, per cui lo ha creato.
+
+Proviamo adesso a visualizzare il `repository` remoto
+
+
+![Alt tex1](img/remote-1.png)
+
+Guarda se torna: prova a prendere in ordine i 4 `commit` e verifica che siano davvero tutti e soli i `commit` che avevi in locale.<br/>
+Sì, torna.
+
+Anche sul tuo `repository` locale è successo un evento notevole. Prova a visualizzarlo
+
+![Alt tex1](img/push-1.png)
+
+Guarda guarda! Sembra sia stato aggiunto un nuovo branch, chiamato `foobar/experiment`. E sembra anche si tratti di un `branch` un po' particolare, perché SmartGit si preoccupa di disegnarlo di colore differente.
+
+
+
+>git push foobar feature
+
+# Daily git
 
 * fast-forward
 * p2p
