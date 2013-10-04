@@ -13,7 +13,7 @@ La mia impressione è che, una volta capito il modello interno (che è sorprende
 
 Questa guida prova a spiegarti git seguendo un percorso contrario a quello adottato di solito: partirai dalla spiegazione degli internal e finirai per imparare, nello stesso momento, sia comandi base che quelli avanzati, in poco tempo e senza troppi grattacapi.
 
-Non imparerai tutti i comandi. Piuttosto che mostrarti tutte le opzioni di un comando, questa guida si sforza di farti comprendere i concetti e il modello sottostante e darti gli strumenti per essere autonomo quando vorrai approfondire un comando sulle man page o vorrai fare qualcosa di fuori dall'ordinario con il tuo `repository`
+Non imparerai tutti i comandi. Piuttosto che mostrarti tutte le opzioni di un comando, questa guida punterà a farti comprendere i concetti e il modello sottostante e a darti gli strumenti per essere autonomo quando vorrai approfondire un argomento sulle man page o vorrai fare qualcosa di fuori dall'ordinario con il tuo `repository`.
 
 
 # Non sono parente di SVN
@@ -929,7 +929,7 @@ Ti aiuto a interpretare quello che è successo:
 * quando hai scritto `git push foobar experiment` git ha preso in considerazione il tuo ramo `experiment` ed ha ricavato l'elenco di tutti i `commit` raggiunbibili da quel ramo (come al solito: sono tutti i `commit` che puoi trovare partendo da `experiment` e seguendo a ritroso nel tempo qualsiasi percorso tu possa percorrere)
 * git ha poi contattato il `repository` remoto `foobar` per sapere quali di quei `commit` non fossero presenti remotamente
 * dopo di che, ha creato un pacchetto con tutti i `commit` necessari, li ha inviati  ed ha chiesto al `repository` remoto di aggiungerli al proprio database
-* il `remote` ha poi posizionato il proprio branch `experiment` esattamente sullo stesso `commit` in cui si trova sul tuo `repository` locale. Il `remote` non aveva quel `branch`, per cui lo ha creato.
+* il `remote` ha poi posizionato il proprio `branch` `experiment` esattamente sullo stesso `commit` in cui si trova sul tuo `repository` locale. Il `remote` non aveva quel `branch`, per cui lo ha creato.
 
 Proviamo adesso a visualizzare il `repository` remoto
 
@@ -943,9 +943,16 @@ Anche sul tuo `repository` locale è successo un evento notevole. Prova a visual
 
 ![Alt tex1](img/push-1.png)
 
-Guarda guarda! Sembra sia stato aggiunto un nuovo branch, chiamato `foobar/experiment`. E sembra anche si tratti di un `branch` un po' particolare, perché SmartGit si preoccupa di disegnarlo di colore differente.
+Guarda guarda! Sembra sia stato aggiunto un nuovo `branch`, chiamato `foobar/experiment`. E sembra anche si tratti di un `branch` un po' particolare, perché SmartGit si preoccupa di disegnarlo di colore differente.
 
+Prova a cancellare quel `branch`
 
+>git branch -d foobar/experiment<br/>
+>error: branch 'foobar/experiment' not found.<br/>
+
+Uhm. Decisamente quel `branch` ha qualcosa di particolare.
+
+Il fatto è che quel `branch` non è sul tuo `repository`: è su `foobar`. git ti aggiunge 
 
 >git push foobar feature
 
