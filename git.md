@@ -1224,7 +1224,36 @@ Cerchiamo di capire perché.
 
 
 
-## Obiettivo 7: Workflow e `bare repository`
+## Obiettivo 7: disegna il tuo workflow ideale
+
+Mettiti nei panni del tuo collega virtuale, che abbiamo immaginato sul `repository` remoto `foobar`.
+
+Il tuo collega se ne sta tranquillo sul suo ramo `experiment` 
+
+![Alt tex1](img/collaborating-1.png)
+
+quando ad un tratto, senza che abbia dato alcun comando a git, il suo `repository` accetta la tua richiesta di `push`, salva nel database locale un paio di nuovi `commit` e sposta il ramo `experiment` (sì, proprio il ramo di cui aveva fatto il `checkout`!) due `commit` in avanti
+
+![Alt tex1](img/collaborating-8.png)
+
+Ammetterai che se questo fosse il comportamento standard di git non vorresti mai trovarti nella posizione del tuo collega virtuale: la perdita di controllo del proprio `repository` e del proprio `file system` sarebbe davvero un prezzo troppo alto da pagare.
+
+Capisci bene che cambiare il ramo del quale si è fatto `checkout` significa, sostanzialmente, fare il `checkout` di un `commit` differente, quindi cambiare sotto i piedi il `file system`. Ovviamente questo è del tutto inaccettabile, ed è per questo che git si è rifiutato di procedere ed ha replicato con un chilometrico messaggio di errore.
+
+Prima hai rimediato alla situazione spostando il tuo collega virtuale su un ramo `parcheggio`, unicamente per poter spedirgli il tuo ramo. 
+
+![Alt tex1](img/collaborating-9.png)
+
+Questo sporco trucco ti ha permesso di fare `push` di `experiment`.
+
+Ma a pensarci bene anche questa è una soluzione che, probabilmente, tu personalmente non accetteresti mai: a parte la scomodità di doversi interrompere solo perché un collega vuole spedirti del suo codice, comunque non vorresti che l'avanzamento dei tuoi rami fosse completamente fuori dal tuo controllo, alla mercé di chiunque. Perché, alla fine, il remo `experiment` si sposterebbe in avanti contro la tua volontà, e lo stesso potrebbe accadere a tutti gli altri rami di cui non hai fatto `checkout`.
+
+È evidente che debba esistere una soluzione radicale a questo problema.
+
+La soluzione è tanto semplice quanto controversa: crea un altro repository.
+
+
+
 
 
 
@@ -1233,3 +1262,10 @@ Cerchiamo di capire perché.
 
 # Daily git
 
+
+
+* amend
+* eliminare l'ultimo commit
+* revert del filesystem
+* diff di due branch
+* diff del file system
