@@ -1139,6 +1139,73 @@ Bene: `rebase` ti permette di applicare tutte le tue modifiche a partire dall'at
 Visto? A tutti gli effetti appare come se tu avessi iniziato il tuo lavoro *dopo* la fine dei lavori su `foobar`.<br/>
 In altre parole: `rebase` ha apparentemente reso lineare il processo di sviluppo, che era intrinsecamente non lineare, senza costringerti ad allinearti con il lavoro del tuo collega esattamente nei momenti in cui aggiungeva `commit` al proprio `repository`.
 
+Puoi spedire il tuo lavoro a `foobar`: apparirà come tu abbia apportato le tue modifiche a partire dall'ultimo `commit` eseguito su `foobar`.
+
+>git push foobar experiment<br/>
+><br/>
+>Counting objects: 6, done.<br/>
+>Delta compression using up to 4 threads.<br/>
+>Compressing objects: 100% (4/4), done.<br/>
+>Writing objects: 100% (5/5), 510 bytes | 0 bytes/s, done.<br/>
+>Total 5 (delta 2), reused 0 (delta 0)<br/>
+>remote: error: **refusing to update checked out branch: refs/heads/experiment**<br/>
+>remote: error: By default, updating the current branch in a non-bare repository<br/>
+>remote: error: is denied, because it will make the index and work tree >inconsistent<br/><br/>
+>remote: error: with what you pushed, and will require 'git reset --hard' to match<br/>
+>remote: error: the work tree to HEAD.<br/>
+>remote: error:<br/>
+>remote: error: You can set 'receive.denyCurrentBranch' configuration variable to<br/>
+>remote: error: 'ignore' or 'warn' in the remote repository to allow pushing into<br/>
+>remote: error: its current branch; however, this is not recommended unless you<br/>
+>remote: error: arranged to update its work tree to match what you pushed in some<br/>
+>remote: error: other way.<br/>
+>remote: error:<br/>
+>remote: error: To squelch this message and still keep the default behaviour, set<br/>
+>remote: error: 'receive.denyCurrentBranch' configuration variable to 'refuse'.<br/>
+>To ../repo-remoto<br/>
+> ! [remote rejected] experiment -> experiment (branch is currently checked out)<br/>
+>error: failed to push some refs to '../repo-remoto'<br/>
+
+
+Mamma mia! Sembra proprio che a git questo `push` non sia piaciuto. Nel lunghissimo messaggio di errore git ti sta dicendo di non poter fare `push` di un `branch` attualmente "*checked out*": il problema, sembra, non è nel `push` in sé, ma nel fatto che sull'altro `repository` il tuo collega abbia fatto `checkout experiment`. 
+
+
+Questo problema potrebbe capitarti di continuo, se non sai come affrontarlo, per cui a breve gli dedicheremo un po' di tempo.<br>)
+Per adesso, rimedia chiedendo gentilmente al tuo collega di spostarsi su un altro ramo e ripeti il `push`.
+
+Quindi: su `foobar` vedi di spostarti su un altro `branch`
+
+>cd ../repo-remoto<br/>
+>git checkout -b parcheggio<br/>
+
+Dopo di che, torna al tuo `repository` locale e ripeti `push`
+
+
+>cd ../progetto<br/>
+>git push foobar experiment<br/>
+
+Ecco il risultato: partivi da
+
+![Alt tex1](img/collaborating-4.png)
+
+Poi hai fatto `rebase` ed hai ottenuto
+
+![Alt tex1](img/collaborating-6.png)
+
+Dopo il `push` su `foobar` sul tuo `repository` il `remote branch` `foobar/experiment` testimonia l'avanzamento del ramo anche sul `repository` remoto.
+
+![Alt tex1](img/collaborating-7.png)
+
+Contestualmente, il tuo collega su `foobar` ha visto passare il proprio `repository` da 
+
+![Alt tex1](img/collaborating-1.png)
+
+a
+
+![Alt tex1](img/collaborating-8.png)
+
+## Obiettivo 7: Workflow e `bare repository`
+
 
 
 
