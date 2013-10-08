@@ -1,4 +1,5 @@
-# Introduzione
+Introduzione
+============
 
 Questa guida è un po' diversa dalle altre.
 
@@ -56,8 +57,10 @@ Se vuoi, installa anche un client grafico. Io ti suggerisco [SmartGit](http://ww
 Fantastico. Partiamo.
 
 
-# Gli internal di git
-## 3 differenze principali
+Gli internal di git
+===================
+
+# 3 differenze principali
 
 Iniziamo con tre caratteristiche di git con le quali dovresti familiarizzare.
 
@@ -68,7 +71,7 @@ Iniziamo con tre caratteristiche di git con le quali dovresti familiarizzare.
 3. **git non memorizza i cambiamenti dei file**: git salva sempre i file nella loro interezza. Se in un file di 2 mega modificassi un singolo carattere, git memorizzerebbe per intero la nuova versione del file. Questa è una differenza importante: SVN memorizza le differenze e, all'occorrenza, ricostruisce il file; git memorizza il file e, all'occorrenza, ricostruisce le differenze.
 
 
-### 4 livelli di nerdosità
+## 4 livelli di nerdosità
 
 Sull'assenza di un server ho un po' mentito: come ti ho già detto e come vedrai più avanti, git è un sistema peer-to-peer, e riesce ad interagire con dei server remoti.
 Nonostante questo resta sostanzialmente un sistema locale.
@@ -91,7 +94,7 @@ Ecco: git è ancora più estremo; preferisce farti avere a disposizione tutto su
 In effetti, qualunque cosa tu voglia fare, git chiede normalmente di ottenere una copia completa di quel che è presente sul server remoto. Ma non preoccuparti troppo: git è più veloce a ottenere l'intera storia del progetto di quanto SVN lo sia ad ottenere un singolo checkout.
 
 
-### Il modello di storage
+## Il modello di storage
 
 Passiamo dalla terza differenza. E preparati a conoscere il vero motivo per cui git sta sostituendo molto velocemente SVN come nuovo standard *de-facto*.
 
@@ -185,7 +188,7 @@ In generale, a meno che non si debba parlare proprio del modello interno come st
 Già da adesso, comunque, dovrebbe risultarti più chiaro il fatto che dentro un `commit` ci sia l'intera fotografia del progetto e che, di fatto, un `commit` sia l'unità minima ed indivisibile di lavoro.
 
 
-## L' `index` o `staging area` 
+# L' `index` o `staging area` 
 
 Sostanzialmente, non c'è molto altro che tu debba sapere del modello di storage di git. Ma prima di passare a vedere i vari comandi, vorrei introdurti ad un altro meccanismo interno: la `staging area` o `index`. L'`index` risulta sempre misterioso a chi arrivi da SVN: vale la pena parlarne perché quando saprai come funzionano il `blob storage` e l'`index`, git non ti sembrerà più contorto e incomprensibile; piuttosto, ne coglierai la coerenza e lo troverai estremamente prevedibile.
 
@@ -288,9 +291,10 @@ Passiamo al pratico.
 
 
 
-# I comandi di git
+I comandi di git
+================
 
-## Obiettivo 1: tornare indietro nel tempo
+# Obiettivo 1: tornare indietro nel tempo
 
 Dunque, se in git tutto è conservato in un database chiave/valore, probabilmente ci saà modo per referenziare un qualunque oggetto del database usando la sua chiave.
 
@@ -324,7 +328,7 @@ Effettivamente, a parte un misterioso e prolisso messaggio di con cui git si lam
 
 
 
-##Obiettivo 2: divergere
+#Obiettivo 2: divergere
 
 Usando una convenzione grafica molto comune nella letteratura su git, potremmo rappresentare la situazione attuale del tuo repository con
 
@@ -360,7 +364,7 @@ La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i 
 La seconda potrebbe un po' sorprenderti: le due linee di sviluppo divergenti che hai appena visto non sono `branch`. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
 
 
-## Obiettivo 3: creare un branch
+# Obiettivo 3: creare un branch
 
 Con il comando `checkout` hai imparato a spostarti da un `commit` all'altro
 
@@ -556,7 +560,7 @@ Se guardi sul `file system`, infatti, ti accorgi che git ha aggiunto il file `st
 Inizi a intuire le giocolerie che potrai fare con questo strumento?<br/>
 Voglio darti qualche spunto.
 
-### Correggere un bug a metà di un ramo
+## Correggere un bug a metà di un ramo
 
 Proviamo a creare una linea di sviluppo con 3 `commit`
 
@@ -623,7 +627,7 @@ Urca! L'impressione è che git abbia riscritto la storia eliminando un `commit` 
 Infatti, molti raccontano che git sia capace di riscrivere la storia e che questo suo comportamento sia estremamente pericoloso. Ecco: tu hai visto che non è così; git è estremamente conservativo e quando ti permette di manipolare i `commit` non fa altro che agire *in append*, costruendo *nuovi* rami. 
 
 
-### Spostare un ramo di sviluppo
+## Spostare un ramo di sviluppo
 
 Voglio farti vedere un'altra magia del `cherry-pick`, per dissipare il velo di mistero di cui è inspiegabilmente circondato il comando `rebase`.
 
@@ -717,7 +721,7 @@ Questa versatilità non dovrebbe poi stupirti troppo: alla fine git non è altro
 Per cui, tutto quel che può venirti in mente di fare con oggetti e puntatori, tendenzialmente, puoi farlo con git.<br/>
 Fico, no?
 
-## Obiettivo 5: unire due rami
+# Obiettivo 5: unire due rami
 
 Passiamo ad un'operazione che farai spessissimo.<br/>
 Confronta le ultime due immagini.<br>
@@ -768,7 +772,7 @@ Con `git merge bugfix` hai chiesto a git: "*procurami un `commit` che contenga t
 Prima di eseguire il merge, git guarda nel suo `blob storage` e cerca se per caso esista già un `commit` contenente entrambi i rami. Dal momento che non lo trova, git lo crea, fonde i due file system e poi assegna come genitori del nuovo `commit` entrambi i `commit` di provenienza.<br/>
 In effetti, il risultato è un nuovo `commit` che ha due genitori. Nota anche che l'etichetta del tuo ramo, `sviluppo` si è spostata sul nuovo `commit`. Non dovrebbe essere una sopresa: il `branch` corrente è pensato per seguirti, `commit` dopo `commit`.
 
-### `fast-forward`
+## `fast-forward`
 
 Se ti torna questo ragionamento, non avrai difficoltà a capire il `fast-forward`. Mettiti alla prova e vediamo. Prova a rispondere a questa domanda: cosa accadrebbe se ti spostassi sul ramo `dev` e chiedessi un `merge` col ramo `sviluppo` con `git merge sviluppo`?
 
@@ -814,7 +818,7 @@ In quest'altro caso, un merge di `sviluppo` su `bugfix` non potrà essere in `fa
 ![Alt tex1](img/merge-1.png)
 
 
-### `octopus merge`
+## `octopus merge`
 
 E per chiudere l'argomento vediamo l'`octopus merge`. Ma ci vorranno pochi secondi, perché è una cosa di una semplicità sconcertante.
 
@@ -850,7 +854,7 @@ Et voilà! Un `merge` di 4 `branch`.
 E ora qualcosa di completamente diverso. Vediamo un po' come si comporta git con i server remoti.
 
 
-## Obiettivo 6: mettere il `repository` in rete
+# Obiettivo 6: mettere il `repository` in rete
 
 Fino ad ora hai interagito solo con il tuo `repository` locale, ma ti avevo anticipato che git è un sistema *peer-to-peer*.
 
@@ -908,7 +912,7 @@ Con `fetch` puoi *riceverli* dal `repository` remoto
 Sia `push` che `fetch`, in realtà, permettono al tuo `repository` e al `remote` di scambiarsi delle etichette. Ma per gradi: iniziamo a vedere in concreto cosa accada.
 
 
-### Spedire un ramo con `push`
+## Spedire un ramo con `push`
 
 Al momento il `remote` che hai chiamato `foobar` è un `repository` completamente vuoto: lo hai appena creato.<br>
 Il tuo `repository` locale, invece, contiene molti `commit` e molti `branch`:
@@ -975,7 +979,7 @@ I `remote branch` sono una sorta di reminder che ti permettono di capire dove si
 
 C'è un aspetto molto importante sulla posizione dei `remote branch` a cui dovrai fare l'abitudine: proprio mentre stavi leggendo queste righe un tuo collega potrebbe aver aggiunto qualche `commit` proprio sul suo ramo `expetiment`, e tu non ne sapresti niente, perché il tuo `repository` non è collegato in tempo reale con i suoi `remote`, ma si sincronizza solo quando ci interagisci con gli appositi comandi. Per cui, il `commit` puntato da `foobar/experiment` è da intendersi come l'ultma posizione nota del ramo `experiment` su `foobar`.
 
-### Ricevere aggiornamenti con `fetch`
+## Ricevere aggiornamenti con `fetch`
 
 Guarda: proviamo proprio a simulare il caso in cui un tuo collega stia lavorando sull'altro `repository`. Prova ad aggiungere un `commit` sul `repository remoto` proprio sul ramo `experiment` di cui hai appena fatto `push`
 
@@ -1034,7 +1038,7 @@ Possiamo estendere il diagramma delle interazioni tra i comandi di git e i suoi 
 ![Alt tex1](img/push-fetch.png)
 
 
-### Divergere
+## Divergere
 
 Proviamo a complicare la situazione.<br/>
 Vorrei mostrarti un caso che ti capiterà continuamente: il caso in cui due sviluppatori stiano lavorando contemporaneamente su un ramo. Di solito accade che, proprio nel momento in cui vorrai spedire al `remote` i tuoi nuovi `commit`, vieni a scoprire che, nel frattempo, qualcuno ha modificato il `branch`. 
@@ -1263,7 +1267,7 @@ Potresti trovarla una soluzione un po' sommaria, ma devi riconoscere che non esi
 Naturalmente, questa è solo metà della storia e forse vale la pena di approfondire  un po' l'argomento.<br/>
 Apri bene la mente, perché adesso entrerai nel vivo di un argomento molto affascinante: la natura distribuita di git. Si tratta, verosimilmente, dell'aspetto più comunemente incompreso di git e, quasi certamente di una delle sue caratteristiche più potenti.
 
-## Obiettivo 7: disegna il tuo workflow ideale
+# Obiettivo 7: disegna il tuo workflow ideale
 
 Se hai usato CVS e SVN sarai senz'altro abituato al concetto di `repository` centrale: tutti gli sviluppatori attingono e fanno riferimento ad un'unica struttura centrale, dove è conservato il codice sorgente.
 
@@ -1392,27 +1396,28 @@ Nota che quando i diagrammi delle reti di `repository` sono particolarmente arti
 
 
 
+Daily git
+=========
+
+Questa guida si chiude con una breve serie di piccoli suggerimenti pratici che ti risulteranno molto utili nel tuo uso quotidiano di git
+
+# Ottenere una copia di un `repository`
+
+
+Hai visto come creare un `repository` da zero e come fare a popolarne uno vuoto a colpi di `push`, ma spesso (anzi, spessissimo) fa molto comodo partire da una copia di un `repository` esistente.
+
+Allo scopo, usa il comando `git clone`, col quale otterrai in locale una copia completa della storia dei `commit` di un `repository`. Dopo aver clonato un `repository` remoto,  questo verrà aggiunto in automatico come `remote` sotto il nome di default `origin`.
+
+Per esempio, per ottenere un `clone` di questa guida esegui
+
+>**git clone https://github.com/arialdomartini/get-git.git**<br/>
+>cd get-git<br/>
+>**git remote**<br/>
+>origin
 
 
 
 
-
-### Pull request
-
-
-
-
-
-
-
-
-
-
-
-# Daily git
-
-* bare
-* clone
 * git rm
 * detached head state
 * amend
