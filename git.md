@@ -351,13 +351,13 @@ Provalo davvero:
 ![Alt tex1](img/repo1.png)
 
 
-Hai ottenuto una diramazione, senza il meccanismo della copia utilizzato da SVN: il modello a chiave/valore e puntatori di git rende molto economico rappresentare una linea di sviluppo che diverge.
+Hai ottenuto una diramazione, senza ricorrere al meccanismo di copia dei file utilizzato da SVN al momento deella creazione di un branch: il modello a chiave/valore e puntatori di git rende molto economico rappresentare una linea di sviluppo che diverge.
 
 Due osservazioni importanti.
  
-La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i file: `A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN qui non valgono.
+La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i file: `A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN in git potrebbero non valere.
 
-La seconda è un po' sorprendente: le due linee di sviluppo divergenti che hai appena visto non sono `branch`. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
+La seconda potrebbe un po' sorprenderti: le due linee di sviluppo divergenti che hai appena visto non sono `branch`. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
 
 
 ## Obiettivo 3: creare un branch
@@ -863,7 +863,12 @@ Per collegare il tuo `repository` locale ad un `remote` ti basta fornire a git l
 Per rendere le cose semplici, facciamo un esempio concreto senza stare a coinvolgere server esterni e internet; crea un altro `repository` da qualche parte sul tuo stesso computer
 
 >cd ..<br/>
->mkdir repo-remoto<br/>
+>mkdir 
+>
+>
+>
+>
+>repo-remoto<br/>
 >cd repo-remoto<br/>
 >git init<br/>
 
