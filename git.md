@@ -1404,7 +1404,7 @@ Questa guida si chiude con una breve serie di piccoli suggerimenti pratici che t
 # Ottenere una copia di un `repository`
 
 
-Hai visto come creare un `repository` da zero e come fare a popolarne uno vuoto a colpi di `push`, ma spesso (anzi, spessissimo) fa molto comodo partire da una copia di un `repository` esistente.
+Fin'ora hai visto come creare un `repository` da zero e come fare a popolarne uno vuoto a colpi di `push`, ma spesso (anzi, spessissimo) fa molto comodo partire da una copia di un `repository` esistente.
 
 Allo scopo, usa il comando `git clone`, col quale otterrai in locale una copia completa della storia dei `commit` di un `repository`. Dopo aver clonato un `repository` remoto,  questo verrà aggiunto in automatico come `remote` sotto il nome di default `origin`.
 
@@ -1416,9 +1416,24 @@ Per esempio, per ottenere un `clone` di questa guida esegui
 >origin
 
 
+# Eliminare un file
+
+Rammenti che per aggiungere un file nell'`index` hai usato il comando `git add`?<br/>
+Ecco: quando cancelli dal `file system` un file già tracciato da git, perché git includa la cancellazione nel `commit` devi cancellare il file anche dall'`index` con
+
+>git rm file_name
+
+Potresti trovare molto comoda l'opzione `-a` di `commit` 
+
+>git -am "include add e rm"
+
+che implicitamente fa `add` dei file modificati e `rm` di quelli rimossi
 
 
-* git rm
+# Sovrascrivere l'ultimo `commit`
+
+
+
 * detached head state
 * amend
 * eliminare l'ultimo commit
