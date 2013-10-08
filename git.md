@@ -1024,6 +1024,10 @@ Se invece tu volessi davvero includere i cambiamenti introdotti remotamente nel 
 
 Riconosci il tipo di `merge` che ne è risultato? Sì, un `fast-forward`. Interpretalo così: il tuo `merge` è stato un `fast-forward` perché mentre il tuo collega lavorava il ramo non è stato modificato da nessun altro; il tuo collega è stato il solo ad avervi aggiunto contributi e lo sviluppo è stato lineare.
 
+Possiamo estendere il diagramma delle interazioni tra i comandi di git e i suoi ambienti aggiungendo la colonna `remote` e l'azione di `push` e `fetch`   
+
+![Alt tex1](img/push-fetch.png)
+
 
 ### Divergere
 
@@ -1250,11 +1254,9 @@ Ma a pensarci bene anche questa è una soluzione che, probabilmente, tu personal
 
 La soluzione è sorprentemente semplice: **non permette ad altri di accedere al tuo `repository`**. 
 
-Una soluzione un po' sommaria: ma bisogna riconoscere che non esista sistema più drastico ed efficace.<br/>
+Potresti trovarla una soluzione un po' sommaria, ma devi riconoscere che non esista sistema più drastico ed efficace.<br/>
 Naturalmente, questa è solo metà della storia e forse vale la pena di approfondire  un po' l'argomento.<br/>
 Apri bene la mente, perché adesso entrerai nel vivo di un argomento molto affascinante: la natura distribuita di git. Si tratta, verosimilmente, dell'aspetto più comunemente incompreso di git e, quasi certamente di una delle sue caratteristiche più potenti.
-
-
 
 ## Obiettivo 7: disegna il tuo workflow ideale
 
@@ -1278,3 +1280,4 @@ Apri bene la mente, perché adesso entrerai nel vivo di un argomento molto affas
 * revert del filesystem
 * diff di due branch
 * diff del file system
+* pull
