@@ -98,8 +98,8 @@ In effetti, qualunque cosa tu voglia fare, git chiede normalmente di ottenere un
 
 Passiamo dalla terza differenza. E preparati a conoscere il vero motivo per cui git sta sostituendo molto velocemente SVN come nuovo standard *de-facto*.
 
-* SVN memorizza la collezione delle varie patch (o diff) applicate nel tempo ai file; all'occorrenza ricostruisce lo stato attuale;
-* git memorizza i file così come sono, nella loro interezza; all'occorrenza ne calcola le diff.
+* SVN memorizza la collezione dei vari delta (o patch) applicati nel tempo ai file; all'occorrenza ricostruisce lo stato attuale;
+* git memorizza i file così come sono, nella loro interezza; all'occorrenza ne calcola i delta.
 
 Se vuoi evitare tanti grattacapi con git, il miglior suggerimento che tu possa seguire è di trattarlo come un **database chiave/valore**. 
 
@@ -359,7 +359,7 @@ Hai ottenuto una diramazione, senza ricorrere al meccanismo di copia dei file ut
 
 Due osservazioni importanti.
  
-La prima per ribadire il concetto che git non ha mai memorizzato i "diff" tra i file: `A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN in git potrebbero non valere.
+La prima per ribadire il concetto che git non ha mai memorizzato i delta tra i file: `A`, `B` e `C` sono snapshot dell'intero progetto. È molto importante ricordarselo, perché ti aiuterà a capire che tutte le considerazioni che sei sempre stato abituato a fare con SVN in git potrebbero non valere.
 
 La seconda potrebbe un po' sorprenderti: le due linee di sviluppo divergenti che hai appena visto non sono `branch`. In git i rami sono dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel prossimo paragrafo, ma abituati già a ripeterti: in git i `branch` non sono rami di sviluppo.
 
