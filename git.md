@@ -1,4 +1,4 @@
-Introduzione
+﻿Introduzione
 ============
 
 Questa guida è un po' diversa dalle altre.
@@ -679,7 +679,7 @@ esegui
 
 > git rebase master
 
-dice a git: "*sposta il ramo corrente sulla nuova base: *`master`".<br/>
+dice a git: "*sposta il ramo corrente sulla nuova base* `master`".<br/>
 Sotto sotto, git non fa altro che eseguire una serie di `cherry-pick`: prende tutti i `commit` di `dev` che `master` ancora non ha e ce li applica in ordine.
 
 Il risultato sarà
