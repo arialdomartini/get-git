@@ -915,15 +915,10 @@ Per collegare il tuo `repository` locale ad un `remote` ti basta fornire a git l
 
 Per rendere le cose semplici, facciamo un esempio concreto senza stare a coinvolgere server esterni e internet; crea un altro `repository` da qualche parte sul tuo stesso computer
 
->cd ..<br/>
->mkdir 
->
->
->
->
->repo-remoto<br/>
->cd repo-remoto<br/>
->git init<br/>
+>**cd ..**<br/>
+>**mkdir repo-remoto**<br/>
+>**cd repo-remoto**<br/>
+>**git init**<br/>
 
 
 In questo caso, dalla directory del tuo progetto il `repository` remoto sarà raggiungibile tramite `../repo-remoto` o col suo path assoluto.<br/>
@@ -936,7 +931,7 @@ Per esempio, il `repository` di questa guida ha l'indirizzo
 
 * `git@github.com:arialdomartini/get-git.git`.
 
-Capita molto spesso, anche, che l'accesso ai `remote` richiesta un'autenticazione. In questo caso, di solito, si usano una coppia nome utente/password o una chiave ssh.
+Capita molto spesso, anche, che l'accesso ai `remote` richieda un'autenticazione. In questo caso, di solito, si usano una coppia nome utente/password o una chiave ssh.
 
 Torna nel tuo progetto
 
@@ -949,7 +944,7 @@ Bene. Aggiungi all'elenco dei `remote` il `repository` appena creato, indicando 
 Ottimo. Hai connesso il tuo `repository` ad un altro nodo. Sei ufficialmente in una rete peer-to-peer di `repository`.<br/>
 Da questo momento, quando vuoi riferirti a quel `repository` remoto utilizzerai il nome `foobar`.
 
-Il nome è necessario perché, a differenza di SVN che ha il concetto di "*server centrale*" in git puoi essere collegato ad un numero qualsiasi di`repository` remoti contemporaneamente.
+Il nome è necessario perché, a differenza di SVN che ha il concetto di *server centrale* in git puoi essere collegato ad un numero qualsiasi di`repository` remoti contemporaneamente, per cui ad ognuno assegnerai un nome identificativo univoco.
 
 Sono due le cose che fondamentalmente puoi fare con un `remote`: allinearsi al suo contenuto o chiedere che sia lui ad allinearsi a te.
 
@@ -958,7 +953,7 @@ Hai a disposizione due comandi: `push` e `fetch`.
 Con `push` puoi *spedire* un set di `commit` al `repository` remoto.<br/>
 Con `fetch` puoi *riceverli* dal `repository` remoto
 
-Sia `push` che `fetch`, in realtà, permettono al tuo `repository` e al `remote` di scambiarsi delle etichette. Ma per gradi: iniziamo a vedere in concreto cosa accada.
+Sia `push` che `fetch`, in realtà, permettono al tuo `repository` e al `remote` di scambiarsi delle etichette. E, in realtà, hai a disposizione anche altri comandi. Ma andiamo per gradi: iniziamo a vedere in concreto come funzioni la comunicazione tra un `repository` ed un `remote`.
 
 
 ## Spedire un ramo con `push`
@@ -972,12 +967,12 @@ Il tuo `repository` locale, invece, contiene molti `commit` e molti `branch`:
 
 Prova a chiedere al `repository` remoto di darti i `commit` e i `branch` di cui dispone e che tu non hai. Se non indichi un `branch` specifico il `repository` remoto cercherà di darteli tutti. Nel tuo caso il `remote` è vuoto, quindi non dovrebbe restituirti nulla
 
->git fetch foobar
+>**git fetch foobar**
 
 Infatti. Non ricevi nulla.<br/>
 Prova, invece, a spedire il ramo `experiment`
 
->git push foobar experiment<br/>
+>**git push foobar experiment**<br/>
 ><br/>
 >Counting objects: 14, done.<br/>
 >Delta compression using up to 4 threads.<br/>
@@ -985,16 +980,17 @@ Prova, invece, a spedire il ramo `experiment`
 >Writing objects: 100% (14/14), 1.07 KiB | 0 bytes/s, done.<br/>
 >Total 14 (delta 3), reused 0 (delta 0)<br/>
 >To ../repo-remoto<br/>
->** * [new branch]      experiment -> experiment<br/>**
+> * [new branch]      experiment -> experiment<br/>
 
 Wow! Qualcosa è sucesso!<br/>
 Di tutti i messaggi di risposta, quello più interessante in questo momento è l'ultimo
 
->** * [new branch]      experiment -> experiment<br/>**
+> * [new branch]      experiment -> experiment<br/>
 
 Ti aiuto a interpretare quello che è successo:
 
-* quando hai scritto `git push foobar experiment` git ha preso in considerazione il tuo ramo `experiment` ed ha ricavato l'elenco di tutti i `commit` raggiunbibili da quel ramo (come al solito: sono tutti i `commit` che puoi trovare partendo da `experiment` e seguendo a ritroso nel tempo qualsiasi percorso tu possa percorrere)
+* con `git push foobar experiment` hai chiesto a git di spedire a `foobar` il ramo `experiment`
+* per eseguire il comando git ha preso in considerazione il tuo ramo `experiment` ed ha ricavato l'elenco di tutti i `commit` raggiunbibili da quel ramo (come al solito: sono tutti i `commit` che puoi trovare partendo da `experiment` e seguendo a ritroso nel tempo qualsiasi percorso tu possa percorrere)
 * git ha poi contattato il `repository` remoto `foobar` per sapere quali di quei `commit` non fossero presenti remotamente
 * dopo di che, ha creato un pacchetto con tutti i `commit` necessari, li ha inviati  ed ha chiesto al `repository` remoto di aggiungerli al proprio database
 * il `remote` ha poi posizionato il proprio `branch` `experiment` perché puntasse esattamente lo stesso `commit` puntato sul tuo `repository` locale. Il `remote` non aveva quel `branch`, per cui lo ha creato.
@@ -1004,38 +1000,41 @@ Proviamo adesso a visualizzare il `repository` remoto
 
 ![Alt tex1](img/remote-1.png)
 
-Vedi? Il `remote` non è una copia del tuo `repository`: contiene solo il `branch` che gli hai spedito.
+Vedi? Il `remote` non è diventato una copia del tuo `repository`: contiene solo il `branch` che gli hai spedito.
 
-Guarda se torna: prova a prendere in ordine i 4 `commit` e verifica che siano davvero tutti e soli i `commit` che avevi in locale sul ramo `experiment`.<br/>
-Sì, sono proprio gli stessi.
+Puoi verificare che i 4 `commit` siano davvero tutti e soli i `commit` che avevi in locale sul ramo `experiment`.<br/>
 
 Anche sul tuo `repository` locale è successo qualcosa. Prova a visualizzarlo
 
 ![Alt tex1](img/push-1.png)
 
-Guarda guarda! Sembra sia stato aggiunto un nuovo `branch`, chiamato `foobar/experiment`. E sembra anche si tratti di un `branch` un po' particolare, perché SmartGit si preoccupa di disegnarlo di colore differente.
+Guarda guarda! Sembra sia stato aggiunto un nuovo `branch`, chiamato `foobar/experiment`. E sembra anche si tratti di un `branch` un po' particolare, perché l'interfaccia grafica si preoccupa di disegnarlo di colore differente.
 
 Prova a cancellare quel `branch`
 
->git branch -d foobar/experiment<br/>
+>**git branch -d foobar/experiment**<br/>
+><br/>
 >error: branch 'foobar/experiment' not found.<br/>
 
-Uhm. Decisamente quel `branch` ha qualcosa di particolare.
+Non può essere cancellato. git dice che quel `branch` non esiste. Uhm. Decisamente quell'etichetta ha qualcosa di particolare.
 
 Il fatto è che quel `branch` non è sul tuo `repository`: è su `foobar`. git ha aggiunto un `remote branch` per permetterti di tenere traccia del fatto che, su  `foobar` il `branch` `experiment` punta proprio a quel `commit`.
 
 I `remote branch` sono una sorta di reminder che ti permettono di capire dove si trovino i `branch` sui `repository` remoti ai quali sei collegato.
 
-C'è un aspetto molto importante sulla posizione dei `remote branch` a cui dovrai fare l'abitudine: proprio mentre stavi leggendo queste righe un tuo collega potrebbe aver aggiunto qualche `commit` proprio sul suo ramo `expetiment`, e tu non ne sapresti niente, perché il tuo `repository` non è collegato in tempo reale con i suoi `remote`, ma si sincronizza solo quando ci interagisci con gli appositi comandi. Per cui, il `commit` puntato da `foobar/experiment` è da intendersi come l'ultma posizione nota del ramo `experiment` su `foobar`.
+Così come non puoi cancellare quel `branch` non puoi nemmeno spostarlo direttamente. L'unico modo per spostarlo è che lo sposti `foobar`: indirettamente, quel che puoi fare è inviare con `push` un aggiornamento del ramo `experiment` a `foobar`; la richiesta di `push` è sempre accompagnata dalla richiesta di aggiornamento della posizione del proprio `branch`.
+
+
+C'è un aspetto molto importante sulla posizione dei `remote branch` a cui dovrai fare l'abitudine: proprio mentre stavi leggendo queste righe un tuo collega potrebbe aver aggiunto qualche `commit` proprio sul suo ramo `experiment` sul `repository` remoto, e tu non ne sapresti niente, perché il tuo `repository` non è collegato in tempo reale con i suoi `remote`, ma si sincronizza solo quando ci interagisci con gli appositi comandi. Per cui, il `commit` puntato da `foobar/experiment` è da intendersi come l'ultma posizione nota del ramo `experiment` su `foobar`.
 
 ## Ricevere aggiornamenti con `fetch`
 
 Guarda: proviamo proprio a simulare il caso in cui un tuo collega stia lavorando sull'altro `repository`. Prova ad aggiungere un `commit` sul `repository remoto` proprio sul ramo `experiment` di cui hai appena fatto `push`
 
->cd ../repo-remoto<br/>
->touch x<br/>
->git add x<br/>
->git commit -m "un contributo dal tuo collega"<br/>
+>**cd ../repo-remoto**<br/>
+>**touch x**<br/>
+>**git add x**<br/>
+>**git commit -m "un contributo dal tuo collega"**<br/>
 
 Ecco il risultato finale su `foobar`
 
@@ -1043,7 +1042,7 @@ Ecco il risultato finale su `foobar`
 
 Torna pure al tuo `repository` locale e vediamo cos'è cambiato
 
->cd ../progetto<br/>
+>**cd ../progetto**<br/>
 
 ![Alt tex1](img/push-1.png)
 
@@ -1055,42 +1054,57 @@ Tutto questo è coerente con quel che ti ho detto prima: il tuo `repository` non
 
 Chiedi allora al tuo `repository` di allinearsi con `foobar`. Puoi chiedere un aggiornamento su un singolo ramo o un aggiornamento su tutti i rami. Di solito, si sceglie la seconda strada
 
->git fetch foobar<br/>
+>**git fetch foobar**<br/>
 ><br/>
 >remote: Counting objects: 3, done.<br/>
 >remote: Compressing objects: 100% (2/2), done.<br/>
 >remote: Total 2 (delta 1), reused 0 (delta 0)<br/>
 >Unpacking objects: 100% (2/2), done.<br/>
 >From ../repo-remoto<br/>
->&nbsp;&nbsp;&nbsp;&nbsp;**e5bb7c4..c8528bb  experiment -> foobar/experiment**<br/>
+>&nbsp;&nbsp;&nbsp;&nbsp;e5bb7c4..c8528bb  experiment -> foobar/experiment<br/>
 
-Guarda di nuovo il `repository` locale. (Per renderci la vita più semplice, iniziamo a sfruttare un'opzione ci dui la quasi totalità delle interfacce grafiche di git è provvista: la possibilità di visualizzare un singolo ramo e nascondere tutti gli altri, così da semplificare il risultato finale)
+Qualcosa è arrivato.
+
+Guarda di nuovo il `repository` locale. (Per renderci la vita più semplice, iniziamo a sfruttare un'opzione ci cui la quasi totalità delle interfacce grafiche di git è provvista: la possibilità di visualizzare un singolo ramo e nascondere tutti gli altri, così da semplificare il risultato finale)
 
 ![Alt tex1](img/push-3.png)
 
 Guarda attentamente quello che è successo: il tuo ramo `experiment` non si è spostato di una virgola. Se controlli, anche il tuo `file system` non è cambiato di un solo bit. Solo il tuo `repository` locale è stato aggiornato: git ci ha aggiunto un nuovo `commit`, lo stesso aggiunto remotamente; in concomitanza, git ha anche aggiornato la posizione di `foobar/experiment`, per comunicarti che "*dalle ultime informazioni di cui si dispone, l'ultima posizione registrata su `foobar` del ramo `experiment` è questa*".
 
-Questo è il modo in cui, normalmente, git ti permette di sapere che qualcuno ha proseguito sui lavori del branch `experiment`.
+Questo è il modo in cui, normalmente, git ti permette di sapere che qualcuno ha proseguito il proprio lavoro su un `repository` remoto.
 
 Un'altra osservazione importante: `fetch` non è l'equivalente di `svn update`; solo il tuo `repository` locale si è sincronizzato con quello remoto; il tuo `file system` non è cambiato! Questo significa che, in generale, l'operazione di `fetch` è molto sicura: anche dovessi sincronizzarti con un `repository` di dubbia qualità, puoi dormire sonni tranquilli, perché l'operazione non eseguirà mai il `merge` sul tuo codice senza il tuo esplicito intervento.
 
 Se invece tu volessi davvero includere i cambiamenti introdotti remotamente nel *tuo* lavoro, potresti usare il comando `merge`. 
 
->git merge foobar/experiment
+>**git merge foobar/experiment**
 
 ![Alt tex1](img/push-4.png)
 
 Riconosci il tipo di `merge` che ne è risultato? Sì, un `fast-forward`. Interpretalo così: il tuo `merge` è stato un `fast-forward` perché mentre il tuo collega lavorava il ramo non è stato modificato da nessun altro; il tuo collega è stato il solo ad avervi aggiunto contributi e lo sviluppo è stato lineare.
 
-Possiamo estendere il diagramma delle interazioni tra i comandi di git e i suoi ambienti aggiungendo la colonna `remote` e l'azione di `push` e `fetch`   
+Questo è un caso così comune che spesso vorrai evitare di fare `git fetch` seguito da `git merge`: git offre il comando `git pull` che esegue le due operazioni insieme.
+
+Insomma, invece di 
+
+>**git fetch foobar**<br/>
+>**git merge foobar/experiment**
+
+avresti potuto lanciare
+
+>**git pull foobar experiment**
+
+
+
+Possiamo estendere il diagramma delle interazioni tra i comandi di git e i suoi ambienti aggiungendo la colonna `remote` e l'azione di `push`, `fetch` e `pull`   
 
 ![Alt tex1](img/push-fetch.png)
 
 
-## Divergere
+## Sviuppo non lineare
 
 Proviamo a complicare la situazione.<br/>
-Vorrei mostrarti un caso che ti capiterà continuamente: il caso in cui due sviluppatori stiano lavorando contemporaneamente su un ramo. Di solito accade che, proprio nel momento in cui vorrai spedire al `remote` i tuoi nuovi `commit`, vieni a scoprire che, nel frattempo, qualcuno ha modificato il `branch`. 
+Vorrei mostrarti un caso che ti capiterà continuamente: quello in cui due sviluppatori stiano lavorando contemporaneamente su un ramo, su due `repository` separati. Di solito accade che, proprio nel momento in cui vorrai spedire al `remote` i tuoi nuovi `commit`, vieni a scoprire che, nel frattempo, qualcuno sul `repository` remoto ha modificato il `branch`. 
 
 Inizia a simulare l'avanzamento dei lavori del tuo collega, aggiungendo un `commit` sul suo `repository`
 
@@ -1110,20 +1124,20 @@ Torna al tuo `repository`
 Come prima: fintanto che non chiedi esplicitamente un allineamento con `fetch` il tuo `repository` non sa nulla del nuovo `commit`.
 
 Questa, per inciso, è una delle caratteristiche notevoli di git: essere compatibile con la natura fortemente non lineare delle attività di sviluppo.<br/>
-Pensaci: quando due sviluppatori lavorano su un solo branch, SVN richiede che ogni `commit` sia preceduto da un `update`; cioè, che per poter registrare una modifica lo sviluppatore debba integrare preventivamente il lavoro dell'altro sviluppatore.<br/>
+Pensaci: quando due sviluppatori lavorano su un solo branch, SVN richiede che ogni `commit` sia preceduto da un `update`; cioè, che per poter registrare una modifica lo sviluppatore debba integrare preventivamente il lavoro dell'altro sviluppatore. Non puoi eseguire un `commit` se prima non integri i `commit` del tuo collega.<br/>
 git, da questo punto di vista, è meno esigente: gli sviluppatori possono divergere localmente, perfino lavorando sullo stesso `branch`; la decisione se e come integrare il loro lavoro può essere intenzionalmente e indefinitamente spostata avanti nel tempo.
 
-In ogni modo: abbraccia la natura fortemente non lineare di git e, ignorando deliberatamente che potrebbero esserci stati avanzamenti sul `repository` remoto, procedi senza indugio con i tuoi nuovi `commit` in locale
+In ogni modo: abbraccia la natura fortemente non lineare di git e, deliberatamente ignorando che potrebbero esserci stati avanzamenti sul `repository` remoto, procedi senza indugio con i tuoi nuovi `commit` in locale
 
 
->cd ../progetto<br/>
->touch mio-contributo && git add mio-contributo<br/>
->git commit -m "un mio nuovo commit"<br/>
+>**cd ../progetto**<br/>
+>**touch mio-contributo && git add mio-contributo**<br/>
+>**git commit -m "un mio nuovo commit"**<br/>
 
 
 ![Alt tex1](img/collaborating-2.png)
 
-Fai nuovamente caso a quel che ti ho appena descritto:
+Rifacciamo un punto della situazione su quel che ti ho appena descritto:
 
 * il tuo `repository` non sa del nuovo `commit` registrato su `foobar` e continua a vedere una situazione non aggiornata
 * a partire dal medesimo `commit` "*un contributo dal tuo collega*" tu e l'altro sviluppatore avete registrato due `commit` completamente indipendenti.
@@ -1133,11 +1147,11 @@ Aver lavorato concorrentemente sullo stesso ramo, con due `commit` potenzialment
 E infatti è proprio così. Il conflitto nasce nel momento in cui si cercherà di sincronizzare i due `repository`. Per esempio: prova a spedire il tuo ramo su `foobar`
 
 
->git push foobar experiment<br/>
+>**git push foobar experiment**<br/>
 ><br/>
 >To ../repo-remoto<br/>
->** ! [rejected]**        experiment -> experiment (fetch first)<br/>
->**error: failed to push some refs to '../repo-remoto'**<br/>
+> ! [rejected]        experiment -> experiment (fetch first)<br/>
+> error: failed to push some refs to '../repo-remoto'<br/>
 >hint: Updates were rejected because the remote contains work that you do<br/>
 >hint: not have locally. This is usually caused by another repository pushing<br/>
 >hint: to the same ref. You may want to first integrate the remote changes<br/>
@@ -1152,7 +1166,7 @@ Ed era prevedibile. Con `git push foobar experiment` avevi chiesto a `foobar` di
 * salvare nei proprio database tutti i `commit` di cui tu disponi e che remotamente ancora non sono presenti
 * spostare la propria etichetta `experiment` in modo che puntasse allo stesso `commit` puntato in locale
 
-Ora: per la prima operazione non ci sarebbe stato alcun problema. Ma per la seconda operazione git pone un vincolo aggiuntivo: il `repository` remoto sposterà la propria etichetta solo a patto che l'operazione si possa concludere con un `fast-forward`, cioè, solo a patto che non ci siano da effettuare dei `merge`. Oppure, detta con altre parole: un `remote` accetta `branch` solo se non creano linee di sviluppo divergenti. 
+Ora: per la prima operazione non ci sarebbe stato alcun problema. Ma per la seconda operazione git pone un vincolo aggiuntivo: il `repository` remoto sposterà la propria etichetta solo a patto che l'operazione si possa concludere con un `fast-forward`, cioè, solo a patto che non ci siano da effettuare dei `merge`. Oppure, detta con altre parole: un `remote` accetta `branch` solo se l'operazione non creerà linee di sviluppo divergenti. 
 
 Il `fast-forward` è citato proprio nell'ultima riga del messaggio di errore
 
@@ -1161,7 +1175,7 @@ Il `fast-forward` è citato proprio nell'ultima riga del messaggio di errore
 Nello stesso messaggio git fornisce un suggerimento: ti dice di provare a fare `fetch`.<br/>
 Proviamo
 
->git fetch foobar
+>**git fetch foobar**
 
 ![Alt tex1](img/collaborating-3.png)
 
@@ -1180,8 +1194,8 @@ Prova la terza di queste possibilità.<br/>
 Anzi, per insistere sulla natura non lineare di git, prova a far precedere alla terza strada la prima. In altre parole, prova a vedere cosa succede se, temporaneamente, ignori il disallineamento col lavoro del tuo collega e continui a sviluppare sulla tua linea.<br/>
 È un caso molto comune: sai di dover riallinearti, prima o poi, col lavoro degli altri, ma vuoi prima completare il tuo lavoro. git non ti detta i tempi e non ti obbliga ad anticipare le cose che non vuoi fare subito
 
->echo modifica >> mio-contributo<br/>
->git commit -am "avanzo lo stesso"&nbsp;&nbsp;&nbsp;# -a è un'abbreviazione a per `git add`
+>**echo modifica >> mio-contributo**<br/>
+>**git commit -am "avanzo lo stesso"**
 
 ![Alt tex1](img/collaborating-4.png)
 
@@ -1205,7 +1219,7 @@ Bene: se ricordi, `rebase` ti permette di applicare tutte le tue modifiche ad un
 
 Prova
 
->git rebase foobar/experiment
+>**git rebase foobar/experiment**
 
 ![Alt tex1](img/collaborating-6.png)
 
@@ -1214,14 +1228,14 @@ In altre parole: `rebase` ha apparentemente reso lineare il processo di sviluppo
 
 Puoi spedire il tuo lavoro a `foobar`: apparirà come tu abbia apportato le tue modifiche a partire dall'ultimo `commit` eseguito su `foobar`.
 
->git push foobar experiment<br/>
+>**git push foobar experiment**<br/>
 ><br/>
 >Counting objects: 6, done.<br/>
 >Delta compression using up to 4 threads.<br/>
 >Compressing objects: 100% (4/4), done.<br/>
 >Writing objects: 100% (5/5), 510 bytes | 0 bytes/s, done.<br/>
 >Total 5 (delta 2), reused 0 (delta 0)<br/>
->remote: error: **refusing to update checked out branch: refs/heads/experiment**<br/>
+>remote: error: refusing to update checked out branch: refs/heads/experiment<br/>
 >remote: error: By default, updating the current branch in a non-bare repository<br/>
 >remote: error: is denied, because it will make the index and work tree >inconsistent<br/><br/>
 >remote: error: with what you pushed, and will require 'git reset --hard' to match<br/>
@@ -1248,20 +1262,20 @@ Per adesso, rimedia chiedendo gentilmente al tuo collega di spostarsi su un altr
 
 Quindi: su `foobar` vedi di spostarti su un altro `branch`
 
->cd ../repo-remoto<br/>
->git checkout -b parcheggio<br/>
+>**cd ../repo-remoto**<br/>
+>**git checkout -b parcheggio**<br/>
 
 Dopo di che, torna al tuo `repository` locale e ripeti `push`
 
 
->cd ../progetto<br/>
->git push foobar experiment<br/>
+>**cd ../progetto**<br/>
+>**git push foobar experiment**<br/>
 
 Ecco il risultato
 
 ![Alt tex1](img/collaborating-7.png)
 
-Ripercorriamo graficamente quello che è successo. Parrivi da
+Ripercorriamo graficamente quello che è successo. Partivi da
 
 ![Alt tex1](img/collaborating-4.png)
 
@@ -1286,8 +1300,7 @@ Ti torna tutto?<br/>
 Ecco, guarda attentamente le ultime due immagini, perché è proprio per evitare quello che vedi che git si è lamentato tanto, quando hai fatto `git push foobar experiment`.<br/>
 
 
-Mettiti nei panni del tuo collega virtuale, che abbiamo immaginato sul `repository` remoto `foobar`.
-
+Per capirlo, mettiti nei panni del tuo collega virtuale, che abbiamo immaginato sul `repository` remoto `foobar`.<br/>
 Il tuo collega se ne sta tranquillo sul suo ramo `experiment` 
 
 ![Alt tex1](img/collaborating-1.png)
@@ -1298,7 +1311,7 @@ quando ad un tratto, senza che abbia dato alcun comando a git, il suo `repositor
 
 Ammetterai che se questo fosse il comportamento standard di git non vorresti mai trovarti nella posizione del tuo collega virtuale: la perdita di controllo del proprio `repository` e del proprio `file system` sarebbe davvero un prezzo troppo alto da pagare.
 
-Capisci bene che cambiare il ramo del quale si è fatto `checkout` significa, sostanzialmente, fare il `checkout` di un `commit` differente, quindi cambiare sotto i piedi il `file system`. Ovviamente questo è del tutto inaccettabile, ed è per questo che git si è rifiutato di procedere ed ha replicato con un chilometrico messaggio di errore.
+Capisci bene che cambiare il ramo del quale si è fatto `checkout` significa, sostanzialmente, vedersi cambiare sotto i piedi il `file system`. Ovviamente questo è del tutto inaccettabile, ed è per questo che git si è rifiutato di procedere ed ha replicato con un chilometrico messaggio di errore.
 
 Prima hai rimediato alla situazione spostando il tuo collega virtuale su un ramo `parcheggio`, unicamente per poter spedirgli il tuo ramo. 
 
@@ -1310,10 +1323,11 @@ Ma a pensarci bene anche questa è una soluzione che, probabilmente, tu personal
 
 È evidente che debba esistere una soluzione radicale a questo problema.
 
-La soluzione è sorprentemente semplice: **non permette ad altri di accedere al tuo `repository`**. 
+La soluzione è sorprentemente semplice: **non permettere ad altri di accedere al tuo `repository`**. 
 
-Potresti trovarla una soluzione un po' sommaria, ma devi riconoscere che non esista sistema più drastico ed efficace.<br/>
-Naturalmente, questa è solo metà della storia e forse vale la pena di approfondire  un po' l'argomento.<br/>
+Potresti trovarla una soluzione un po' sommaria, ma devi riconoscere che non esista sistema più drastico ed efficace. E, fortunatamente, è molto meno limitante di quanto tu possa credere ad una prima analisi.
+
+Naturalmente, ti ho raccontato solo metà della storia e forse vale la pena di approfondire  un po' l'argomento.<br/>
 Apri bene la mente, perché adesso entrerai nel vivo di un argomento molto affascinante: la natura distribuita di git. Si tratta, verosimilmente, dell'aspetto più comunemente incompreso di git e, quasi certamente di una delle sue caratteristiche più potenti.
 
 # Obiettivo 7: disegna il tuo workflow ideale
