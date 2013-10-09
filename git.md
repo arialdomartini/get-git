@@ -7,7 +7,7 @@ Molti dei testi che ho letto su git si preoccupano di introdurti ai comandi base
 
 Quello che ho notato, però, è che imparando git partendo dai comandi base rischi di finire per usarlo come uno strumento vagamente simile a SVN ma provvisto di un set aggiuntivo di comandi esoterici, il cui funzionamento ti resterà sostanzialmente oscuro.
 
-Facci caso: alcuni di quelli che hanno imparato git abbasanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un `rebase` o di non cogliere esattamente che uso fare dell'`index`. 
+Facci caso: alcuni di quelli che hanno imparato git abbastanza da riuscire ad usarlo quotidianamente ti racconteranno di aver fatto molta fatica a capire cosa sia un `rebase` o di non cogliere esattamente che uso fare dell'`index`. 
 
 La mia impressione è che, una volta capito il modello interno (che è sorprendentemente semplice!), tutto git appaia improvvisamente lineare e coerente: non c'è davvero alcun motivo per cui il `rebase` dovrebbe essere un argomento misterioso.
 
@@ -512,11 +512,11 @@ Per git, calcolare le modifiche apportate ai file da un `commit` all'altro non �
 
 >**git diff dev master**
 
-Con `git diff FROM TO` chiedi a git "*qual è l'elenco delle modifiche ai file che devo applicare a `FROM` perché il progetto diventi identico a quello di `TO`*"? 
+Con `git diff FROM TO` chiedi a git "*qual è l'elenco delle modifiche ai file che devo applicare a `FROM` perché il progetto diventi identico a quello contenuto fotografato da `TO`*"? 
 
 
-Con un po' di immaginazione puoi pensare che le linee tra i commit rappresentino le modifiche che tu hai apportato ai file e alle directory per ottenere un `commit`.<br/>
-Per esempio, qui in rosso ho evidenziato la linea che rappresenta quel che hai fatto quando sei partito da `B` e hai creato il commit `dev`.
+Con un po' di immaginazione puoi pensare che le linee tra i `commit` rappresentino le modifiche che tu hai apportato ai file e alle directory per ottenere un `commit`.<br/>
+Per esempio, qui in rosso ho evidenziato la linea che rappresenta quel che hai fatto quando sei partito da `B` e hai creato il commit puntato da `dev`.
 
 ![Alt tex1](img/angular-highlighted.png)
 
@@ -534,7 +534,8 @@ Bene. Tieni a mente questo modello. Adesso ti mostrerò uno dei comandi più fol
 
 `cherry-pick` applica i cambiamenti introdotti da un commit sopra un altro commit.
 
-Vediamolo subito con un esempio. A partire da `dev` crea un `branch` chiamato `experiment` ed aggiuncici un `commit`
+Vediamolo subito con un esempio.<br/>
+A partire da `dev` crea un `branch` chiamato `experiment` ed aggiuncici un `commit`
 
 >**git checkout dev**<br/>
 >** git branch experiment**<br/>
@@ -545,8 +546,7 @@ Vediamolo subito con un esempio. A partire da `dev` crea un `branch` chiamato `e
 
 ![Alt tex1](img/cherry-pick-1.png)
 
-Bene: hai apportato una modifica a partire dall'ultimo `commit` di `dev`.<br/>
-Supponiamo ti interessi applicare la stessa modifica anche al ramo `master`.<br/>
+Bene: adesso prendi in considerazione la modifica che hai appena apportato a partire dall'ultimo `commit` di `dev`e supponi che ti interessi applicare la stessa modifica anche al ramo `master`.<br/>
 Con il comando `cherry-pick` puoi chiedere a git di calcolare le modifiche introdotte dl tuo `commit` e riapplicarle da qualche altra parte, per esempio, proprio su `master`
 
 > git checkout master<br/>
@@ -564,7 +564,7 @@ Voglio darti qualche spunto.
 A partire da `master` crea un ramo `feature` e aggiungici 3 `commit`
 
 
->**git checkout -b feature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# scorciatoria per fare branch + checkout**<br/>
+>**git checkout -b feature**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# scorciatoria per fare branch + checkout<br/>
 > **touch feature**<br/>
 > **git add feature**<br/>
 > **git commit -m "feature"**<br/>
@@ -580,30 +580,33 @@ A partire da `master` crea un ramo `feature` e aggiungici 3 `commit`
 
 ![Alt tex1](img/bug-1.png)
 
-Oh, no! il secondo `commit`, quello col commento `orrore e raccapriccio` è stato un errore madornale!  Ah, se solo si potesse riscrivere la storia ed rimuoverlo!
+Oh, no! Il secondo `commit`, quello con il commento "*orrore e raccapriccio*" è stato un errore madornale!  Ah, se solo si potesse riscrivere la storia e rimuoverlo!
 
-Bene: puoi farlo.<br/>
-L'idea è di riportare `feature` indietro nel tempo, su `master`, ed di usare `cherry-pick` per riapplicarvi una per una le modifiche, avendo cura però di non applicare le modifiche introdotte da `orrore e raccapriccio`. Hai solo bisogno di conoscere i valori delle chiavi:
+Puoi farlo!<br/>
+L'idea è di riportare `feature` indietro nel tempo, su `master`, e di usare `cherry-pick` per riapplicarvi una per una le modifiche, avendo cura però di non applicare le modifiche introdotte da "*orrore e raccapriccio*".<br/>
+Hai solo bisogno di conoscere i valori delle chiavi dei 3 `commit` 
 
 >**git log master..feature --oneline**<br/>
 >8f41bb8 altra feature<br/>
 >ec0e615 orrore e raccapriccio<br/>
 >b5041f3 feature<br/>
 
-Adesso che sai come chiamare i vari `commit` per nome, tornare indietro nel tempo.<br/> Riposizionati su `master`
+È il momento di tornare indietro nel tempo.<br/> Riposizionati su `master`
 
 >**git checkout master**<br/>
 
-e spostaci sopra `feature`, in modo che torni alla posizione dove si trovava quando lo hai creato, prima di fare i `commit`
+e spostaci sopra `feature`, in modo che torni alla posizione dove si trovava quando lo hai creato prima di fare i `commit`
 
->**git branch --force feature** 
+>**git branch --force feature**<br/>
+>**git checkout feature**
 
 ![Alt tex1](img/bug-2.png)
+
 
 Non ti resta che prenderti, con `cherry-pick` i soli `commit` che ti interessano.<br/>
 Prendi il primo, quello col commento `feature`
 
->**git checkout feature**<br/>
+
 >**git cherry-pick b5041f3**
 
 ![Alt tex1](img/bug-3.png)
@@ -628,10 +631,11 @@ Urca! L'impressione è che git abbia riscritto la storia eliminando un `commit` 
  
 Infatti, molti raccontano che git sia capace di riscrivere la storia e che questo suo comportamento sia estremamente pericoloso. Ecco: tu hai visto che non è così; git è estremamente conservativo e quando ti permette di manipolare i `commit` non fa altro che agire *in append*, costruendo *nuovi* rami, senza mai cancellare quel che già esiste.
 
+Nota anche un'altra cosa: nel momento in cui hai ricostruito il ramo prendendo con `cherry-pick` un `commit` alla volta, niente ti obbligava a riapplicare i `commit` nello stesso ordine originario: volendo, avresti potuto applicarli al contrario, ottenendo, di fatto, un ramo con i `commit` invertiti. Non è una cosa che capita spesso di fare: ma adesso sai che si può fare.
 
 ## Spostare un ramo di sviluppo
 
-Voglio farti vedere un'altra magia del `cherry-pick`, pre introdurti all'inspiegabilmente temuto comando `rebase`.
+Voglio farti vedere un'altra magia del `cherry-pick`, per introdurti al comando `rebase`.
 
 Riprendi il tuo `repository`.
 
@@ -641,21 +645,23 @@ Mettiamo che tu voglia proseguire lo sviluppo dei tuoi css, per cui farai un nuo
 
 >**git checkout dev**<br/>
 >**echo "a { color:red; }" >> style.css**<br/>
->**git commit -am "i link sono rossi"
+>**git commit -am "i link sono rossi**"
+
+Nota: ho usato l'opzione `-a` di `commit` che, implicitamente, esegue `git add` di ogni file modificato. Tieni a mente questa opzione: è molto comoda e ti capiterà spessissimo di usarla.
+
 
 ![Alt tex1](img/rebase-2.png)
 
-(Ho usato l'opzione `-a` di `commit` che, implicitamente, esegue `git add` di ogni file modificato)
 
-Ottimo. I tuoi css sono perfetti.<br/>
-Peccato solo che il ramo `dev` sia rimasto un po' indietro rispetto a `master`. Del resto, cosa potevi farci? `master` è andato avanti e `dev` è rimasto lì dove lo avevi creato.
+Ottimo. I tuoi css sono pronti per andare in produzione.<br/>
+Peccato solo che il ramo `dev` sia rimasto un po' indietro rispetto a `master`, che tu hai deciso di considerare il codice *production-ready*. Del resto, cosa potevi farci? Mentre tu lavoravi sui css `master` è andato avanti e `dev`, ovviamente, è rimasto lì dove lo avevi creato.
 
-Certo, se si potesse staccare il ramo `dev` per poi spostarlo *sopra* `master`…
+Certo, se si potesse staccare il ramo `dev` per poi spostarlo *sopra* `master`...
 
 Non ti torna in mente che potresti farlo con `cherry-pick`? È un caso come quello precedente: solo che invece di viaggiare nel passato devi avere un po' di fantasia e immaginare di viaggiare nel futuro.<br/>
-Si tratterebbe di prendere uno ad uno i `commit` di `dev` (scritti nel passato) e riapplicarli sull'ultimo commit di `master` (che relativamente a `dev` è il futuro).
+Si tratterebbe di prendere uno ad uno i 2 `commit` di `dev` e riapplicarli sull'ultimo commit di `master` (che, relativamente a `dev`, è il futuro).
 
-Cioè: riscrivi la storia facendo come se i commit di `dev` siano stati scritti *dopo* i `commit` di `master`. 
+Cioè: a colpi di `cherry-pick` potresti riscrivere la storia come se i commit di `dev` fossero stati scritti *dopo* i `commit` di `master`. 
 
 Se lo facessi, il risultato sarebbe questo
 
@@ -665,13 +671,11 @@ Confrontalo con la situazione di partenza
 
 ![Alt tex1](img/rebase-2.png)
 
-Vedi cosa è accadrebbe? Il ramo `dev` è stato staccato ed è stato impiantato sopra master.
+Potresti interpretarla così: il ramo `dev` è stato staccato ed è stato impiantato sopra master.
 
-Ma 
+Ecco: `rebase` non è altro che una *macro* che esegue automaticamente una serie di `cherry-pick` per evitarti di spostare a mano un `commit` alla volta da un ramo all'altro.
 
-Uno shortcut per evitare di spostare un `commit` alla volta da un ramo all'altro è il comando `git-rebase`.
-
-Provalo. Sul tuo `repository`
+Prova. Sul tuo `repository`
 
 ![Alt tex1](img/rebase-2.png)
 
@@ -679,14 +683,14 @@ esegui
 
 > git rebase master
 
-dice a git: "*sposta il ramo corrente sulla nuova base* `master`".<br/>
-Sotto sotto, git non fa altro che eseguire una serie di `cherry-pick`: prende tutti i `commit` di `dev` che `master` ancora non ha e ce li applica in ordine.
-
-Il risultato sarà
 
 ![Alt tex1](img/rebase-3.png)
 
-Vedi? È del tutto equivalente a spostare uno per uno i `commit` con `cherry-pick`.
+Voilà!
+
+Hai chiesto a git: "*sposta il ramo corrente sulla nuova base* `master`".<br/>
+
+Ricorda: `rebase` è del tutto equivalente a spostare uno per uno i `commit` con `cherry-pick`. Solo, è più comodo.
 
 Riesci ad immaginare a cosa potrebbe servire un tool simile?<br/>
 Guarda, provo a descriverti una situazione molto comune.
