@@ -1625,9 +1625,86 @@ Come vedi, l'opzione `--amend` è un altro di quegli esempi di *macro* comandi c
 Puoi usare `--amend` non solo per modificare il commento: puoi sovrascrivere il tuo ultimo commit aggiungendo file che ti eri dimenticato, correggendo delle modifiche e così via. Di fatto, stai facendo un nuovo `commit`, per cui non ci sono vincoli al tipo di correzioni che puoi apportare.
 
 
+# Eliminare l'ultimo `commit`
+
+Parti dalla fotografia del `repository` che hai ottenuto dal precedente paragrafo
+
+![Alt tex1](img/amend-7.png)
+
+Immagina che tu abbia valutato che, dopo tutto, il tuo ultimo `commit` non vada bene: vorresti eliminarlo.
+
+Una cosa che potresti fare è spostare il `branch` `feature` al `commit` precedente per ottenere
+
+![Alt tex1](img/reset-4.png)
+
+Vediamo passo passo come fare
+
+
+Parti da 
+
+![Alt tex1](img/amend-7.png)
+
+Ti sposti sul precedente `commit`
+
+>**git checkout HEAD^1**<br/>
+
+che significa "*vai sul `commit` padre di `HEAD`*", cioè sul `commit` precedente a quello dove ti trovi adesso
+
+![Alt tex1](img/reset-1.png)
+
+Adesso puoi spostare `feature` nel punto ti trovi: per farlo, puoi creare un branch `feature` nel punto dove ti trovi, sovrascrivendo la posizione attuale di `feature` con l'opzione `-f` di `branch`
+
+>**git branch -f feature HEAD**<br/>
+
+![Alt tex1](img/reset-2.png)
+
+Nascondendo i `commit` orfani il risultato diventa evidente 
+
+![Alt tex1](img/reset-4.png)
+
+
+Sarai senz'altro d'accordo come me che sia una procedura troppo macchinosa per un'esigenza così comune.
+
+Come al solito, git ha un comando che, dietro le quinte, esegue tutti questi passi: `git reset`. A dire la verità, `reset` è ben più versatile e potente.
+
+`git reset` sposta `HEAD` nel punto specificato come argomento. Ricordi che `HEAD` è sempre il tuo `branch` corrente, vero? Quindi, in altre parole, `reset` permette di *spostare* il tuo `branch` corrente in un qualsiasi altro punto del `repository`.
+
+Per esempio partendo da 
+
+![Alt tex1](img/amend-7.png)
+
+puoi *resettare* il tuo `branch` corrente al `commit` precedente puoi fare
+
+>**git reset HEAD^1**
+
+![Alt tex1](img/reset-4.png)
+
+Non sei limitato a spostare il `branch` corrente sul `commit` precedente: puoi *resettarlo* in qualunque posizione. Per esempio, per portare `feature` su master puoi fare
+
+>**git reset master**
+
+![Alt tex1](img/reset-5.png)
+
+Puoi anche spostare il ramo corrente da una linea di sviluppo all'altra
+
+Partendo da 
+
+![Alt tex1](img/reset-6.png)
+
+con
+
+>**git reset prod**
+
+ottieni
+
+![Alt tex1](img/reset-7.png)
+
+Tieni conto di una cosa molto importante: `reset` non coinvolge solo uno spostamento di `branch` sul `repository` ma anche delle modifiche sul `file system`. Il `branch` che stai spostando, infatti, è quello corrente, cioè quello di cui hai fatto il `checkout`; in altre parole, quando esegui un `reset` stai contestualmente facendo il `checkout` di un altro `commit`.
+
+
+
 * eliminare l'ultimo commit
 * revert del filesystem
 * diff di due branch
 * diff del file system
-* pull
 * range di commit
