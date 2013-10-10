@@ -1703,7 +1703,9 @@ Tieni conto di una cosa molto importante: `reset` non coinvolge solo uno spostam
 
 
 
-* eliminare l'ultimo commit
+
+## To do
+
 * revert del filesystem
 * diff di due branch
 * diff del file system
