@@ -1576,20 +1576,23 @@ Puoi rimediare *sovrascrivendo* il tuo ultimo `commit`
 ![Alt tex1](img/amend-2.png)
 
 
-Ora: no c'è niente di magico in quel che hai appena visto: git, come al solito ,nn ha *riscritto* la storia. Prova a visualizzare tutti i `commit` del `repository`, compresi quelli dei `branch` orfani
+Ora: non c'è niente di magico in quel che hai appena visto: git, come al solito ,non ha *riscritto* la storia.<br/>
+Prova a visualizzare tutti i `commit` del `repository`, compresi quelli dei `branch` orfani
 
 
 ![Alt tex1](img/amend-3.png)
 
-Il `commit` con il commento sbagliato c'è ancora.<br/>
+Vedi? Il `commit` con il commento sbagliato c'è ancora.<br/>
 
 Guarda cosa ha fatto dietro le quinte git quando hai usato l'opzione `--amend`.
+
+
+git è tornato al `commit`, ha recuperato le stesse modifiche che avevi apportato e poi ha ripetuto il `commit` cambiando il commento. Guardiamolo passo passo
 
 Partivi da
 
 ![Alt tex1](img/amend-1.png)
 
-git è tornato al `commit`, ha recupeato le stesse modifiche che avevi apportato e poi ha ripetuto il `commit` cambiando il commento. Vedilo passo passo
 
 Si torna indietro di un `commit`
 
@@ -1620,7 +1623,7 @@ E infine, si fa il `checkout` del `branch`
 ![Alt tex1](img/amend-7.png)
 
 
-Come vedi, l'opzione `--amend` è un altro di quegli esempi *macro* di operazioni più granulari che potresti eseguire passo passo manualmente.
+Come vedi, l'opzione `--amend` è un altro di quegli esempi di *macro* comandi che si poggiano su operazioni più granulari che potresti anche eseguire passo passo manualmente.
 
 Puoi usare `--amend` non solo per modificare il commento: puoi sovrascrivere il tuo ultimo commit aggiungendo file che ti eri dimenticato, correggendo delle modifiche e così via. Di fatto, stai facendo un nuovo `commit`, per cui non ci sono vincoli al tipo di correzioni che puoi apportare.
 
