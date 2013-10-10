@@ -1469,7 +1469,7 @@ Questa guida si chiude con una breve serie di piccoli suggerimenti pratici che t
 # Ottenere una copia di un `repository`
 
 
-Fin'ora hai visto come creare un `repository` da zero e come fare a popolarne uno vuoto a colpi di `push`, ma spesso (anzi, spessissimo) fa molto comodo partire da una copia di un `repository` esistente.
+Fin'ora hai visto come creare un `repository` da zero e come fare a popolarne uno vuoto a colpi di `push`. Spesso (anzi, spessissimo) fa molto comodo partire da una copia di un `repository` esistente.
 
 Allo scopo, usa il comando `git clone`, col quale otterrai in locale una copia completa della storia dei `commit` di un `repository`. Dopo aver clonato un `repository` remoto,  questo verrà aggiunto in automatico come `remote` sotto il nome di default `origin`.
 
@@ -1495,11 +1495,136 @@ Potresti trovare molto comoda l'opzione `-a` di `commit`
 che implicitamente fa `add` dei file modificati e `rm` di quelli rimossi
 
 
+# Il `detached head state`
+
+Considera questo `repository`
+
+![Alt tex1](img/bob.png)
+
+È evidente che l'ultimo comando di `checkout` sia stao `git checkout bob`: si è *aggrappati* all'etichetta `bob`.
+
+Usando una terminologia un po' più corretta, potresti dire "*`HEAD` in questo momento punta a `bob`*".
+
+Non è una metafora: c'è davvero una variabile `HEAD` il cui contenuto è un puntatore al `branch` `bob`. Questa variabile (come, del resto, tutti i i `branch` locali e remoti) è conservata nella directory nascosta `.git`
+
+>**cat .git/HEAD**<br/>
+><br/>
+>ref: refs/heads/bob
+
+La variabile `HEAD`, tra le varie cose, permette a git di aggiornare il `branch` nel quale ti trovi, in modo che *ti segua* `commit` dopo `commit`.
+
+Quindi: `HEAD` punta a `bob`. A sua volta `bob` punta al `commit` `A`. Per verificarlo, esegui
+
+>**cat .git/refs/heads/bob**<br/>
+><br/>
+>dd15c2bee7059de07c4d74cf5f264b906d332e30
+
+Prova a *staccarti* dal `branch` `bob`, restando sempre sul medesimo `commit`; cioè, fa un `checkout` usando direttaente la chiave del `commit ` `A`
+
+>**git checkout dd15c2bee7059de07c4d74cf5f264b906d332e30**<br/>
+><br/>
+>Note: checking out 'dd15c2bee7059de07c4d74cf5f264b906d332e30'.<br/>
+><br/>
+>You are in 'detached HEAD' state. You can look around, make experimental<br/>
+>changes and commit them, and you can discard any commits you make in this<br/>
+>state without impacting any branches by performing another checkout.<br/>
+><br/>
+>If you want to create a new branch to retain commits you create, you may<br/>
+>do so (now or later) by using -b with the checkout command again. Example:<br/>
+><br/>
+>  git checkout -b new_branch_name<br/>
+><br/>
+>HEAD is now at dd15c2b... un commit con un esperimento<br/>
+
+git si lamenta un po'. O meglio: ti avvisa che non sei *attaccato* ad un `branch` per cui qualsiasi modifica farai non avrà impatto sulla posizione di alcun `branch`. Ti suggerisce anche di crearne uno col comando `git checkout -b`.
+
+Se ripeti 
+
+>**cat .git/HEAD**<br/>
+><br/>
+>dd15c2bee7059de07c4d74cf5f264b906d332e30
+
+scopri che `HEAD` stia puntando direttamente al `commit` e non ad un `branch`
+
+Lo stato in cui `HEAD` non punta ad un `branch` viene chiamato `detached head`.
+
+Ora, non c'è niente di particolarmente sbagliato nello staccarsi da un `branch` e mettersi in `detached head state`: capita di avere bisogno. Ma spesso procura qualche grattacapo, soprattutto se non ci si accorge di esservi entrati. Per questo git mette in guardia.
+
+Dovesse capitarti di leggere quell'avviso chilometrico, non spaventarti: tutto quel che probabilmente dovrai fare è domandarti se forse non volessi piuttosto entrare in un `branch`.
+
+
 # Sovrascrivere l'ultimo `commit`
 
 
+Prendi il `repository`
 
-* detached head state
+![Alt tex1](img/bug-5.png)
+
+e aggiungici un `commit`
+
+>**echo qualcosa >> feature**<br/>
+>**git commit -am "o aggiunto qualcosa"**<br/>
+
+![Alt tex1](img/amend-1.png)
+
+Ma no, che figure! Hai scritto "ho" senza l'acca!
+
+Puoi rimediare *sovrascrivendo* il tuo ultimo `commit`
+
+>**git commit -am "ho aggiunto qualcosa" --amend**
+
+![Alt tex1](img/amend-2.png)
+
+
+Ora: no c'è niente di magico in quel che hai appena visto: git, come al solito ,nn ha *riscritto* la storia. Prova a visualizzare tutti i `commit` del `repository`, compresi quelli dei `branch` orfani
+
+
+![Alt tex1](img/amend-3.png)
+
+Il `commit` con il commento sbagliato c'è ancora.<br/>
+
+Guarda cosa ha fatto dietro le quinte git quando hai usato l'opzione `--amend`.
+
+Partivi da
+
+![Alt tex1](img/amend-1.png)
+
+git è tornato al `commit`, ha recupeato le stesse modifiche che avevi apportato e poi ha ripetuto il `commit` cambiando il commento. Vedilo passo passo
+
+Si torna indietro di un `commit`
+
+>**git checkout feature^1**<br/>
+
+![Alt tex1](img/amend-4.png)
+
+Si recuperano le modifiche apportate in `feature`, senza committarle
+
+>**git cherry-pick feature --no-commit**
+
+e poi si committano con il messaggio corretto
+
+>**git commit -am "ho aggiunto qualcosa"**
+
+![Alt tex1](img/amend-5.png)
+
+Non resta che spostare sul `commit` corrente il branch `feature`
+
+>**git branch -f feature HEAD**
+
+![Alt tex1](img/amend-6.png)
+
+E infine, si fa il `checkout` del `branch`
+
+>**git checkout feature**
+
+![Alt tex1](img/amend-7.png)
+
+
+Come vedi, l'opzione `--amend` è un altro di quegli esempi *macro* di operazioni più granulari che potresti eseguire passo passo manualmente.
+
+Puoi usare `--amend` non solo per modificare il commento: puoi sovrascrivere il tuo ultimo commit aggiungendo file che ti eri dimenticato, correggendo delle modifiche e così via. Di fatto, stai facendo un nuovo `commit`, per cui non ci sono vincoli al tipo di correzioni che puoi apportare.
+
+
 * amend
 * eliminare l'ultimo commit
 * revert del filesystem
