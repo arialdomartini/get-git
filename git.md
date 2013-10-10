@@ -47,8 +47,8 @@ Installa [git](http://git-scm.com/downloads).
 
 Poi configuralo perché ti riconosca
 
-> git config --global user.name "Arialdo Martini"<br/>
-> git config --global user.emal arialdomartini@gmail.com`
+>**git config --global user.name "Arialdo Martini"**<br/>
+>**git config --global user.emal arialdomartini@gmail.com**
 
 Se sei su Windows puoi eseguire quei comandi in `git bash`, un terminale predisposto a `git`. Su Linux e Mac OS X puoi usare il tuo terminal preferito.
 
