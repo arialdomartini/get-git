@@ -1700,13 +1700,3 @@ ottieni
 ![Alt tex1](img/reset-7.png)
 
 Tieni conto di una cosa molto importante: `reset` non coinvolge solo uno spostamento di `branch` sul `repository` ma anche delle modifiche sul `file system`. Il `branch` che stai spostando, infatti, è quello corrente, cioè quello di cui hai fatto il `checkout`; in altre parole, quando esegui un `reset` stai contestualmente facendo il `checkout` di un altro `commit`.
-
-
-
-
-## To do
-
-* revert del filesystem
-* diff di due branch
-* diff del file system
-* range di commit
