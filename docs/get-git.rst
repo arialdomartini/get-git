@@ -95,8 +95,9 @@ Poi configuralo perché ti riconosca
     git config --global user.emal arialdomartini@gmail.com
 
 Se sei su Windows puoi eseguire quei comandi in ``git bash``, un
-terminale predisposto a ``git``. Su Linux e Mac OS X puoi usare il tuo
-terminal preferito.
+terminale predisposto a ``git``. Su Linux e Mac OS X, dopo 
+l'installazione, troverai il tuo terminal preferito già pronto
+all'uso.
 
 Se vuoi, installa anche un client grafico. Io ti suggerisco
 `SmartGit <http://www.syntevo.com/smartgithg/>`__, che è gratuito per
@@ -135,8 +136,8 @@ familiarizzare.
 ==================================
 
 Sull'assenza di un server ho un po' mentito: come ti ho già detto e come
-vedrai più avanti, git è un sistema peer-to-peer, e riesce ad interagire
-con dei server remoti. Nonostante questo resta sostanzialmente un
+vedrai più avanti, git è un sistema *peer-to-peer*, e riesce ad interagire
+con dei server remoti. Nonostante questo, resta sostanzialmente un
 sistema locale.
 
 Per capire quanto questo possa avvantaggiarti, prova a vederla così:
@@ -178,7 +179,7 @@ progetto di quanto SVN lo sia ad ottenere un singolo checkout.
 Il modello di storage
 =====================
 
-Passiamo dalla terza differenza. E preparati a conoscere il vero motivo
+Passiamo alla terza differenza. E preparati a conoscere il vero motivo
 per cui git sta sostituendo molto velocemente SVN come nuovo standard
 *de-facto*.
 
@@ -228,10 +229,10 @@ Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo
 memorizza nel suo database chiave/valore, chiamato ``blob storage`` e
 conservato su file system nella directory nascosta ``.git``.
 
-Siccome il ``blob-storage`` è un database chiave valore, git cercherà di
+Siccome il ``blob-storage`` è un database chiave/valore, git cercherà di
 calcolare una chiave ed un valore per il file che hai aggiunto. Per il
 valore git userà il contenuto stesso del file; per la chiave, calcolerà
-lo sha1 del contenuto (se sei curioso, nel caso di un file vuoto vale
+lo SHA1 del contenuto (se sei curioso, nel caso di un file vuoto vale
 ``e69de29bb2d1d6434b8b29ae775ad8c2e48c5391``)
 
 Per cui, nel ``blob storage`` git salverà un oggetto ``blob``,
@@ -267,7 +268,7 @@ Nel nostro caso, avremo 3 ``tree``
 
    
 Come ogni altro oggetto, anche i ``tree`` sono memorizzati come
-chiave/valore.
+oggetti chiave/valore.
 
 Tutte queste strutture vengono raccolte dentro un contenitore, chiamato
 ``commit``.
@@ -304,7 +305,7 @@ La riga col pallino che vedi sulla sinistra rappresenta l'oggetto
 ``commit``. Nel pannello sulla destra, invece, puoi vedere la chiave del
 ``commit``.
 
-In generale, a meno che non si debba parlare proprio del modello interno
+In generale, a meno che non si debba parlare proprio del modello interno, 
 come stiamo facendo adesso, non c'è una grande necessità di
 rappresentare tutta la struttura di ``blob`` e ``tree`` che costituisce
 un ``commit``. Difatti, dopo il prossimo paragrafo inizieremo a
@@ -321,14 +322,14 @@ L' ``index`` o ``staging area``
 Sostanzialmente, non c'è molto altro che tu debba sapere del modello di
 storage di git. Ma prima di passare a vedere i vari comandi, vorrei
 introdurti ad un altro meccanismo interno: la ``staging area`` o
-``index``. L'\ ``index`` risulta sempre misterioso a chi arrivi da SVN:
-vale la pena parlarne perché quando saprai come funzionano il
+``index``. L'\ ``index`` risulta sempre misterioso a chi arriva da SVN:
+vale la pena parlarne perché, quando saprai come funzionano il
 ``blob storage`` e l'\ ``index``, git non ti sembrerà più contorto e
 incomprensibile; piuttosto, ne coglierai la coerenza e lo troverai
 estremamente prevedibile.
 
-L'\ ``index`` è una struttura che fa da cuscinetto tra il file system e
-il repository. È un piccolo buffer che puoi utilizzare per costruire il
+L'\ ``index`` è una struttura che fa da cuscinetto tra il ``file system`` e
+il ``repository``. È un piccolo buffer che puoi utilizzare per costruire il
 prossimo ``commit``.
 
 .. figure:: img/index1.png
@@ -337,10 +338,11 @@ prossimo ``commit``.
 Non è troppo complicato:
 
 -  il ``file system`` è la directory con i tuoi file.
--  il ``repository`` è il database locale su file, che conserva i vari
+-  il ``repository`` è il database locale su file che conserva i vari
    ``commit``
 -  l'\ ``index`` è lo spazio che git ti mette a disposizione per creare
-   il tuo prossimo ``commit`` prima di registrarlo definitivamente.
+   il tuo prossimo ``commit`` prima di registrarlo definitivamente nel
+   ``repository``
 
 Fisicamente, l'\ ``index`` non è molto diverso dal ``repository``:
 entrambi conservano i dati nel ``blob storage``, usando le strutture che
@@ -455,15 +457,20 @@ Ricapitolando:
 1. git memorizza sempre i file nella loro interezza
 2. il ``commit`` è uno dei tanti oggetti conservati dentro il database
    chiave/valore di git. È un contenitore di tanti puntatori ad altri
-   oggetti del database: i ``tree`` che rappresentano directory con nomi
-   di file che a loro volta puntano ad altri ``tree`` (sottodirectory) o
+   oggetti del database: i ``tree``, che rappresentano directory, 
+   che a loro volta puntano ad altri ``tree`` (sotto-directory) o
    a dei ``blob`` (il contenuto dei file)
 3. ogni oggetto ``commit`` ha un puntatore al ``commit`` padre da cui
    deriva
 4. l'\ ``index`` è uno spazio di appoggio nel quale puoi costruire, a
    colpi di ``git add``, il nuovo ``commit``
-5. con ``git add`` aggiungi un file all'\ ``index``; con ``git commit``
+5. con ``git commit``
    registri l'attuale ``index`` facendolo diventare il nuovo ``commit``.
+
+
+
+.. figure:: img/index-add-commit.png
+
 
 
 Bene: adesso hai tutta la teoria per capire i concetti più astrusi di
@@ -494,8 +501,8 @@ Il comando ``checkout`` prende il ``commit`` indicato e lo copia nel
 .. figure:: img/index-add-commit-checkout.png
 
 Già: ma qual è la chiave del ``commit A``? Lo puoi scoprire con un
-client grafico o col comando ``git log`` che mostra tutto quello che hai
-fatto fin'ora
+client grafico o col comando ``git log`` che mostra un elenco di tutti
+i ``commit`` memorizzati nel ``repository``
 
 .. code-block:: bash
 
