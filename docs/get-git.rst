@@ -188,8 +188,14 @@ Passa al terminal e guarda nel concreto.
 
 Mettiti nella condizione di avere 2 file vuoti sul file system:
 
-    mkdir progetto cd progetto mkdir libs touch libs/foo.txt mkdir
-    templates touch templates/bar.txt
+.. code-block:: bash
+
+    **mkdir progetto**
+    cd progetto 
+    mkdir libs 
+    touch libs/foo.txt 
+    mkdir templates 
+    touch templates/bar.txt
 
 ::
 
@@ -202,9 +208,13 @@ Mettiti nella condizione di avere 2 file vuoti sul file system:
 
 Decidiamo di gestire il progetto con git
 
+.. code-block:: bash
+
     git init
 
 Aggiungi il primo file a git
+
+.. code-block:: bash
 
     git add libs/foo.txt
 
@@ -223,10 +233,10 @@ univocamente identificabile dalla sua chiave (che, in assenza di
 ambiguità, vale la pena di abbreviare)
 
 .. figure:: img/blob.png
-
-
    
 Adesso aggiungi il secondo file
+
+.. code-block:: bash
 
     git add templates/bar.txt
 
@@ -269,6 +279,8 @@ no?
 Quindi, il ``commit`` è l'attuale fotografia del file system.
 
 Adesso fai
+
+.. code-block:: bash
 
     git commit -m "commit A, il mio primo commit"
 
@@ -347,9 +359,13 @@ Sul file system hai
 
 Proviamo a fare delle modifiche al file ``foo.txt``
 
+.. code-block:: bash
+
     echo "nel mezzo del cammin" >> libs/foo.txt
 
 e aggiorna l'\ ``index`` con
+
+.. code-block:: bash
 
     git add libs/foo.txt
 
@@ -363,6 +379,8 @@ suo nuovo contenuto
 .. figure:: img/index3.png
 
 Prosegui aggiungendo un nuovo file ``doh.html`` alla root del progetto
+
+.. code-block:: bash
 
     echo "happy happy joy joy" > doh.html git add doh.html
 
@@ -401,6 +419,8 @@ come puntatore tra un elemento e l'altro.
 
 Ok. Adesso committa
 
+.. code-block:: bash
+
     git commit -m "Commit B, Il mio secondo commit"
 
 Con l'operazione di commit si dice a git "*Ok, prendi l'attuale
@@ -419,6 +439,8 @@ viene visualizzato così
 .. figure:: img/gitk.png
 
 Guarda tu stesso. Lancia
+
+.. code-block:: bash
 
     gitk
 
@@ -468,7 +490,10 @@ Già: ma qual è la chiave del ``commit A``? Lo puoi scoprire con un
 client grafico o col comando ``git log`` che mostra tutto quello che hai
 fatto fin'ora
 
-    **git log --oneline**\  2a17c43 Commit B, Il mio secondo commit
+.. code-block:: bash
+
+    git log --oneline
+    2a17c43 Commit B, Il mio secondo commit
     56674fb commit A, il mio primo commit
 
 Attenzione! Siccome nel ``commit`` vengono memorizzati anche la data e
@@ -477,7 +502,14 @@ l'autore, le tue chiavi risulteranno diverse dalle mie.
 Sul mio ``repository`` la chiave del ``commit A`` è ``56674fb``. Bene:
 torniamo indietro al passato, al momento del ``commit`` ``A``
 
-    **ls**\  doh.html    libs    templates **git checkout 56674fb**\  ls
+.. code-block:: bash
+
+    ls
+    doh.html    libs    templates
+    
+    git checkout 56674fb
+    
+    ls
     libs    templates
 
 Effettivamente, a parte un misterioso e prolisso messaggio di con cui
@@ -507,6 +539,8 @@ Cioè, si creerebbe questa situazione
     A---B        **C**
 
 Provalo davvero:
+
+.. code-block:: bash
 
     echo "ei fu siccome immobile" > README.md git add README.md git
     commit -m "Ecco il commit C"
@@ -545,9 +579,11 @@ primo commit
 
 .. figure:: img/repo1.png
 
-    **git checkout 56674fb**     # vai al ``commit A``\  **git checkout
-    2a17c43**    # vai al ``commit B``\  **git checkout deaddd3**   #
-    vai al ``commit C``\ 
+.. code-block:: bash
+
+    git checkout 56674fb   # vai al ``commit A``
+    git checkout 2a17c43   # vai al ``commit B``
+    git checkout deaddd3   # vai al ``commit C``
 
 Però, bisogna ammetterlo: gestire i ``commit`` ``A``, ``B`` e ``C``
 dovendoli chiamare ``56674fb``, ``2a17c43`` e ``deaddd3`` è di una
@@ -558,7 +594,9 @@ buon senso: dal momento che quei numeri sono dei puntatori ad oggetti,
 git permette di usare delle variabili per conservarne il valore.
 Assegnare un valore ad una variabile è semplice:
 
-    **git branch bob 56674fb**
+.. code-block:: bash
+
+    git branch bob 56674fb
 
 .. figure:: img/bob.png
 
@@ -568,13 +606,17 @@ ad indicare che l'etichetta ``bob`` punta a quel ``commit``.
 Quando crei un'etichetta, se non specifichi un valore, git userà la
 chiave del ``commit`` sul quale ti trovi al momento
 
-    **git checkout 300c737**\  **git branch piccio**
+.. code-block:: bash
+
+    git checkout 300c737**\  **git branch piccio
 
 .. figure:: img/piccio.png
 
 L'eliminazine di una variabile è ugualmente banale:
 
-    **git branch -d bob**\  **git branch -d piccio**
+.. code-block:: bash
+
+    git branch -d bob**\  **git branch -d piccio
 
 Avrai notato che di default git crea alcune di queste variabili. Per
 esempio, nelle figure sopra appariva anche la variabile ``master``,
@@ -585,7 +627,9 @@ puntata su ``B``.
 L'etichetta ``master`` ti permette di andare sul quel ``commit``
 scrivendo:
 
-    **git checkout master**
+.. code-block:: bash
+
+    git checkout master
 
 Ora attento, perché siamo di nuovo in una di quelle occasioni dove la
 conoscenza di SVN fornisce solo dei grattacapi: queste etichette in git
@@ -601,7 +645,9 @@ variabili!
 
 Crea un nuovo ``branch`` che useremo nelle prossime pagine
 
-    **git branch dev**
+.. code-block:: bash
+
+    git branch dev
 
 .. figure:: img/branch-dev.png
 
@@ -612,7 +658,9 @@ di spostamento è stato ``git checkout master``.
 
 Potresti spostarti su ``dev`` con
 
-    **git checkout dev**
+.. code-block:: bash
+
+    git checkout dev
 
 .. figure:: img/branch-dev2.png
 
@@ -627,7 +675,11 @@ differenti rappresentazioni per comunicare dove si trovi ``HEAD``.
 ti trovi. Invece, dalla linea di comando, per sapere su quale ``branch``
 ti trovi ti basta eseguire
 
-    **git branch**\  \* dev master
+.. code-block:: bash
+
+    git branch  
+    \* dev
+    master
 
 L'asterisco suggerisce che ``HEAD`` adesso stia puntanto a ``dev``.
 
@@ -661,8 +713,12 @@ loro un nome.
 
 Guardalo nel concreto. Torna a ``master`` ed apporta qualche modifica.
 
-    **git checkout master**\  **touch angular.js**\  **git add
-    angular.js**\  **git commit -m "angular.js rocks"**
+.. code-block:: bash
+
+    git checkout master
+    touch angular.js
+    git add angular.js
+    git commit -m "angular.js rocks"
 
 .. figure:: img/angular.png
 
@@ -723,7 +779,9 @@ immediatamente precedente*\ ".
 Per git, calcolare le modifiche apportate ai file da un ``commit``
 all'altro non è poi difficile. Per esempio, puoi ricavarle con
 
-    **git diff dev master**
+.. code-block:: bash
+
+    git diff dev master
 
 Con ``git diff from to`` chiedi a git "*qual è l'elenco delle modifiche
 ai file che devo applicare a ``from`` perché il progetto diventi
@@ -739,8 +797,11 @@ hai creato il commit puntato da ``dev``.
 
 Se rammenti, avevi fatto
 
-    **touch style.css**\  **git add style.css**\  **git commit -m
-    "Adesso ho anche il css"**\ 
+.. code-block:: bash
+
+    touch style.css
+    git add style.css
+    git commit -m "Adesso ho anche il css"
 
 Quindi, potresti dire che quella linea rossa rappresenti l'aggiunta del
 file ``style.css``.
@@ -757,9 +818,14 @@ altro punto del ``repository``.
 Vediamolo subito con un esempio. A partire da ``dev`` crea un ``branch``
 chiamato ``experiment`` ed aggiuncici un ``commit``
 
-    **git checkout dev**\  \*\* git branch experiment\ ** **\ git
-    checkout experiment\ ** **\ touch experiment\ ** **\ git add
-    experiment\ ** **\ git commit -m "un commit con un esperimento"\*\*
+.. code-block:: bash
+
+    git checkout dev
+    git branch experiment
+    git checkout experiment
+    touch experiment
+    git add experiment
+    git commit -m "un commit con un esperimento"
 
 .. figure:: img/cherry-pick-1.png
 
@@ -770,7 +836,10 @@ comando ``cherry-pick`` puoi chiedere a git di calcolare le modifiche
 introdotte dal tuo ``commit`` e riapplicarle da qualche altra parte, per
 esempio, proprio su ``master``
 
-    **git checkout master**\  **git cherry-pick experiment**
+.. code-block:: bash
+
+    git checkout master
+    git cherry-pick experiment
 
 .. figure:: img/cherry-pick-2.png
 
@@ -804,20 +873,29 @@ modifiche, avendo cura però di non applicare le modifiche introdotte da
 "*orrore e raccapriccio*\ ". Hai solo bisogno di conoscere i valori
 delle chiavi dei 3 ``commit``
 
-    **git log master..feature --oneline**\  8f41bb8 altra feature
-    ec0e615 orrore e raccapriccio b5041f3 feature
+.. code-block:: bash
+
+    git log master..feature --oneline
+    8f41bb8 altra feature
+    ec0e615 orrore e raccapriccio 
+    b5041f3 feature
 
 (``master..feature`` è una sintassi che permette di esprimere un *range*
 di ``commit``: ne parleremo più avanti)
 
 È il momento di tornare indietro nel tempo. Riposizionati su ``master``
 
-    **git checkout master**\ 
+.. code-block:: bash
+
+    git checkout master
 
 e spostaci sopra ``feature``, in modo che torni alla posizione dove si
 trovava quando lo hai creato prima di fare i ``commit``
 
-    **git branch --force feature**\  **git checkout feature**
+.. code-block:: bash
+
+    git branch --force feature
+    git checkout feature
 
 .. figure:: img/bug-2.png
 
@@ -827,14 +905,18 @@ stati riposizionati dov'erano prima. Non ti resta che prenderti, con
 ``cherry-pick`` i soli ``commit`` che ti interessano. Prendi il primo,
 quello col commento ``feature``
 
-    **git cherry-pick b5041f3**
+.. code-block:: bash
+
+    git cherry-pick b5041f3
 
 .. figure:: img/bug-3.png
 
 Vedi? È stato aggiunto a ``feature``, che poi è avanzato in avanti.
 Prosegui colsecondo ``commit``, saltando il ``commit`` incriminato
 
-    **git cherry-pick 8f41bb8**
+.. code-block:: bash
+
+    git cherry-pick 8f41bb8
 
 .. figure:: img/bug-4.png
 
@@ -880,8 +962,11 @@ Riprendi il tuo ``repository``.
 Mettiamo che tu voglia proseguire lo sviluppo dei tuoi css, per cui
 farai un nuovo commit su ``dev``
 
-    **git checkout dev**\  **echo "a { color:red; }" >> style.css**\ 
-    **git commit -am "i link sono rossi**"
+.. code-block:: bash
+
+    git checkout dev
+    echo "a { color:red; }" >> style.css
+    git commit -am "i link sono rossi"
 
 Nota: ho usato l'opzione ``-a`` di ``commit`` che, implicitamente,
 esegue ``git add`` di ogni file modificato. Tieni a mente questa
@@ -930,7 +1015,9 @@ Prova. Sul tuo ``repository``
 
 esegui
 
-    **git rebase master**
+.. code-block:: bash
+
+    git rebase master
 
 .. figure:: img/rebase-3.png
 
@@ -948,10 +1035,12 @@ provo a descriverti una situazione molto comune.
 Inizia staccando un nuovo ramo da ``dev`` e registrando 3 nuovi
 ``commit``
 
-    **git checkout -b sviluppo**\  **touch file1 && git add file1 && git
-    commit -m "avanzamento 1"**\  **touch file2 && git add file2 && git
-    commit -m "avanzamento 2"**\  **touch file3 && git add file3 && git
-    commit -m "avanzamento 3"**\ 
+.. code-block:: bash
+
+    git checkout -b sviluppo
+    touch file1 && git add file1 && git commit -m "avanzamento 1"
+    touch file2 && git add file2 && git commit -m "avanzamento 2"
+    touch file3 && git add file3 && git commit -m "avanzamento 3"
 
 .. figure:: img/rebase-4.png
 
@@ -959,9 +1048,12 @@ Bene. Adesso simuliamo una cosa che accade molto spesso nel mondo reale:
 i tuoi colleghi, mentre tu lavoravi sui tuoi 3 ``commit`` hanno fatto
 avanzare il ramo ``dev`` con i loro contributi
 
-    **git checkout dev**\  **touch dev1 && git add dev1 && git commit -m
-    "developer 1"**\  **touch dev2 && git add dev2 && git commit -m
-    "developer 2"**\ 
+
+.. code-block:: bash
+
+    git checkout dev
+    touch dev1 && git add dev1 && git commit -m "developer 1"
+    touch dev2 && git add dev2 && git commit -m "developer 2"
 
 .. figure:: img/rebase-5.png
 
@@ -973,7 +1065,10 @@ nell'esempio precedente, il tuo ramo ``sviluppo`` è rimasto indietro
 rispetto alle evoluzioni di ``dev``: usa ``rebase`` per staccarlo dalla
 sua base e riattaccarlo più avanti
 
-    **git checkout sviluppo**\  **git rebase dev**
+.. code-block:: bash
+
+    git checkout sviluppo
+    git rebase dev
 
 Con ``git rebase dev`` stai chiedendo a git "*riapplica tutto il lavoro
 che ho fatto nel mio ramo come se lo avessi staccato dall'ultimo commit
@@ -1064,17 +1159,24 @@ L'ultima fotografia del tuo ``repository`` è
 
 Stacca un ramo da ``dev`` e aggiungi un paio di ``commit``
 
-    **git checkout -b bugfix dev**
+.. code-block:: bash
+
+    git checkout -b bugfix dev
 
 Nota: qui ho usato una forma ancora più concisa equivalente ai comandi:
 
-    **git checkout dev**\  **git branch bugfix**\  **git checkout
-    bugfix**\ 
+.. code-block:: bash
+
+    git checkout dev
+    git branch bugfix
+    git checkout bugfix
 
 Prosegui aggiungendo i due ``commit``
 
-    **touch fix1 && git add fix1 && git commit -m "bugfixing 1"**\ 
-    **touch fix2 && git add fix2 && git commit -m "bugfixing 2"**\ 
+.. code-block:: bash
+
+    touch fix1 && git add fix1 && git commit -m "bugfixing 1"
+    touch fix2 && git add fix2 && git commit -m "bugfixing 2"
 
 .. figure:: img/merge-1.png
 
@@ -1089,7 +1191,10 @@ il tuo lavoro nel loro.
 Per integrare il ``bugfix`` in ``sviluppo`` i tuoi colleghi potrebbe
 fare
 
-    **git checkout sviluppo**\  **git merge bugfix**
+.. code-block:: bash
+
+    git checkout sviluppo
+    git merge bugfix
 
 .. figure:: img/merge-2.png
 
@@ -1139,7 +1244,10 @@ spostarvi sopra la tua etichetta corrente.
 
 Prova:
 
-    **git checkout dev**\  **git merge sviluppo**
+.. code-block:: bash
+
+    git checkout dev
+    git merge sviluppo
 
 .. figure:: img/fast-forward.png
 
@@ -1199,9 +1307,15 @@ un colpo solo.
 
 Guarda. Crea 4 ``branch`` qualsiasi
 
-    git branch uno git branch due git branch tre git branch quattro git
-    checkout uno && touch uno && git add uno && git commit -m "uno" git
-    checkout due && touch due && git add due&& git commit -m "due" git
+
+.. code-block:: bash
+
+    git branch uno 
+    git branch due 
+    git branch tre 
+    git branch quattro 
+    git checkout uno && touch uno && git add uno && git commit -m "uno" 
+    git checkout due && touch due && git add due&& git commit -m "due" git
     checkout tre && touch tre&& git add tre && git commit -m "tre" git
     checkout quattro && touch quattro && git add quattro && git commit
     -m "e quattro"
@@ -1211,7 +1325,10 @@ Guarda. Crea 4 ``branch`` qualsiasi
 Bene. Hai 4 rami. Adesso chiedi a ``dev`` di mergiarli tutti, in un
 colpo solo
 
-    git checkout dev git merge uno due tre quattro
+.. code-block:: bash
+
+    git checkout dev 
+    git merge uno due tre quattro
 
 .. figure:: img/octopus-2.png
 
@@ -1244,8 +1361,12 @@ Per rendere le cose semplici, facciamo un esempio concreto senza stare a
 coinvolgere server esterni e internet; crea un altro ``repository`` da
 qualche parte sul tuo stesso computer
 
-    **cd ..**\  **mkdir repo-remoto**\  **cd repo-remoto**\  **git
-    init**\ 
+.. code-block:: bash
+
+    cd ..
+    mkdir repo-remoto
+    cd repo-remoto
+    git init
 
 In questo caso, dalla directory del tuo progetto il ``repository``
 remoto sarà raggiungibile tramite ``../repo-remoto`` o col suo path
@@ -1266,10 +1387,14 @@ utente/password o una chiave ssh.
 
 Torna nel tuo progetto
 
+.. code-block:: bash
+
     cd ../progetto
 
 Bene. Aggiungi all'elenco dei ``remote`` il ``repository`` appena
 creato, indicando a git un nome qualsiasi e l'indirizzo
+
+.. code-block:: bash
 
     git remote add foobar ../repo-remoto
 
@@ -1311,16 +1436,20 @@ Prova a chiedere al ``repository`` remoto di darti i ``commit`` e i
 specifico il ``repository`` remoto cercherà di darteli tutti. Nel tuo
 caso il ``remote`` è vuoto, quindi non dovrebbe restituirti nulla
 
-    **git fetch foobar**
+.. code-block:: bash
+    git fetch foobar
 
 Infatti. Non ricevi nulla. Prova, invece, a spedire il ramo
 ``experiment``
 
-    **git push foobar experiment**\  Counting objects: 14, done. Delta
+.. code-block:: bash
+
+    git push foobar experiment
+    Counting objects: 14, done. Delta
     compression using up to 4 threads. Compressing objects: 100% (8/8),
     done. Writing objects: 100% (14/14), 1.07 KiB \| 0 bytes/s, done.
-    Total 14 (delta 3), reused 0 (delta 0) To ../repo-remoto \* [new
-    branch] experiment -> experiment
+    Total 14 (delta 3), reused 0 (delta 0) To ../repo-remoto
+    [new branch] experiment -> experiment
 
 Wow! Qualcosa è sucesso! Di tutti i messaggi di risposta, quello più
 interessante in questo momento è l'ultimo
@@ -1368,8 +1497,10 @@ colore differente.
 
 Prova a cancellare quel ``branch``
 
-    **git branch -d foobar/experiment**\  error: branch
-    'foobar/experiment' not found.
+.. code-block:: bash
+
+    git branch -d foobar/experiment
+    error: branch 'foobar/experiment' not found.
 
 Non può essere cancellato. git dice che quel ``branch`` non esiste. Uhm.
 Decisamente quell'etichetta ha qualcosa di particolare.
@@ -1408,8 +1539,12 @@ lavorando sull'altro ``repository``. Prova ad aggiungere un ``commit``
 sul ``repository remoto`` proprio sul ramo ``experiment`` di cui hai
 appena fatto ``push``
 
-    **cd ../repo-remoto**\  **touch x**\  **git add x**\  **git commit
-    -m "un contributo dal tuo collega"**\ 
+.. code-block:: bash
+
+    cd ../repo-remoto
+    touch x
+    git add x
+    git commit -m "un contributo dal tuo collega" 
 
 Ecco il risultato finale su ``foobar``
 
@@ -1417,7 +1552,9 @@ Ecco il risultato finale su ``foobar``
 
 Torna pure al tuo ``repository`` locale e vediamo cos'è cambiato
 
-    **cd ../progetto**\ 
+.. code-block:: bash
+
+    cd ../progetto
 
 .. figure:: img/push-1.png
 
@@ -1434,10 +1571,14 @@ Chiedi allora al tuo ``repository`` di allinearsi con ``foobar``. Puoi
 chiedere un aggiornamento su un singolo ramo o un aggiornamento su tutti
 i rami. Di solito, si sceglie la seconda strada
 
-    **git fetch foobar**\  remote: Counting objects: 3, done. remote:
+.. code-block:: bash
+
+    git fetch foobar
+    remote: Counting objects: 3, done. remote:
     Compressing objects: 100% (2/2), done. remote: Total 2 (delta 1),
-    reused 0 (delta 0) Unpacking objects: 100% (2/2), done. From
-    ../repo-remoto     e5bb7c4..c8528bb experiment -> foobar/experiment
+    reused 0 (delta 0) Unpacking objects: 100% (2/2), done. 
+    From ../repo-remoto
+    e5bb7c4..c8528bb experiment -> foobar/experiment
 
 Qualcosa è arrivato.
 
@@ -1472,7 +1613,9 @@ dormire sonni tranquilli, perché l'operazione non eseguirà mai il
 Se invece tu volessi davvero includere i cambiamenti introdotti
 remotamente nel *tuo* lavoro, potresti usare il comando ``merge``.
 
-    **git merge foobar/experiment**
+.. code-block:: bash
+
+    git merge foobar/experiment
 
 .. figure:: img/push-4.png
 
@@ -1488,11 +1631,16 @@ Questo è un caso così comune che spesso vorrai evitare di fare
 
 Insomma, invece di
 
-    **git fetch foobar**\  **git merge foobar/experiment**
+.. code-block:: bash
+
+    git fetch foobar
+    git merge foobar/experiment
 
 avresti potuto lanciare
 
-    **git pull foobar experiment**
+.. code-block:: bash
+
+    git pull foobar experiment
 
 Possiamo estendere il diagramma delle interazioni tra i comandi di git e
 i suoi ambienti aggiungendo la colonna ``remote`` e l'azione di
@@ -1513,8 +1661,11 @@ tuoi nuovi ``commit``, vieni a scoprire che, nel frattempo, qualcuno sul
 Inizia a simulare l'avanzamento dei lavori del tuo collega, aggiungendo
 un ``commit`` sul suo ``repository``
 
-    cd ../repo-remoto touch avanzamento && git add avanzamento git
-    commit -m "un nuovo commit del tuo collega"
+.. code-block:: bash
+
+    cd ../repo-remoto
+    touch avanzamento && git add avanzamento
+    git commit -m "un nuovo commit del tuo collega"
 
 .. figure:: img/collaborating-1.png
 
@@ -1546,8 +1697,11 @@ deliberatamente ignorando che potrebbero esserci stati avanzamenti sul
 ``repository`` remoto, procedi senza indugio con i tuoi nuovi ``commit``
 in locale
 
-    **cd ../progetto**\  **touch mio-contributo && git add
-    mio-contributo**\  **git commit -m "un mio nuovo commit"**\ 
+.. code-block:: bash
+
+    cd ../progetto
+    touch mio-contributo && git add mio-contributo
+    git commit -m "un mio nuovo commit"
 
 .. figure:: img/collaborating-2.png
 
@@ -1569,7 +1723,10 @@ E infatti è proprio così. Il conflitto nasce nel momento in cui si
 cercherà di sincronizzare i due ``repository``. Per esempio: prova a
 spedire il tuo ramo su ``foobar``
 
-    **git push foobar experiment**\  To ../repo-remoto ! [rejected]
+.. code-block:: bash
+
+    git push foobar experiment
+    To ../repo-remoto ! [rejected]
     experiment -> experiment (fetch first) error: failed to push some
     refs to '../repo-remoto' hint: Updates were rejected because the
     remote contains work that you do hint: not have locally. This is
@@ -1599,13 +1756,17 @@ sviluppo divergenti.
 Il ``fast-forward`` è citato proprio nell'ultima riga del messaggio di
 errore
 
+.. code-block:: bash
+
     hint: **See the 'Note about fast-forwards'** in 'git push --help'
     for details.<br/
 
 Nello stesso messaggio git fornisce un suggerimento: ti dice di provare
 a fare ``fetch``. Proviamo
 
-    **git fetch foobar**
+.. code-block:: bash
+
+    git fetch foobar
 
 .. figure:: img/collaborating-3.png
 
@@ -1639,8 +1800,10 @@ poi, col lavoro degli altri, ma vuoi prima completare il tuo lavoro. git
 non ti detta i tempi e non ti obbliga ad anticipare le cose che non vuoi
 fare subito
 
-    **echo modifica >> mio-contributo**\  **git commit -am "avanzo lo
-    stesso"**
+.. code-block:: bash
+
+    echo modifica >> mio-contributo
+    git commit -am "avanzo lo stesso"
 
 .. figure:: img/collaborating-4.png
 
@@ -1674,7 +1837,9 @@ tuo ramo ``experiment`` per riattaccarlo su un'altra base
 
 Prova
 
-    **git rebase foobar/experiment**
+.. code-block:: bash
+
+    git rebase foobar/experiment
 
 .. figure:: img/collaborating-6.png
 
@@ -1723,11 +1888,17 @@ altro ramo e ripeti il ``push``.
 
 Quindi: su ``foobar`` vedi di spostarti su un altro ``branch``
 
-    **cd ../repo-remoto**\  **git checkout -b parcheggio**\ 
+.. code-block:: bash
+
+    cd ../repo-remoto
+    git checkout -b parcheggio
 
 Dopo di che, torna al tuo ``repository`` locale e ripeti ``push``
 
-    **cd ../progetto**\  **git push foobar experiment**\ 
+.. code-block:: bash
+
+    cd ../progetto
+    git push foobar experiment
 
 Ecco il risultato
 
@@ -2070,8 +2241,12 @@ aggiunto in automatico come ``remote`` sotto il nome di default
 
 Per esempio, per ottenere un ``clone`` di questa guida esegui
 
-    **git clone https://github.com/arialdomartini/get-git.git**\  cd
-    get-git **git remote**\  origin
+.. code-block:: bash
+
+    git clone https://github.com/arialdomartini/get-git.git
+    cd get-git
+    git remote
+    origin
 
 Eliminare un file
 =================
@@ -2081,11 +2256,16 @@ comando ``git add``? Ecco: quando cancelli dal ``file system`` un file
 già tracciato da git, perché includere la cancellazione nel ``commit``
 devi cancellare il file anche dall'\ ``index`` con
 
-    **git rm file\_name**
+
+.. code-block:: bash
+
+    git rm file\_name
 
 Potresti trovare molto comoda l'opzione ``-a`` di ``commit``
 
-    **git -am "include add e rm"**
+.. code-block:: bash
+
+    git -am "include add e rm"
 
 che implicitamente fa ``add`` dei file modificati e ``rm`` di quelli
 rimossi prima di eseguire il ``commit``.
@@ -2097,7 +2277,7 @@ Considera questo ``repository``
 
 .. figure:: img/bob.png
 
-È evidente che l'ultimo comando di ``checkout`` sia stato
+È evidente che l'ultimo comando di ``checkout`` sia stato
 ``git checkout bob``: si è *aggrappati* all'etichetta ``bob``.
 
 Usando una terminologia un po' più corretta, potresti dire "*``HEAD`` in
@@ -2108,7 +2288,10 @@ Questa di ``HEAD`` non è una metafora: c'è davvero una variabile
 variabile (come, del resto, tutti i i ``branch`` locali e remoti) è
 conservata nella directory nascosta ``.git``
 
-    **cat .git/HEAD**\  ref: refs/heads/bob
+.. code-block:: bash
+
+    cat .git/HEAD
+    ref: refs/heads/bob
 
 La variabile ``HEAD``, tra le varie cose, permette a git di aggiornare
 il ``branch`` nel quale ti trovi, in modo che *ti segua*
@@ -2117,7 +2300,9 @@ il ``branch`` nel quale ti trovi, in modo che *ti segua*
 Quindi: ``HEAD`` punta a ``bob``. A sua volta ``bob`` punta al
 ``commit`` ``A``. Per verificarlo, esegui
 
-    **cat .git/refs/heads/bob**\ 
+.. code-block:: bash
+
+    cat .git/refs/heads/bob
     dd15c2bee7059de07c4d74cf5f264b906d332e30
 
 Prova a *staccarti* dal ``branch`` ``bob``, restando sempre sul medesimo
@@ -2141,7 +2326,10 @@ comando ``git checkout -b``.
 
 Se ripeti
 
-    **cat .git/HEAD**\  dd15c2bee7059de07c4d74cf5f264b906d332e30
+.. code-block:: bash
+
+    cat .git/HEAD
+    dd15c2bee7059de07c4d74cf5f264b906d332e30
 
 scopri che, effetticamente, ``HEAD`` sta puntando direttamente al
 ``commit`` e non ad un ``branch``
@@ -2167,8 +2355,10 @@ Prendi il ``repository``
 
 e aggiungici un ``commit``
 
-    **echo qualcosa >> feature**\  **git commit -am "o aggiunto
-    qualcosa"**\ 
+.. code-block:: bash
+
+    echo qualcosa >> feature
+    git commit -am "o aggiunto qualcosa"
 
 .. figure:: img/amend-1.png
 
@@ -2177,7 +2367,9 @@ Ma no, che figure! Hai scritto "ho" senza l'acca!
 Puoi rimediare *sovrascrivendo* il tuo ultimo ``commit`` con l'ozione
 ``--amend`` di ``commit``
 
-    **git commit -am "ho aggiunto qualcosa" --amend**
+.. code-block:: bash
+
+    git commit -am "ho aggiunto qualcosa" --amend
 
 .. figure:: img/amend-2.png
 
@@ -2201,29 +2393,37 @@ Prova a simularlo passo passo: partivi da
 
 Torna indietro di un ``commit``
 
-    **git checkout feature^1**\ 
+.. code-block:: bash
+
+    git checkout feature^1
 
 .. figure:: img/amend-4.png
 
 Recuperano le modifiche apportate in ``feature``, senza committarle
 
-    **git cherry-pick feature --no-commit**
+.. code-block:: bash
+
+    git cherry-pick feature --no-commit
 
 e poi committale con il messaggio corretto
 
-    **git commit -am "ho aggiunto qualcosa"**
+    git commit -am "ho aggiunto qualcosa"
 
 .. figure:: img/amend-5.png
 
 Non ti resta che spostare sul ``commit`` corrente il branch ``feature``
 
-    **git branch -f feature HEAD**
+.. code-block:: bash
+
+    git branch -f feature HEAD
 
 .. figure:: img/amend-6.png
 
 E infine, fai il ``checkout`` del ``branch``
 
-    **git checkout feature**
+.. code-block:: bash
+
+    git checkout feature
 
 .. figure:: img/amend-7.png
 
@@ -2262,7 +2462,9 @@ Parti da
 
 Ti sposti sul precedente ``commit``
 
-    **git checkout HEAD^1**\ 
+.. code-block:: bash
+
+    git checkout HEAD^1
 
 che significa "*vai sul ``commit`` padre di ``HEAD``*\ ", cioè sul
 ``commit`` precedente a quello dove ti trovi adesso
@@ -2273,7 +2475,9 @@ Adesso puoi spostare ``feature`` nel punto ti trovi: per farlo, puoi
 creare un branch ``feature`` nel punto dove ti trovi, sovrascrivendo la
 posizione attuale di ``feature`` con l'opzione ``-f`` di ``branch``
 
-    **git branch -f feature HEAD**\ 
+.. code-block:: bash
+
+    git branch -f feature HEAD
 
 .. figure:: img/reset-2.png
 
@@ -2300,7 +2504,9 @@ Per esempio partendo da
 puoi *resettare* il tuo ``branch`` corrente al ``commit`` precedente
 puoi fare
 
-    **git reset HEAD^1**
+.. code-block:: bash
+
+    git reset HEAD^1
 
 .. figure:: img/reset-4.png
 
@@ -2308,7 +2514,9 @@ Non sei limitato a spostare il ``branch`` corrente sul ``commit``
 precedente: puoi *resettarlo* in qualunque posizione. Per esempio, per
 portare ``feature`` su master puoi fare
 
-    **git reset master**
+.. code-block:: bash
+
+    git reset master
 
 .. figure:: img/reset-5.png
 
@@ -2320,7 +2528,9 @@ Partendo da
 
 con
 
-    **git reset prod**
+.. code-block:: bash
+
+    git reset prod
 
 ottieni
 
@@ -2333,4 +2543,5 @@ infatti, è quello corrente, cioè quello di cui hai fatto il
 ``checkout``; in altre parole, quando esegui un ``reset`` stai
 contestualmente facendo il ``checkout`` di un altro ``commit``.
 
-.. |Alt tex1| image:: img/index-add-commit.png
+.. figure:: img/index-add-commit.png
+
