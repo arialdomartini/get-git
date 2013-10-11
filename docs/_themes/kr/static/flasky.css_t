@@ -353,7 +353,7 @@ dl dl pre {
 
 tt {
     background-color: #ecf0f3;
-    color: #222;
+    #color: #222;
     /* padding: 1px 2px; */
 }
 
