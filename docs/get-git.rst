@@ -37,6 +37,8 @@ Un'ultima nota: questa guida è organizzata come un lungo tutorial. Se ti
 armi di terminale ed esegui ognuno dei comandi, tipograficamente
 riportati così
 
+.. code-block:: bash
+
     ls
 
 potrai riprodurre esattamente sul tuo computer ognuno degli esempi della
@@ -82,8 +84,10 @@ Installa `git <http://git-scm.com/downloads>`__.
 
 Poi configuralo perché ti riconosca
 
-    **git config --global user.name "Arialdo Martini"**\  **git config
-    --global user.emal arialdomartini@gmail.com**
+.. code-block:: bash
+
+    git config --global user.name "Arialdo Martini"
+    git config --global user.emal arialdomartini@gmail.com
 
 Se sei su Windows puoi eseguire quei comandi in ``git bash``, un
 terminale predisposto a ``git``. Su Linux e Mac OS X puoi usare il tuo
