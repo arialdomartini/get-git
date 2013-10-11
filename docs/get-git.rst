@@ -190,7 +190,7 @@ Mettiti nella condizione di avere 2 file vuoti sul file system:
 
 .. code-block:: bash
 
-    **mkdir progetto**
+    mkdir progetto
     cd progetto 
     mkdir libs 
     touch libs/foo.txt 
