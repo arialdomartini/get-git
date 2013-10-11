@@ -2309,15 +2309,22 @@ Prova a *staccarti* dal ``branch`` ``bob``, restando sempre sul medesimo
 ``commit``; cioè, fai un ``checkout`` usando direttaente la chiave del
 ``commit`` ``A``
 
-    **git checkout dd15c2bee7059de07c4d74cf5f264b906d332e30**\  Note:
-    checking out 'dd15c2bee7059de07c4d74cf5f264b906d332e30'. You are in
-    'detached HEAD' state. You can look around, make experimental
-    changes and commit them, and you can discard any commits you make in
-    this state without impacting any branches by performing another
-    checkout. If you want to create a new branch to retain commits you
-    create, you may do so (now or later) by using -b with the checkout
-    command again. Example: git checkout -b new\_branch\_name HEAD is
-    now at dd15c2b... un commit con un esperimento
+.. code-block:: bash
+
+    git checkout dd15c2bee7059de07c4d74cf5f264b906d332e30
+
+    Note: checking out 'dbf9b91bac0bc93ab2979ca6a65bf2ac3dbc16ff'.
+
+    You are in 'detached HEAD' state. You can look around, make experimental
+    changes and commit them, and you can discard any commits you make in this
+    state without impacting any branches by performing another checkout.
+    
+    If you want to create a new branch to retain commits you create, you may
+    do so (now or later) by using -b with the checkout command again. Example:
+    
+    git checkout -b new_branch_name
+    
+    HEAD is now at dbf9b91... ** inside a code block doesn't work: removed
 
 git si lamenta un po'. O meglio: ti avvisa che non sei *attaccato* ad un
 ``branch`` per cui qualsiasi modifica farai non avrà impatto sulla
