@@ -9,6 +9,6 @@ get-git
 Indice:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
    get-git
