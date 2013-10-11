@@ -45,7 +45,7 @@ guida.
 Non sono parente di SVN
 =======================
 
-Per chi arrivi da SVN, git presenta una sola difficoltà: ha molti
+Per chi arriva da SVN, git presenta una sola difficoltà: ha molti
 comandi identici. Ma è una somiglianza superficiale e ingannevole: sotto
 il cofano git è totalmente differente.
 
