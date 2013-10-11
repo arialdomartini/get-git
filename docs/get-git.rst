@@ -60,9 +60,9 @@ semplicemente fuori strada. Per esempio: ci crederesti che questo
 repository ha 3 branch?
 
 .. figure:: img/3-branches.png
-   :alt: Alt text
 
-   Alt text
+
+   
 Sì: 3 branch, non 2.
 
 Oppure: ci crederesti che git, più che un sistema di versionamento del
@@ -219,9 +219,9 @@ univocamente identificabile dalla sua chiave (che, in assenza di
 ambiguità, vale la pena di abbreviare)
 
 .. figure:: img/blob.png
-   :alt: Alt text
 
-   Alt text
+
+   
 Adesso aggiungi il secondo file
 
     git add templates/bar.txt
@@ -231,9 +231,8 @@ identico contenuto (sono entrambi vuoti!), nel ``blob storage`` entrambi
 verranno conservati in un unico oggetto:
 
 .. figure:: img/blob.png
-   :alt: Alt text
 
-   Alt text
+   
 Come vedi, nel ``blob storage`` git ha memorizzato solo il contenuto del
 file, non il suo nome né la sua posizione.
 
@@ -245,9 +244,8 @@ il contenuto delle varie directory e i nomi dei file.
 Nel nostro caso, avremo 3 ``tree``
 
 .. figure:: img/tree.png
-   :alt: Alt text
 
-   Alt text
+   
 Come ogni altro oggetto, anche i ``tree`` sono memorizzati come
 chiave/valore.
 
@@ -255,9 +253,8 @@ Tutte queste strutture vengono raccolte dentro un contenitore, chiamato
 ``commit``.
 
 .. figure:: img/commit.png
-   :alt: Alt text
 
-   Alt text
+   
 Come avrai intuito, un ``commit`` non è altro che un elemento del
 database chiave/valore, la cui chiave è uno SHA1, come per tutti gli
 altri oggetti, e il cui valore è un puntatore al ``tree`` del progetto,
@@ -279,9 +276,8 @@ ti ho preparato a colpi di add*
 Il tuo ``repository``, visto da SmartGit, adesso ha questo aspetto
 
 .. figure:: img/first-commit.png
-   :alt: Alt text
 
-   Alt text
+   
 La riga col pallino che vedi sulla sinistra rappresenta l'oggetto
 ``commit``. Nel pannello sulla destra, invece, puoi vedere la chiave del
 ``commit``.
@@ -314,9 +310,8 @@ il repository. È un piccolo buffer che puoi utilizzare per costruire il
 prossimo ``commit``.
 
 .. figure:: img/index1.png
-   :alt: Alt text
 
-   Alt text
+   
 Non è troppo complicato:
 
 -  il ``file system`` è la directory con i tuoi file.
@@ -334,9 +329,7 @@ l'\ ``index`` conserva una copia del tuo ultimo ``commit`` e si aspetta
 che tu lo modifichi.
 
 .. figure:: img/index2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Sul file system hai
 
 ::
@@ -364,9 +357,7 @@ non ha mai registrato e quindi aggiunge al ``blob storage`` un nuovo
 suo nuovo contenuto
 
 .. figure:: img/index3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Prosegui aggiungendo un nuovo file ``doh.html`` alla root del progetto
 
     echo "happy happy joy joy" > doh.html git add doh.html
@@ -376,9 +367,7 @@ e, contestualmente, aggiunge nel ``tree`` "/" un nuovo puntatore
 chiamato ``doh.html`` che punta al nuovo ``blob`` object
 
 .. figure:: img/index4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Il contenitore di tutta questa struttura è sempre un oggetto ``commit``;
 git lo tiene parcheggiato nella ``staging area`` in attesa che tu lo
 spedisca al ``repository``. Questa struttura rappresenta esattamente la
@@ -399,9 +388,7 @@ In effetti, git aggiunge automaticamente al ``commit`` parcheggiato
 nella ``staging area`` un puntatore al ``commit`` di provenienza
 
 .. figure:: img/index-and-first-commit.png
-   :alt: Alt tex1
 
-   Alt tex1
 La freccia rappresenta il fatto che l'\ ``index`` è figlio del
 ``commit A``. È un semplice puntatore. Nessuna sopresa, se ci pensi;
 git, dopo tutto, utilizza il solito, medesimo, semplicissimo modello
@@ -419,18 +406,14 @@ l'\ ``index`` così che possa fare una nuova modifica*\ "
 Dopo il ``commit`` nel database di git avrai
 
 .. figure:: img/index-and-second-commit.png
-   :alt: Alt tex1
 
-   Alt tex1
 Una breve osservazione: spesso le interfacce grafiche di git omettono di
 visualizzare l'\ ``index``. ``gitk``, per esempio, la visualizza solo se
 ci sono modifiche da committare. Il tuo repository in ``gitk`` adesso
 viene visualizzato così
 
 .. figure:: img/gitk.png
-   :alt: Alt tex1
 
-   Alt tex1
 Guarda tu stesso. Lancia
 
     gitk
@@ -449,7 +432,7 @@ Ricapitolando:
    colpi di ``git add``, il nuovo ``commit``
 5. con ``git add`` aggiungi un file all'\ ``index``; con ``git commit``
    registri l'attuale ``index`` facendolo diventare il nuovo ``commit``.
-   |Alt tex1|
+
 
 Bene: adesso hai tutta la teoria per capire i concetti più astrusi di
 git come il ``rebase``, il ``cherrypick``, l'\ ``octopus-merge``,
@@ -476,9 +459,7 @@ Il comando ``checkout`` prende il ``commit`` indicato e lo copia nel
 ``file system`` e nella ``staging area``.
 
 .. figure:: img/index-add-commit-checkout.png
-   :alt: Alt tex1
 
-   Alt tex1
 Già: ma qual è la chiave del ``commit A``? Lo puoi scoprire con un
 client grafico o col comando ``git log`` che mostra tutto quello che hai
 fatto fin'ora
@@ -527,9 +508,7 @@ Provalo davvero:
     commit -m "Ecco il commit C"
 
 .. figure:: img/repo1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Hai ottenuto una diramazione, senza ricorrere al meccanismo di copia dei
 file utilizzato da SVN al momento deella creazione di un branch: il
 modello a chiave/valore e puntatori di git rende molto economico
@@ -561,9 +540,7 @@ C >2a17c43 Commit B, Il mio secondo commit >56674fb commit A, il mio
 primo commit
 
 .. figure:: img/repo1.png
-   :alt: Alt tex1
 
-   Alt tex1
     **git checkout 56674fb**     # vai al ``commit A``\  **git checkout
     2a17c43**    # vai al ``commit B``\  **git checkout deaddd3**   #
     vai al ``commit C``\ 
@@ -580,9 +557,7 @@ Assegnare un valore ad una variabile è semplice:
     **git branch bob 56674fb**
 
 .. figure:: img/bob.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vedi l'etichetta ``bob`` proprio in corrispondenza del ``commit A``? Sta
 ad indicare che l'etichetta ``bob`` punta a quel ``commit``.
 
@@ -592,9 +567,7 @@ chiave del ``commit`` sul quale ti trovi al momento
     **git checkout 300c737**\  **git branch piccio**
 
 .. figure:: img/piccio.png
-   :alt: Alt tex1
 
-   Alt tex1
 L'eliminazine di una variabile è ugualmente banale:
 
     **git branch -d bob**\  **git branch -d piccio**
@@ -604,9 +577,7 @@ esempio, nelle figure sopra appariva anche la variabile ``master``,
 puntata su ``B``.
 
 .. figure:: img/repo2.png
-   :alt: Alt tex1
 
-   Alt tex1
 L'etichetta ``master`` ti permette di andare sul quel ``commit``
 scrivendo:
 
@@ -629,9 +600,7 @@ Crea un nuovo ``branch`` che useremo nelle prossime pagine
     **git branch dev**
 
 .. figure:: img/branch-dev.png
-   :alt: Alt tex1
 
-   Alt tex1
 Nota un'altra cosa: vedi che accanto a ``master`` SmartGit aggiunge un
 segnaposto triangolare verde? Quel simbolo indica che in questo momento
 sei *agganciato* al ``branch`` ``master``, perché il tuo ultimo comando
@@ -642,9 +611,7 @@ Potresti spostarti su ``dev`` con
     **git checkout dev**
 
 .. figure:: img/branch-dev2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Visto? Il segnaposto si è spostato su ``dev``.
 
 Quel segnaposto si chiama ``HEAD``. Di default, infatti, git aggiunge
@@ -679,9 +646,7 @@ Guarda: adesso sei su ``dev``. Apporta una modifica qualsiasi e committa
     css"
 
 .. figure:: img/branch-dev3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Visto cosa è successo? L'etichetta ``dev`` si è spostata in avanti e si
 è agganciata al tuo nuovo ``commit``.
 
@@ -696,9 +661,7 @@ Guardalo nel concreto. Torna a ``master`` ed apporta qualche modifica.
     angular.js**\  **git commit -m "angular.js rocks"**
 
 .. figure:: img/angular.png
-   :alt: Alt tex1
 
-   Alt tex1
 Come c'era da aspettarselo, l'etichetta ``master`` è avanzata di un
 posto, per puntare al tuo nuovo ``commit``.
 
@@ -745,9 +708,7 @@ diametralmente opposto su questo punto
 Per cui, quando guardi il ``repository``
 
 .. figure:: img/angular.png
-   :alt: Alt tex1
 
-   Alt tex1
 e fai riferimento al ``commit`` ``dev``, intendi "*l'intero progetto,
 così come è stato fotografato al momento di quel commit*\ ".
 
@@ -771,9 +732,7 @@ linea che rappresenta quel che hai fatto quando sei partito da ``B`` e
 hai creato il commit puntato da ``dev``.
 
 .. figure:: img/angular-highlighted.png
-   :alt: Alt tex1
 
-   Alt tex1
 Se rammenti, avevi fatto
 
     **touch style.css**\  **git add style.css**\  **git commit -m
@@ -799,9 +758,7 @@ chiamato ``experiment`` ed aggiuncici un ``commit``
     experiment\ ** **\ git commit -m "un commit con un esperimento"\*\*
 
 .. figure:: img/cherry-pick-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Bene: adesso prendi in considerazione la modifica che hai appena
 apportato a partire dall'ultimo ``commit`` di ``dev``\ e supponi che ti
 interessi applicare la stessa modifica anche al ramo ``master``. Con il
@@ -812,9 +769,7 @@ esempio, proprio su ``master``
     **git checkout master**\  **git cherry-pick experiment**
 
 .. figure:: img/cherry-pick-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 ``cherry-pick`` "coglie" il ``commit`` che gli indichi e lo applica sul
 ``commit`` dove ti trovi.
 
@@ -834,9 +789,7 @@ A partire da ``master`` crea un ramo ``feature`` e aggiungici 3
     add altra-feature && git commit -m "altra feature"**\ 
 
 .. figure:: img/bug-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Oh, no! Il secondo ``commit``, quello con il commento "*orrore e
 raccapriccio*\ " è stato un errore madornale! Ah, se solo si potesse
 riscrivere la storia e rimuoverlo!
@@ -863,9 +816,7 @@ trovava quando lo hai creato prima di fare i ``commit``
     **git branch --force feature**\  **git checkout feature**
 
 .. figure:: img/bug-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Perfetto. Non hai ricreato esattamente il ``repository`` del passato,
 perché i tuoi 3 nuovi ``commit`` ci sono ancora, ma i ``branch`` sono
 stati riposizionati dov'erano prima. Non ti resta che prenderti, con
@@ -875,18 +826,14 @@ quello col commento ``feature``
     **git cherry-pick b5041f3**
 
 .. figure:: img/bug-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vedi? È stato aggiunto a ``feature``, che poi è avanzato in avanti.
 Prosegui colsecondo ``commit``, saltando il ``commit`` incriminato
 
     **git cherry-pick 8f41bb8**
 
 .. figure:: img/bug-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Et voilà. Hai ricostruiro il ramo di sviluppo saltando il ``commit``
 sbagliato. Resta un ramo orfano, cioè, senza alcun ``branch``: verrà
 cancellato prima o poi dal garbage collector di git. Oltretutto, i rami
@@ -894,15 +841,11 @@ orfani di solito non vengono mostrati dagli editor grafici, per cui, a
 cose normali, dovresti vedere questa come situazione di partenza
 
 .. figure:: img/bug-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 e questa come situazione finale
 
 .. figure:: img/bug-5.png
-   :alt: Alt tex1
 
-   Alt tex1
 Urca! L'impressione è che git abbia riscritto la storia eliminando un
 ``commit`` a metà di un ramo, vero?
 
@@ -929,9 +872,7 @@ al comando ``rebase``.
 Riprendi il tuo ``repository``.
 
 .. figure:: img/rebase-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Mettiamo che tu voglia proseguire lo sviluppo dei tuoi css, per cui
 farai un nuovo commit su ``dev``
 
@@ -943,9 +884,7 @@ esegue ``git add`` di ogni file modificato. Tieni a mente questa
 opzione: è molto comoda e ti capiterà spessissimo di usarla.
 
 .. figure:: img/rebase-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ottimo. I tuoi css sono pronti per andare in produzione. Peccato solo
 che il ramo ``dev`` sia rimasto un po' indietro rispetto a ``master``,
 che tu potresti decidere di considerare il codice *production-ready*.
@@ -969,15 +908,11 @@ commit di ``dev`` fossero stati scritti *dopo* i ``commit`` di
 Se lo facessi, il risultato sarebbe questo
 
 .. figure:: img/rebase-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Confrontalo con la situazione di partenza
 
 .. figure:: img/rebase-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Potresti interpretarla così: il ramo ``dev`` è stato staccato ed è stato
 impiantato sopra ``master``.
 
@@ -988,17 +923,13 @@ una serie di ``cherry-pick`` per evitarti di spostare a mano un
 Prova. Sul tuo ``repository``
 
 .. figure:: img/rebase-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 esegui
 
     **git rebase master**
 
 .. figure:: img/rebase-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Voilà!
 
 Hai chiesto a git: "*sposta il ramo corrente sulla nuova base
@@ -1019,9 +950,7 @@ Inizia staccando un nuovo ramo da ``dev`` e registrando 3 nuovi
     commit -m "avanzamento 3"**\ 
 
 .. figure:: img/rebase-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Bene. Adesso simuliamo una cosa che accade molto spesso nel mondo reale:
 i tuoi colleghi, mentre tu lavoravi sui tuoi 3 ``commit`` hanno fatto
 avanzare il ramo ``dev`` con i loro contributi
@@ -1031,9 +960,7 @@ avanzare il ramo ``dev`` con i loro contributi
     "developer 2"**\ 
 
 .. figure:: img/rebase-5.png
-   :alt: Alt tex1
 
-   Alt tex1
 Questa situazione è sostanzialmente inevitabile, a causa della natura
 fortemente non lineare del processo di sviluppo: è figlia diretta del
 fatto che le persone lavorino in parallelo. ``rebase`` ti permette di
@@ -1052,9 +979,7 @@ cherry-pick*\ "
 Il risulato è
 
 .. figure:: img/rebase-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vedi? Gli ultimi 3 ``commit`` introducono le stesse identiche modifiche
 che avevi apportato tu nel tuo ramo, ma tutto appare come se tu avessi
 staccato il ramo dall'ultima versione di ``dev``. Di nuovo:
@@ -1091,9 +1016,7 @@ le ultime due immagini che abbiamo visto, cioè il tuo ``repository``
 prima e dopo il ``rebase``\ 
 
 .. figure:: img/rebase-5-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 Nella prima si vede chiaramente come ``sviluppo`` non contenga i due
 contributi ``developer 1`` ``developer 2`` dei tuoi colleghi. Quei due
 ``commit`` non sono *raggiungibili* dal tuo ramo. Cioè: percorrendo a
@@ -1134,9 +1057,7 @@ Il ``merge``
 L'ultima fotografia del tuo ``repository`` è
 
 .. figure:: img/rebase-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 Stacca un ramo da ``dev`` e aggiungi un paio di ``commit``
 
     **git checkout -b bugfix dev**
@@ -1152,9 +1073,7 @@ Prosegui aggiungendo i due ``commit``
     **touch fix2 && git add fix2 && git commit -m "bugfixing 2"**\ 
 
 .. figure:: img/merge-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Benissimo. Hai riprodotto nuovamente una situazione piuttosto comune:
 due ``branch``, su due linee di sviluppo divergenti, contenenti entrambi
 dei contributi che prima o poi si vogliono integrare.
@@ -1169,9 +1088,7 @@ fare
     **git checkout sviluppo**\  **git merge bugfix**
 
 .. figure:: img/merge-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Con ``git merge bugfix`` hai chiesto a git: "*procurami un ``commit``
 che contenga tutto quello che c'è nel mio ``branch`` corrente e
 aggiungici tutte le modifiche introdotte dal ramo ``bugfix``*\ ".
@@ -1195,9 +1112,7 @@ domanda:
 Partendo dall'ultimo stato del tuo ``repository``
 
 .. figure:: img/merge-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 cosa accadrebbe se ti spostassi sul ramo ``dev`` e chiedessi un
 ``merge`` col ramo ``sviluppo``, cioè se facessi ``git merge sviluppo``?
 
@@ -1223,15 +1138,11 @@ Prova:
     **git checkout dev**\  **git merge sviluppo**
 
 .. figure:: img/fast-forward.png
-   :alt: Alt tex1
 
-   Alt tex1
 Prova a confrontare la storia prima e dopo il merge
 
 .. figure:: img/fast-forward-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vedi cosa è accaduto? Che l'etichetta ``dev`` è stata *spinta in
 avanti*.
 
@@ -1261,16 +1172,12 @@ In questo ``repository``, un merge di ``bugfix`` su ``dev`` avverrà in
 ``fast-forward``
 
 .. figure:: img/fast-forward.png
-   :alt: Alt tex1
 
-   Alt tex1
 In quest'altro caso, un merge di ``sviluppo`` su ``bugfix`` non potrà
 essere in ``fast-forward``, e risulterà in un nuovo ``commit``
 
 .. figure:: img/merge-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 ``octopus merge``
 -----------------
 
@@ -1281,9 +1188,7 @@ Guarda un ``commit`` nato da un ``merge``: non è diverso dagli altri
 ``commit`` se non per il fatto di avere due genitori invece di uno solo.
 
 .. figure:: img/fast-forward.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ecco: su git il numero di genitori di un ``commit`` non è limitato a
 due. In altre parole, puoi mergiare tra loro quanti ``branch`` vuoi, in
 un colpo solo.
@@ -1298,18 +1203,14 @@ Guarda. Crea 4 ``branch`` qualsiasi
     -m "e quattro"
 
 .. figure:: img/octopus-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Bene. Hai 4 rami. Adesso chiedi a ``dev`` di mergiarli tutti, in un
 colpo solo
 
     git checkout dev git merge uno due tre quattro
 
 .. figure:: img/octopus-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Et voilà! Un ``merge`` di 4 ``branch``.
 
 E ora qualcosa di completamente diverso. Vediamo un po' come si comporta
@@ -1400,9 +1301,7 @@ completamente vuoto: lo hai appena creato. Il tuo ``repository`` locale,
 invece, contiene molti ``commit`` e molti ``branch``:
 
 .. figure:: img/local-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Prova a chiedere al ``repository`` remoto di darti i ``commit`` e i
 ``branch`` di cui dispone e che tu non hai. Se non indichi un ``branch``
 specifico il ``repository`` remoto cercherà di darteli tutti. Nel tuo
@@ -1446,9 +1345,7 @@ Ti aiuto a interpretare quello che è successo:
 Proviamo adesso a visualizzare il ``repository`` remoto
 
 .. figure:: img/remote-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vedi? Il ``remote`` non è diventato una copia del tuo ``repository``:
 contiene solo il ``branch`` che gli hai spedito.
 
@@ -1459,9 +1356,7 @@ Anche sul tuo ``repository`` locale è successo qualcosa. Prova a
 visualizzarlo
 
 .. figure:: img/push-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Guarda guarda! Sembra sia stato aggiunto un nuovo ``branch``, chiamato
 ``foobar/experiment``. E sembra anche si tratti di un ``branch`` un po'
 particolare, perché l'interfaccia grafica si preoccupa di disegnarlo di
@@ -1515,17 +1410,13 @@ appena fatto ``push``
 Ecco il risultato finale su ``foobar``
 
 .. figure:: img/push-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Torna pure al tuo ``repository`` locale e vediamo cos'è cambiato
 
     **cd ../progetto**\ 
 
 .. figure:: img/push-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Infatti. Non è cambiato niente di niente. Il tuo ``repository`` locale
 continua a dirti che il ramo ``experiment`` su ``foobar`` si trova a
 "*un commit con un esperimento*\ ". E tu sai benissimo che non è vero!
@@ -1553,9 +1444,7 @@ un singolo ramo e nascondere tutti gli altri, così da semplificare il
 risultato finale)
 
 .. figure:: img/push-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Guarda attentamente quello che è successo: il tuo ramo ``experiment``
 non si è spostato di una virgola. Se controlli, anche il tuo
 ``file system`` non è cambiato di un solo bit. Solo il tuo
@@ -1582,9 +1471,7 @@ remotamente nel *tuo* lavoro, potresti usare il comando ``merge``.
     **git merge foobar/experiment**
 
 .. figure:: img/push-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Riconosci il tipo di ``merge`` che ne è risultato? Sì, un
 ``fast-forward``. Interpretalo così: il tuo ``merge`` è stato un
 ``fast-forward`` perché mentre il tuo collega lavorava il ramo non è
@@ -1608,9 +1495,7 @@ i suoi ambienti aggiungendo la colonna ``remote`` e l'azione di
 ``push``, ``fetch`` e ``pull``
 
 .. figure:: img/push-fetch.png
-   :alt: Alt tex1
 
-   Alt tex1
 Sviuppo non lineare
 -------------------
 
@@ -1628,9 +1513,7 @@ un ``commit`` sul suo ``repository``
     commit -m "un nuovo commit del tuo collega"
 
 .. figure:: img/collaborating-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 (En passant, nota una cosa: sul ``repository`` remoto non c'è alcuna
 indicazione del tuo ``repository``; git è un sistema peer-to-peer
 asimmetrico)
@@ -1638,9 +1521,7 @@ asimmetrico)
 Torna al tuo ``repository``
 
 .. figure:: img/push-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Come prima: fintanto che non chiedi esplicitamente un allineamento con
 ``fetch`` il tuo ``repository`` non sa nulla del nuovo ``commit``.
 
@@ -1665,9 +1546,7 @@ in locale
     mio-contributo**\  **git commit -m "un mio nuovo commit"**\ 
 
 .. figure:: img/collaborating-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Rifacciamo un punto della situazione su quel che ti ho appena descritto:
 
 -  il tuo ``repository`` non sa del nuovo ``commit`` registrato su
@@ -1725,9 +1604,7 @@ a fare ``fetch``. Proviamo
     **git fetch foobar**
 
 .. figure:: img/collaborating-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 La situazione dovrebbe essere chiara già a colpo d'occhio. Si vede che
 le due linee di sviluppo stanno divergendo. La posizione dei due rami
 aiuta a capire dove ti trovi in locale e dove si trovi il tuo collega
@@ -1762,9 +1639,7 @@ fare subito
     stesso"**
 
 .. figure:: img/collaborating-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Benissimo. Sei andato avanti col tuo lavoro, disallineandoti ancora di
 più col lavoro del tuo collega. Supponiamo tu decida sia arrivato il
 momento di allinearsi, per poi spedire il tuo lavoro a ``foobar``.
@@ -1773,9 +1648,7 @@ Potresti fare un ``git merge foobar/experiment`` ed ottenere questa
 situazione
 
 .. figure:: img/collaborating-5.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vedi? Adesso ``foobar/experiment`` potrebbe essere spinto in avanti (con
 un ``fast-forward``) fino a ``experiment``. Per cui, a seguire, potresti
 fare ``git push foobar``.
@@ -1784,9 +1657,7 @@ Ma invece di fare un ``merge``, fai qualcosa di più raffinato: usa
 ``rebase``. Guarda nuovamente la situazione attuale
 
 .. figure:: img/collaborating-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Rispetto ai lavori su ``foobar`` è come se tu avessi staccato un ramo di
 sviluppo ma, disgraziatamente, mentre tu facevi le tue modifiche,
 ``foobar`` non ti ha aspettato ed è stato modificato.
@@ -1802,9 +1673,7 @@ Prova
     **git rebase foobar/experiment**
 
 .. figure:: img/collaborating-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 Visto? A tutti gli effetti appare come se tu avessi iniziato il tuo
 lavoro *dopo* la fine dei lavori su ``foobar``. In altre parole:
 ``rebase`` ha apparentemente reso lineare il processo di sviluppo, che
@@ -1859,42 +1728,30 @@ Dopo di che, torna al tuo ``repository`` locale e ripeti ``push``
 Ecco il risultato
 
 .. figure:: img/collaborating-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ripercorriamo graficamente quello che è successo. Partivi da
 
 .. figure:: img/collaborating-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Poi hai fatto ``rebase`` ed hai ottenuto
 
 .. figure:: img/collaborating-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 Poi hai fatt ``push`` su ``foobar``: la nuova posizione del
 ``remote branch`` ``foobar/experiment`` testimonia l'avanzamento del
 ramo anche sul ``repository`` remoto.
 
 .. figure:: img/collaborating-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 Contestualmente, il tuo collega su ``foobar`` ha visto passare il
 proprio ``repository`` da
 
 .. figure:: img/collaborating-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 a
 
 .. figure:: img/collaborating-8.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ti torna tutto? Ecco, guarda attentamente le ultime due immagini, perché
 è proprio per evitare quello che vedi che git si è lamentato tanto,
 quando hai fatto ``git push foobar experiment``.
@@ -1904,9 +1761,7 @@ immaginato sul ``repository`` remoto ``foobar``. Il tuo collega se ne
 sta tranquillo sul suo ramo ``experiment``
 
 .. figure:: img/collaborating-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 quando ad un tratto, senza che abbia dato alcun comando a git, il suo
 ``repository`` accetta la tua richiesta di ``push``, salva nel database
 locale un paio di nuovi ``commit`` e sposta il ramo ``experiment`` (sì,
@@ -1914,9 +1769,7 @@ proprio il ramo di cui aveva fatto il ``checkout``!) due ``commit`` in
 avanti
 
 .. figure:: img/collaborating-8.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ammetterai che se questo fosse il comportamento standard di git non
 vorresti mai trovarti nella posizione del tuo collega virtuale: la
 perdita di controllo del proprio ``repository`` e del proprio
@@ -1932,9 +1785,7 @@ Prima hai rimediato alla situazione spostando il tuo collega virtuale su
 un ramo ``parcheggio``, unicamente per poter spedirgli il tuo ramo.
 
 .. figure:: img/collaborating-9.png
-   :alt: Alt tex1
 
-   Alt tex1
 Questo sporco trucco ti ha permesso di fare ``push`` di ``experiment``.
 
 Ma a pensarci bene anche questa è una soluzione che, probabilmente, tu
@@ -1971,9 +1822,7 @@ riferimento ad un'unica struttura centrale, dove è conservato il codice
 sorgente.
 
 .. figure:: img/workflow-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Nell'esempio che abbiamo utilizzato fino ad ora il team era composto da
 2 sviluppatori: tu ed il tuo collega. Ti sarai accorto che già con un
 team di dimensione così ridotta l'organizzazione dei repository, con
@@ -1982,9 +1831,7 @@ git, ha qualcosa di particolare: prima di tutto perché ci sono due
 bene quale sia quello *ufficiale*.
 
 .. figure:: img/workflow-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 A complicare le cose c'è il fatto che, a quanto pare, non si dovrebbe
 permettere ad altri di accedere al proprio ``repository``. Decisamente
 la faccenda si fa confusa e nebulosa.
@@ -2025,9 +1872,7 @@ parole, potreste prendere in considerazione l'ipotesi di aggiungere un
 utilizzare come area di integrazione
 
 .. figure:: img/workflow-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ora: verrebbe già più spontaneo eleggere il ``repository``
 ``integrazione`` come il ``repository`` ufficiale, non trovi?
 
@@ -2062,9 +1907,7 @@ possibilità di spedirvi ``branch`` senza passare dal ``repository``
 centrale, ma a breve vedremo delle configurazioni più articolate.
 
 .. figure:: img/workflow-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ecco qui: hai una topologia molto simile alla soluzione centralizzata di
 SVN, con la sola differenza che ogni sviluppatore dispone di un
 ``repository`` privato locale.
@@ -2092,9 +1935,7 @@ e decidere di aggiungere un nuovo ``repositorty`` con il ruolo di
 restringere l'accesso in scrittura solo a te
 
 .. figure:: img/workflow-5.png
-   :alt: Alt tex1
 
-   Alt tex1
 Inizi ad intuire che questa storia dei ``repository`` offra una gamma
 pressocché illimitata di possibilità?
 
@@ -2109,9 +1950,7 @@ sulle rispettive macchine di sviluppo. Generalmente, quindi, non sono
 disegnato lo schema
 
 .. figure:: img/workflow-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 ero stato molto superficiale e frettoloso, perché avevo del tutto
 sorvolato sul problema, tutt'altro che banale, di come far comunicare i
 due ``repository``, ospitati probabilmente su due *laptop*, senza IP
@@ -2134,9 +1973,7 @@ collega non un singolo ``repository`` ciascuno, ma una coppia di
 sviluppo, ed uno pubblico, per consentire la reciproca comunicazione
 
 .. figure:: img/workflow-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 Quindi: ogni sviluppatore dispone del proprio ``repository`` privato di
 lavoro, e di un ``repository`` pubblico. Tutti possono accedere al
 ``repository`` pubblico di chiunque, ma solo il legittimo proprietario
@@ -2151,9 +1988,7 @@ Per esempio: il team potrebbe prevedere che il codice vada in produzione
 in pacchetti di funzionalità decise da un ``release manager``
 
 .. figure:: img/workflow-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 In questa topologia si è deciso che il ``repository`` dal quale si
 preleva il codice per il deployment in produzione sia il ``repository``
 pubblico del *release manager*: il *release manager* preleva il codice
@@ -2166,9 +2001,7 @@ sempre passare da un ambiente di stage (per esempio, un ambiente di
 produzione solo per utenti abilitati al *beta testing*)
 
 .. figure:: img/workflow-8.png
-   :alt: Alt tex1
 
-   Alt tex1
 Nota come l'organizzazione, in git, sia ottenuta non limitando le
 letture (sostanzialmente, in tutti questi schemi tutti hanno diritti di
 lettura su qualsiasi ``repository`` pubblico), ma garantendo i permessi
@@ -2205,9 +2038,7 @@ adottando quello che viene chiamato "*Dictator and Lieutenants
 Workflow*\ "
 
 .. figure:: img/dictator.png
-   :alt: Alt tex1
 
-   Alt tex1
 Nota che quando i diagrammi delle topologie sono particolarmente
 articolati, si rappresentano solo i ``repository`` pubblici, dando per
 scontato che ogni persona adibita al controllo di quel ``repository``
@@ -2261,9 +2092,7 @@ Il ``detached head state``
 Considera questo ``repository``
 
 .. figure:: img/bob.png
-   :alt: Alt tex1
 
-   Alt tex1
 È evidente che l'ultimo comando di ``checkout`` sia stato
 ``git checkout bob``: si è *aggrappati* all'etichetta ``bob``.
 
@@ -2331,18 +2160,14 @@ Sovrascrivere l'ultimo ``commit``
 Prendi il ``repository``
 
 .. figure:: img/bug-5.png
-   :alt: Alt tex1
 
-   Alt tex1
 e aggiungici un ``commit``
 
     **echo qualcosa >> feature**\  **git commit -am "o aggiunto
     qualcosa"**\ 
 
 .. figure:: img/amend-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ma no, che figure! Hai scritto "ho" senza l'acca!
 
 Puoi rimediare *sovrascrivendo* il tuo ultimo ``commit`` con l'ozione
@@ -2351,18 +2176,14 @@ Puoi rimediare *sovrascrivendo* il tuo ultimo ``commit`` con l'ozione
     **git commit -am "ho aggiunto qualcosa" --amend**
 
 .. figure:: img/amend-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ora: non c'è niente di magico in quel che hai appena visto: git, come al
 solito, non ha *riscritto* la storia. Prova a visualizzare tutti i
 ``commit`` del ``repository``, compresi quelli dei ``branch`` orfani
 (SmartGit li chiama "*lost heads*\ ")
 
 .. figure:: img/amend-3.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vedi? Il ``commit`` con il commento sbagliato c'è ancora.
 
 Proviamo ad immaginare cosa potrebbe aver fatto dietro le quinte git
@@ -2373,17 +2194,13 @@ recuperato le stesse modifiche che avevi apportato e poi ha ripetuto il
 Prova a simularlo passo passo: partivi da
 
 .. figure:: img/amend-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Torna indietro di un ``commit``
 
     **git checkout feature^1**\ 
 
 .. figure:: img/amend-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Recuperano le modifiche apportate in ``feature``, senza committarle
 
     **git cherry-pick feature --no-commit**
@@ -2393,25 +2210,19 @@ e poi committale con il messaggio corretto
     **git commit -am "ho aggiunto qualcosa"**
 
 .. figure:: img/amend-5.png
-   :alt: Alt tex1
 
-   Alt tex1
 Non ti resta che spostare sul ``commit`` corrente il branch ``feature``
 
     **git branch -f feature HEAD**
 
 .. figure:: img/amend-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 E infine, fai il ``checkout`` del ``branch``
 
     **git checkout feature**
 
 .. figure:: img/amend-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 Come vedi, l'opzione ``--amend`` è un altro di quegli esempi di *macro*
 comandi che si poggiano su operazioni più granulari che potresti anche
 eseguire passo passo manualmente ma che sono così comuni che è molto più
@@ -2430,9 +2241,7 @@ Parti dalla fotografia del ``repository`` che hai ottenuto dal
 precedente paragrafo
 
 .. figure:: img/amend-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 Immagina che tu abbia valutato che, dopo tutto, il tuo ultimo ``commit``
 non vada bene: vorresti eliminarlo.
 
@@ -2440,17 +2249,13 @@ Una cosa che potresti fare è spostare il ``branch`` ``feature`` al
 ``commit`` precedente per ottenere
 
 .. figure:: img/reset-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Vediamo passo passo come fare
 
 Parti da
 
 .. figure:: img/amend-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 Ti sposti sul precedente ``commit``
 
     **git checkout HEAD^1**\ 
@@ -2459,9 +2264,7 @@ che significa "*vai sul ``commit`` padre di ``HEAD``*\ ", cioè sul
 ``commit`` precedente a quello dove ti trovi adesso
 
 .. figure:: img/reset-1.png
-   :alt: Alt tex1
 
-   Alt tex1
 Adesso puoi spostare ``feature`` nel punto ti trovi: per farlo, puoi
 creare un branch ``feature`` nel punto dove ti trovi, sovrascrivendo la
 posizione attuale di ``feature`` con l'opzione ``-f`` di ``branch``
@@ -2469,15 +2272,11 @@ posizione attuale di ``feature`` con l'opzione ``-f`` di ``branch``
     **git branch -f feature HEAD**\ 
 
 .. figure:: img/reset-2.png
-   :alt: Alt tex1
 
-   Alt tex1
 Nascondendo i ``commit`` orfani il risultato diventa evidente
 
 .. figure:: img/reset-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Sarai senz'altro d'accordo come me che sia una procedura troppo
 macchinosa per un'esigenza così comune.
 
@@ -2493,18 +2292,14 @@ corrente in un qualsiasi altro punto del ``repository``.
 Per esempio partendo da
 
 .. figure:: img/amend-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 puoi *resettare* il tuo ``branch`` corrente al ``commit`` precedente
 puoi fare
 
     **git reset HEAD^1**
 
 .. figure:: img/reset-4.png
-   :alt: Alt tex1
 
-   Alt tex1
 Non sei limitato a spostare il ``branch`` corrente sul ``commit``
 precedente: puoi *resettarlo* in qualunque posizione. Per esempio, per
 portare ``feature`` su master puoi fare
@@ -2512,17 +2307,13 @@ portare ``feature`` su master puoi fare
     **git reset master**
 
 .. figure:: img/reset-5.png
-   :alt: Alt tex1
 
-   Alt tex1
 Puoi anche spostare il ramo corrente da una linea di sviluppo all'altra
 
 Partendo da
 
 .. figure:: img/reset-6.png
-   :alt: Alt tex1
 
-   Alt tex1
 con
 
     **git reset prod**
@@ -2530,9 +2321,7 @@ con
 ottieni
 
 .. figure:: img/reset-7.png
-   :alt: Alt tex1
 
-   Alt tex1
 Tieni conto di una cosa molto importante: ``reset`` non coinvolge solo
 uno spostamento di ``branch`` sul ``repository`` ma anche delle
 modifiche sul ``file system``. Il ``branch`` che stai spostando,
