@@ -72,11 +72,15 @@ Oppure: ci crederesti che git, più che un sistema di versionamento del
 codice, potrebbe essere meglio descritto come un "*sistema peer-to-peer
 di database chiave/valore su file system*\ "?
 
-Per cui: dimentica quello che sai sui branch e sui changeset di SVN, e
-preparati a concetti completamente nuovi.
+Dopo aver letto la guida torna a leggere queste due affermazioni:
+sono pronto a scommettere che le troverai ovvie.
 
+Ecco il mio consiglio: dimentica quello che sai sui branch e sui 
+changeset di SVN e preparati a concetti completamente nuovi.
 Sono persuaso che li troverai molto più omogenei e potenti di quelli di
-SVN. Devi solo predisporti ad un piccolo salto culturale.
+SVN. 
+
+Devi solo predisporti ad un piccolo salto culturale.
 
 Setup
 #####
