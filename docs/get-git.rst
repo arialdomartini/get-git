@@ -183,7 +183,7 @@ Passiamo alla terza differenza. E preparati a conoscere il vero motivo
 per cui git sta sostituendo molto velocemente SVN come nuovo standard
 *de-facto*.
 
--  SVN memorizza la collezione dei vari delta (o patch) applicati nel
+-  SVN memorizza la collezione dei vari delta applicati nel
    tempo ai file; all'occorrenza ricostruisce lo stato attuale;
 -  git memorizza i file così come sono, nella loro interezza;
    all'occorrenza ne calcola i delta.
