@@ -1,5 +1,6 @@
+############
 Introduzione
-============
+############
 
 Questa guida è un po' diversa dalle altre.
 
@@ -45,7 +46,7 @@ potrai riprodurre esattamente sul tuo computer ognuno degli esempi della
 guida.
 
 Non sono parente di SVN
-=======================
+#######################
 
 Per chi arriva da SVN, git presenta una sola difficoltà: ha molti
 comandi identici. Ma è una somiglianza superficiale e ingannevole: sotto
@@ -78,7 +79,7 @@ Sono persuaso che li troverai molto più omogenei e potenti di quelli di
 SVN. Devi solo predisporti ad un piccolo salto culturale.
 
 Setup
------
+#####
 
 Installa `git <http://git-scm.com/downloads>`__.
 
@@ -100,11 +101,12 @@ bundle insieme all'installazione di git.
 
 Fantastico. Partiamo.
 
+###################
 Gli internal di git
-===================
+###################
 
 3 differenze principali
-=======================
+#######################
 
 Iniziamo con tre caratteristiche di git con le quali dovresti
 familiarizzare.
@@ -125,8 +127,8 @@ familiarizzare.
    all'occorrenza, ricostruisce il file; git memorizza il file e,
    all'occorrenza, ricostruisce le differenze.
 
-4 livelli di nerdosità
-----------------------
+4 livelli di operatività *offline*
+==================================
 
 Sull'assenza di un server ho un po' mentito: come ti ho già detto e come
 vedrai più avanti, git è un sistema peer-to-peer, e riesce ad interagire
@@ -170,7 +172,7 @@ non preoccuparti troppo: git è più veloce a ottenere l'intera storia del
 progetto di quanto SVN lo sia ad ottenere un singolo checkout.
 
 Il modello di storage
----------------------
+=====================
 
 Passiamo dalla terza differenza. E preparati a conoscere il vero motivo
 per cui git sta sostituendo molto velocemente SVN come nuovo standard
@@ -466,11 +468,12 @@ l'\ ``interactive rebase``, il ``revert`` e il ``reset``.
 
 Passiamo al pratico.
 
+################
 I comandi di git
-================
+################
 
 Obiettivo 1: tornare indietro nel tempo
-=======================================
+#######################################
 
 Dunque, se in git tutto è conservato in un database chiave/valore,
 probabilmente ci sarà modo per referenziare un qualunque oggetto del
@@ -518,7 +521,7 @@ questo punto), il file system è tornato allo stato del primo commit e,
 infatti, il file ``doh.html`` è scomparso.
 
 Obiettivo 2: divergere
-======================
+######################
 
 Usando una convenzione grafica molto comune nella letteratura su git,
 potremmo rappresentare la situazione attuale del tuo repository con
@@ -567,7 +570,7 @@ prossimo paragrafo, ma abituati già a ripeterti: in git i ``branch`` non
 sono rami di sviluppo.
 
 Obiettivo 3: creare un branch
-=============================
+#############################
 
 Con il comando ``checkout`` hai imparato a spostarti da un ``commit``
 all'altro
@@ -754,7 +757,7 @@ Pensaci su. Se tratti i ``branch`` come puntatori a ``commit`` dovrebbe
 sembrarti tutto molto lineare.
 
 Obiettivo 4: fare i giocolieri con i ``commit``
-===============================================
+###############################################
 
 Come hai visto, git riesce a conservare la storia delle modifiche dei
 file senza mai salvarne le differenze. All'inizio della guida ti avevo
@@ -810,7 +813,7 @@ Bene. Tieni a mente questo modello. Adesso ti mostrerò uno dei comandi
 più folli e versatili di git: ``cherry-pick``.
 
 il coltellino svizzero: ``cherry-pick``
----------------------------------------
+=======================================
 
 ``cherry-pick`` applica i cambiamenti introdotti da un ``commit`` in un
 altro punto del ``repository``.
@@ -850,7 +853,7 @@ Inizi a intuire le giocolerie che potrai fare con questo strumento?
 Voglio darti qualche spunto.
 
 Correggere un bug a metà di un ramo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 A partire da ``master`` crea un ramo ``feature`` e aggiungici 3
 ``commit``
@@ -950,7 +953,7 @@ ramo con i ``commit`` invertiti. Non è una cosa che capita spesso di
 fare: ma adesso sai che si può fare.
 
 Spostare un ramo di sviluppo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+----------------------------
 
 Voglio farti vedere un'altra magia del ``cherry-pick``, per introdurti
 al comando ``rebase``.
@@ -1108,7 +1111,7 @@ puntatori, tendenzialmente, puoi farlo con git.
 Fico, no?
 
 Obiettivo 5: unire due rami
-===========================
+###########################
 
 Passiamo ad un'operazione che farai spessissimo: il ``merge``. Confronta
 le ultime due immagini che abbiamo visto, cioè il tuo ``repository``
@@ -1151,7 +1154,7 @@ l'\ ``octopus merge``.
 Ma preferisco mostrarteli subito con degli esempi
 
 Il ``merge``
-------------
+============
 
 L'ultima fotografia del tuo ``repository`` è
 
@@ -1338,7 +1341,7 @@ E ora qualcosa di completamente diverso. Vediamo un po' come si comporta
 git con i server remoti.
 
 Obiettivo 6: mettere il ``repository`` in rete
-==============================================
+##############################################
 
 Fino ad ora hai interagito solo con il tuo ``repository`` locale, ma ti
 avevo anticipato che git è un sistema *peer-to-peer*.
@@ -1423,7 +1426,7 @@ vedere in concreto come funzioni la comunicazione tra un ``repository``
 ed un ``remote``.
 
 Spedire un ramo con ``push``
-----------------------------
+============================
 
 Al momento il ``remote`` che hai chiamato ``foobar`` è un ``repository``
 completamente vuoto: lo hai appena creato. Il tuo ``repository`` locale,
@@ -1532,7 +1535,7 @@ appositi comandi. Per cui, il ``commit`` puntato da
 ramo ``experiment`` su ``foobar``.
 
 Ricevere aggiornamenti con ``fetch``
-------------------------------------
+====================================
 
 Guarda: proviamo proprio a simulare il caso in cui un tuo collega stia
 lavorando sull'altro ``repository``. Prova ad aggiungere un ``commit``
@@ -1649,7 +1652,7 @@ i suoi ambienti aggiungendo la colonna ``remote`` e l'azione di
 .. figure:: img/push-fetch.png
 
 Sviuppo non lineare
--------------------
+===================
 
 Proviamo a complicare la situazione. Vorrei mostrarti un caso che ti
 capiterà continuamente: quello in cui due sviluppatori stiano lavorando
@@ -1989,7 +1992,7 @@ comunemente incompreso di git e, quasi certamente di una delle sue
 caratteristiche più potenti.
 
 Obiettivo 7: disegna il tuo workflow ideale
-===========================================
+###########################################
 
 Se hai usato CVS e SVN sarai senz'altro abituato al concetto di
 ``repository`` centrale: tutti gli sviluppatori attingono e fanno
@@ -2220,14 +2223,15 @@ scontato che ogni persona adibita al controllo di quel ``repository``
 pubblico (cioè, fornita dei diritti di ``push``) avrà un ``repository``
 privato sulal propria macchina locale.
 
+#########
 Daily git
-=========
+#########
 
 Questa guida si chiude con una breve serie di piccoli suggerimenti
 pratici che ti risulteranno molto utili nel tuo uso quotidiano di git
 
 Ottenere una copia di un ``repository``
-=======================================
+#######################################
 
 Fin'ora hai visto come creare un ``repository`` da zero e come fare a
 popolarne uno vuoto a colpi di ``push``. Spesso (anzi, spessissimo) ti
@@ -2249,7 +2253,7 @@ Per esempio, per ottenere un ``clone`` di questa guida esegui
     origin
 
 Eliminare un file
-=================
+#################
 
 Rammenti che per aggiungere un file nell'\ ``index`` hai usato il
 comando ``git add``? Ecco: quando cancelli dal ``file system`` un file
@@ -2271,7 +2275,7 @@ che implicitamente fa ``add`` dei file modificati e ``rm`` di quelli
 rimossi prima di eseguire il ``commit``.
 
 Il ``detached head state``
-==========================
+##########################
 
 Considera questo ``repository``
 
@@ -2354,7 +2358,7 @@ tutto quel che probabilmente dovrai fare è domandarti se forse non
 volessi piuttosto entrare in un ``branch``.
 
 Sovrascrivere l'ultimo ``commit``
-=================================
+#################################
 
 Prendi il ``repository``
 
@@ -2446,7 +2450,7 @@ facendo un nuovo ``commit``, per cui non ci sono vincoli al tipo di
 correzioni che puoi apportare.
 
 Eliminare l'ultimo ``commit``
-=============================
+#############################
 
 Parti dalla fotografia del ``repository`` che hai ottenuto dal
 precedente paragrafo
