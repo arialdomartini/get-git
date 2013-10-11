@@ -39,6 +39,7 @@ div.bodywrapper {
 
 div.sphinxsidebar {
     width: {{ sidebar_width }};
+    text-align:left;
 }
 
 hr {

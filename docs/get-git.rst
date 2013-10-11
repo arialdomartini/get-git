@@ -823,7 +823,7 @@ file ``style.css``.
 Bene. Tieni a mente questo modello. Adesso ti mostrerò uno dei comandi
 più folli e versatili di git: ``cherry-pick``.
 
-il coltellino svizzero: ``cherry-pick``
+Il coltellino svizzero: ``cherry-pick``
 =======================================
 
 ``cherry-pick`` applica i cambiamenti introdotti da un ``commit`` in un
@@ -1451,6 +1451,7 @@ specifico il ``repository`` remoto cercherà di darteli tutti. Nel tuo
 caso il ``remote`` è vuoto, quindi non dovrebbe restituirti nulla
 
 .. code-block:: bash
+
     git fetch foobar
 
 Infatti. Non ricevi nulla. Prova, invece, a spedire il ramo
