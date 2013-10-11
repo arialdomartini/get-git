@@ -31,7 +31,7 @@ avanzati, in poco tempo e senza troppi grattacapi.
 Non imparerai, però, tutti i comandi. Piuttosto che mostrarti tutte le
 opzioni disponibili, questa guida punterà a farti comprendere i concetti
 e il modello sottostante e a darti gli strumenti per essere autonomo
-quando vorrai approfondire un argomento sulle man page o vorrai fare
+quando vorrai approfondire un argomento sulle *man page* o vorrai fare
 qualcosa di fuori dall'ordinario con il tuo ``repository``.
 
 Un'ultima nota: questa guida è organizzata come un lungo tutorial. Se ti
