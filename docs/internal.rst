@@ -373,4 +373,4 @@ l'\ ``interactive rebase``, il ``revert`` e il ``reset``.
 
 Passiamo al pratico.
 
-:ref:`I comandi di git <basecommands>`
+:ref:`Indice <indice>` ::  :ref:`I comandi di git <comandi>`

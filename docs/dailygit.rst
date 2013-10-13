@@ -1,4 +1,5 @@
 .. _dailygit:
+
 #########
 Daily git
 #########
@@ -332,3 +333,4 @@ contestualmente facendo il ``checkout`` di un altro ``commit``.
 
 .. figure:: img/index-add-commit.png
 
+:ref:`Indice <indice>`

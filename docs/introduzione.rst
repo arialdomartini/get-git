@@ -110,4 +110,4 @@ bundle insieme all'installazione di git.
 
 Fantastico. Partiamo.
 
-:ref:`Gli internal di git <internal>`
+:ref:`Indice <indice>` ::  :ref:`Gli internal di git <internal>`

@@ -15,5 +15,5 @@ Indice
 
    introduzione
    internal
-   basecommands
+   comandi
    dailygit
