@@ -10,9 +10,9 @@ In generale, questo significa che il tuo ``repository`` è un nodo che
 può entrare a far parte di una rete e scambiare informazioni con altri
 nodi, cioè con altri ``repository``.
 
-A parte il tuo ``repository`` locale, qualsiasi altro ``repository``,
-non importa che si trovi su GitHub, su un server aziendale o
-semplicemente in un'altra directory del tuo computer, per git, è un
+A parte il tuo ``repository`` locale, qualsiasi altro ``repository``
+--non importa che si trovi su GitHub, su un server aziendale o
+semplicemente in un'altra directory del tuo computer-- per git è un
 ``remote``.
 
 Per collegare il tuo ``repository`` locale ad un ``remote`` ti basta
@@ -32,7 +32,7 @@ qualche parte sul tuo stesso computer
     git init
 
 In questo caso, dalla directory del tuo progetto il ``repository``
-remoto sarà raggiungibile tramite ``../repo-remoto`` o col suo path
+remoto sarà raggiungibile tramite il path ``../repo-remoto`` o col suo path
 assoluto. Più comunemente, però, avrai a che fare con ``repository``
 remoti raggiungibili, a seconda del protocollo utilizzato, con indirizzi
 come
@@ -41,7 +41,7 @@ come
 -  ``git@github.com:johncarpenter/mytool.git``.
 
 Per esempio, il ``repository`` di questa guida ha l'indirizzo
-
+ 
 -  ``git@github.com:arialdomartini/get-git.git``.
 
 Capita molto spesso, anche, che l'accesso ai ``remote`` richieda
@@ -55,20 +55,20 @@ Torna nel tuo progetto
     cd ../progetto
 
 Bene. Aggiungi all'elenco dei ``remote`` il ``repository`` appena
-creato, indicando a git un nome qualsiasi e l'indirizzo
+creato, indicando a git un nome qualsiasi e l'indirizzo  del ``remote``
 
 .. code-block:: bash
 
     git remote add foobar ../repo-remoto
 
 Ottimo. Hai connesso il tuo ``repository`` ad un altro nodo. Sei
-ufficialmente in una rete peer-to-peer di ``repository``. Da questo
+ufficialmente in una rete *peer-to-peer* di ``repository``. Da questo
 momento, quando vuoi riferirti a quel ``repository`` remoto utilizzerai
 il nome ``foobar``.
 
 Il nome è necessario perché, a differenza di SVN che ha il concetto di
-*server centrale* in git puoi essere collegato ad un numero qualsiasi
-di\ ``repository`` remoti contemporaneamente, per cui ad ognuno
+*server centrale*, in git puoi essere collegato ad un numero qualsiasi
+di ``repository`` remoti contemporaneamente, per cui ad ognuno
 assegnerai un nome identificativo univoco.
 
 Sono due le cose che fondamentalmente puoi fare con un ``remote``:
@@ -103,22 +103,27 @@ caso il ``remote`` è vuoto, quindi non dovrebbe restituirti nulla
 
     git fetch foobar
 
-Infatti. Non ricevi nulla. Prova, invece, a spedire il ramo
+Infatti. Non ricevi nulla. 
+
+Prova, invece, a spedire il ramo
 ``experiment``
 
 .. code-block:: bash
 
     git push foobar experiment
-    Counting objects: 14, done. Delta
-    compression using up to 4 threads. Compressing objects: 100% (8/8),
-    done. Writing objects: 100% (14/14), 1.07 KiB \| 0 bytes/s, done.
+    Counting objects: 14, done. 
+    Delta compression using up to 4 threads. 
+    Compressing objects: 100% (8/8), done. 
+    Writing objects: 100% (14/14), 1.07 KiB \| 0 bytes/s, done.
     Total 14 (delta 3), reused 0 (delta 0) To ../repo-remoto
     [new branch] experiment -> experiment
 
 Wow! Qualcosa è sucesso! Di tutti i messaggi di risposta, quello più
 interessante in questo momento è l'ultimo
 
-    -  [new branch] experiment -> experiment
+.. code-block:: bash
+
+    [new branch] experiment -> experiment
 
 Ti aiuto a interpretare quello che è successo:
 
@@ -139,7 +144,7 @@ Ti aiuto a interpretare quello che è successo:
    ``repository`` locale. Il ``remote`` non aveva quel ``branch``, per
    cui lo ha creato.
 
-Proviamo adesso a visualizzare il ``repository`` remoto
+Prova adesso a visualizzare il ``repository`` remoto
 
 .. figure:: img/remote-1.png
 
@@ -178,15 +183,24 @@ I ``remote branch`` sono una sorta di reminder che ti permettono di
 capire dove si trovino i ``branch`` sui ``repository`` remoti ai quali
 sei collegato.
 
+Si tratta di uno di quegli argomenti che risultano meno chiari
+ai nuovi utenti di git, ma se ci pensi il concetto non è affatto
+difficile. Con il ``remote branch`` chiamato ``foobar/experiment`` git ti
+sta semplicemente dicendo che sul ``repository`` ``foobar`` il ``branch``
+``experiment`` si trova in corrispondenza di quel ``commit``.
+
 Così come non puoi cancellare quel ``branch`` non puoi nemmeno spostarlo
-direttamente. L'unico modo per spostarlo è che lo sposti ``foobar``:
-indirettamente, quel che puoi fare è inviare con ``push`` un
-aggiornamento del ramo ``experiment`` a ``foobar``; la richiesta di
-``push`` è sempre accompagnata dalla richiesta di aggiornamento della
+direttamente. L'unico modo per avere un controllo diretto di quel ``branch``
+è accedere direttamente al ``repository`` ``foobar``.
+
+Hai però modo di controllarne indirettamente la posizione inviando con ``push`` un
+aggiornamento del ramo ``experiment``; avevamo visto prima che, effettivamente, 
+la richiesta di ``push`` è sempre accompagnata dalla richiesta di aggiornamento della
 posizione del proprio ``branch``.
 
-C'è un aspetto molto importante sulla posizione dei ``remote branch`` a
-cui dovrai fare l'abitudine: proprio mentre stavi leggendo queste righe
+
+Prima di provare con un esempio concreto, vorrei richiamare la tua attenzione su un aspetto molto importante 
+a cui dovrai fare l'abitudine: mentre stavi leggendo queste righe
 un tuo collega potrebbe aver aggiunto qualche ``commit`` proprio sul suo
 ramo ``experiment`` sul ``repository`` remoto, e tu non ne sapresti
 niente, perché il tuo ``repository`` non è collegato in tempo reale con
@@ -198,10 +212,10 @@ ramo ``experiment`` su ``foobar``.
 Ricevere aggiornamenti con ``fetch``
 ====================================
 
-Guarda: proviamo proprio a simulare il caso in cui un tuo collega stia
-lavorando sull'altro ``repository``. Prova ad aggiungere un ``commit``
-sul ``repository remoto`` proprio sul ramo ``experiment`` di cui hai
-appena fatto ``push``
+Guarda: proviamo proprio a simulare quest'ultimo caso caso. 
+Modifica `foobar` come se un tuo collega stesse lavorando su ``experiment``. 
+
+Cioè: aggiungi un ``commit`` sul ramo ``experiment`` di ``foobar``
 
 .. code-block:: bash
 
@@ -391,13 +405,13 @@ spedire il tuo ramo su ``foobar``
 
     git push foobar experiment
     To ../repo-remoto ! [rejected]
-    experiment -> experiment (fetch first) error: failed to push some
-    refs to '../repo-remoto' hint: Updates were rejected because the
-    remote contains work that you do hint: not have locally. This is
-    usually caused by another repository pushing hint: to the same ref.
-    You may want to first integrate the remote changes hint: (e.g., 'git
-    pull ...') before pushing again. hint: See the 'Note about
-    fast-forwards' in 'git push --help' for details.
+    experiment -> experiment (fetch first) 
+    error: failed to push some refs to '../repo-remoto' 
+    hint: Updates were rejected because the remote contains work that you do 
+    hint: not have locally. This is usually caused by another repository pushing 
+    hint: to the same ref.  You may want to first integrate the remote changes 
+    hint: (e.g., 'git pull ...') before pushing again. 
+    hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 
 Rejected. Failed. Error. Più che evidente che l'operazione non sia
 andata a buon fine. Ed era prevedibile. Con
@@ -518,25 +532,28 @@ Puoi spedire il tuo lavoro a ``foobar``: apparirà come tu abbia
 apportato le tue modifiche a partire dall'ultimo ``commit`` eseguito su
 ``foobar``.
 
-    **git push foobar experiment**\  Counting objects: 6, done. Delta
-    compression using up to 4 threads. Compressing objects: 100% (4/4),
-    done. Writing objects: 100% (5/5), 510 bytes \| 0 bytes/s, done.
-    Total 5 (delta 2), reused 0 (delta 0) remote: error: refusing to
-    update checked out branch: refs/heads/experiment remote: error: By
-    default, updating the current branch in a non-bare repository
+.. code-block:: bash
+
+    **git push foobar experiment**\  
+    Counting objects: 6, done. 
+    Delta compression using up to 4 threads. 
+    Compressing objects: 100% (4/4), done. 
+    Writing objects: 100% (5/5), 510 bytes \| 0 bytes/s, done.
+    Total 5 (delta 2), reused 0 (delta 0) 
+    remote: error: refusing to update checked out branch: refs/heads/experiment 
+    remote: error: By default, updating the current branch in a non-bare repository
     remote: error: is denied, because it will make the index and work
-    tree >inconsistent remote: error: with what you pushed, and will
-    require 'git reset --hard' to match remote: error: the work tree to
-    HEAD. remote: error: remote: error: You can set
-    'receive.denyCurrentBranch' configuration variable to remote: error:
-    'ignore' or 'warn' in the remote repository to allow pushing into
-    remote: error: its current branch; however, this is not recommended
-    unless you remote: error: arranged to update its work tree to match
-    what you pushed in some remote: error: other way. remote: error:
-    remote: error: To squelch this message and still keep the default
-    behaviour, set remote: error: 'receive.denyCurrentBranch'
-    configuration variable to 'refuse'. To ../repo-remoto ! [remote
-    rejected] experiment -> experiment (branch is currently checked out)
+    tree >inconsistent 
+    remote: error: with what you pushed, and will require 'git reset --hard' to match 
+    remote: error: the work tree to HEAD. 
+    remote: error: remote: error: You can set 'receive.denyCurrentBranch' configuration variable to 
+    remote: error: 'ignore' or 'warn' in the remote repository to allow pushing into
+    remote: error: its current branch; however, this is not recommended unless you 
+    remote: error: arranged to update its work tree to match what you pushed in some remote: error: other way. 
+    remote: error:
+    remote: error: To squelch this message and still keep the default behaviour, set 
+    remote: error: 'receive.denyCurrentBranch' configuration variable to 'refuse'. 
+    To ../repo-remoto ! [remote rejected] experiment -> experiment (branch is currently checked out)
     error: failed to push some refs to '../repo-remoto'
 
 Mamma mia! Sembra proprio che a git questo ``push`` non sia piaciuto.
