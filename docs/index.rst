@@ -17,3 +17,4 @@ Indice
    internal
    comandi
    dailygit
+   proseguire
