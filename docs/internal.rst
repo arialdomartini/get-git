@@ -1,8 +1,8 @@
 .. _internal:
 
-###################
-Gli internal di git
-###################
+############
+Gli internal
+############
 
 3 differenze principali
 #######################

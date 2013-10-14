@@ -1,9 +1,9 @@
 .. _comandi:
 
 
-################
-I comandi di git
-################
+#########
+I comandi
+#########
 
 .. toctree::
    :maxdepth: 4
