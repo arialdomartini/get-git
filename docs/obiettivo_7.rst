@@ -27,12 +27,12 @@ Cerchiamo di mettere chiarezza. Partiamo da un assunto: git è abbastanza
 versatile da replicare totalmente l'organizzazione a ``repository``
 centrale di SVN. Per cui, se proprio per te fosse uno shock culturale
 insostenibile anche solo pensare di organizzare il tuo workflow in altro
-modo, riproduci la struttura di SVN e vivi felice ed ignorante. Ti
+modo, riproduci la struttura di SVN e vivi felice. Ti
 uniresti ad un lungo elenco di aziende e di team che, di fronte alle
 possibilità offerte da git, rimediano rifugiandosi nell'arcinota
-architettura a ``repository`` centrale, così che tutto cambi perché
-tutto resti come prima. Tutti sereni e tutti contenti. È una opzione.
-Non è delle più felici, perché impedisce di godere di alcuni dei grandi
+architettura a ``repository`` centrale. 
+
+È una opzione. Non è delle più felici, perché impedisce di godere di alcuni dei grandi
 vantaggi dell'usare un sistema di versionamento distribuito, ma è sempre
 un'opzione percorribile Un mio collega la descrive come "*avere
 finalmente il fucile ed usarlo come una clava*\ ". Diciamo pure che non
