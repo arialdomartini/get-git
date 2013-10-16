@@ -51,7 +51,8 @@ L'eliminazine di una variabile è ugualmente banale:
 
 .. code-block:: bash
 
-    git branch -d bob**\  **git branch -d piccio
+    git branch -d bob
+    git branch -d piccio
 
 Avrai notato che di default git crea alcune di queste variabili. Per
 esempio, nelle figure sopra appariva anche la variabile ``master``,
