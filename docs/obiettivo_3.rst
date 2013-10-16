@@ -42,7 +42,8 @@ chiave del ``commit`` sul quale ti trovi al momento
 
 .. code-block:: bash
 
-    git checkout 300c737**\  **git branch piccio
+    git checkout 300c737
+    git branch piccio
 
 .. figure:: img/piccio.png
 
