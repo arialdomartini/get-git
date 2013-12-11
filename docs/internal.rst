@@ -46,7 +46,7 @@ remoto hai 4 modi per editare il codice
 3. Trovi il modo di ottenere **una copia locale di un intero albero del
    file system** e lasci il resto della storia dei commit sul computer
    remoto
-4. Ottenieni una **copia locale dell'intero repository** con tutta la
+4. Ottieni una **copia locale dell'intero repository** con tutta la
    storia del progetto e lavori in locale
 
 Avrai notato due cose.
