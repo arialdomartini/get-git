@@ -102,12 +102,14 @@ Correggere un bug a metà di un ramo
 A partire da ``master`` crea un ramo ``feature`` e aggiungici 3
 ``commit``
 
-    **git checkout -b feature**        # scorciatoia per fare branch +
-    checkout **touch feature && git add feature && git commit -m
-    "feature"**\  **touch orribile-baco && git add orribile-baco && git
-    commit -m "orrore e raccapriccio"**\  **touch altra-feature && git
-    add altra-feature && git commit -m "altra feature"**\ 
+.. code-block:: bash
 
+    git checkout -b feature    # scorciatoia per fare branch + checkout
+    touch feature && git add feature && git commit -m "feature"
+    touch orribile-baco && git add orribile-baco && git commit -m "orrore e raccapriccio"
+    touch altra-feature && git add altra-feature && git commit -m "altra feature"
+
+    
 .. figure:: img/bug-1.png
 
 Oh, no! Il secondo ``commit``, quello con il commento "*orrore e
