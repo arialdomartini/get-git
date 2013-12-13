@@ -360,6 +360,6 @@ delle macro per creare oggetti e applicare l'aritmetica dei puntatori.
 Per cui, tutto quel che può venirti in mente di fare con oggetti e
 puntatori, tendenzialmente, puoi farlo con git.
 
-Fico, no?
+Ganzo, no?
 
 :ref:`Indice <indice>` :: :ref:`Obiettivo 5: unire due rami <obiettivo_5>`
