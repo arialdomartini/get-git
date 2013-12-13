@@ -134,8 +134,11 @@ altre parole, inizierà a seguirti, ``commit`` dopo ``commit``.
 
 Guarda: adesso sei su ``dev``. Apporta una modifica qualsiasi e committa
 
-    touch style.css git add style.css git commit -m "Adesso ho anche il
-    css"
+.. code-block:: bash
+
+    touch style.css
+    git add style.css
+    git commit -m "Adesso ho anche il css"
 
 
 .. figure:: img/branch-dev3.png
