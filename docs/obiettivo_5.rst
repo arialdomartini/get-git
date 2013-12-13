@@ -207,11 +207,18 @@ Guarda. Crea 4 ``branch`` qualsiasi
     git branch due 
     git branch tre 
     git branch quattro 
-    git checkout uno && touch uno && git add uno && git commit -m "uno" 
-    git checkout due && touch due && git add due&& git commit -m "due" git
-    checkout tre && touch tre&& git add tre && git commit -m "tre" git
-    checkout quattro && touch quattro && git add quattro && git commit
-    -m "e quattro"
+
+    git checkout uno
+    touch uno && git add uno && git commit -m "uno" 
+    
+    git checkout due
+    touch due && git add due && git commit -m "due" 
+    
+    git checkout tre
+    touch tre&& git add tre && git commit -m "tre"
+    
+    git checkout quattro
+    touch quattro && git add quattro && git commit -m "e quattro"
 
 .. figure:: img/octopus-1.png
 
