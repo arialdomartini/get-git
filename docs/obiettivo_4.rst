@@ -105,9 +105,15 @@ A partire da ``master`` crea un ramo ``feature`` e aggiungici 3
 .. code-block:: bash
 
     git checkout -b feature    # scorciatoia per fare branch + checkout
-    touch feature && git add feature && git commit -m "feature"
-    touch orribile-baco && git add orribile-baco && git commit -m "orrore e raccapriccio"
-    touch altra-feature && git add altra-feature && git commit -m "altra feature"
+    
+    touch feature && git add feature 
+    git commit -m "feature"
+    
+    touch orribile-baco && git add orribile-baco
+    commit -m "orrore e raccapriccio"
+    
+    touch altra-feature && git add altra-feature
+    git commit -m "altra feature"
 
     
 .. figure:: img/bug-1.png
