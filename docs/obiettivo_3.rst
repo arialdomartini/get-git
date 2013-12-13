@@ -114,7 +114,7 @@ ti trovi ti basta eseguire
 .. code-block:: bash
 
     git branch  
-    \* dev
+    * dev
     master
 
 L'asterisco suggerisce che ``HEAD`` adesso stia puntanto a ``dev``.
