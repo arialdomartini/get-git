@@ -18,9 +18,11 @@ figlio di ``A`` (perché è da lì che parti), ma la linea di svilupppo
 proseguirebbe divergendo dalla linea ``A---B``.
 
 Cioè, si creerebbe questa situazione
-
-    A---B        **C**
-
+      
+    A---B
+     \
+      C
+      
 Provalo davvero:
 
 .. code-block:: bash
