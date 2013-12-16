@@ -120,7 +120,7 @@ Aggiungi il primo file a git
     git add libs/foo.txt
 
 Con questo comando, git ispeziona il contenuto del file (è vuoto!) e lo
-memorizza nel suo database chiave/valore, chiamato ``blob storage`` e
+memorizza nel suo database chiave/valore, chiamato ``Object Database`` e
 conservato su file system nella directory nascosta ``.git``.
 
 Siccome il ``blob-storage`` è un database chiave/valore, git cercherà di
@@ -129,7 +129,7 @@ valore git userà il contenuto stesso del file; per la chiave, calcolerà
 lo SHA1 del contenuto (se sei curioso, nel caso di un file vuoto vale
 ``e69de29bb2d1d6434b8b29ae775ad8c2e48c5391``)
 
-Per cui, nel ``blob storage`` git salverà un oggetto ``blob``,
+Per cui, nell'``Object Database`` git salverà un oggetto ``blob``,
 univocamente identificabile dalla sua chiave (che, in assenza di
 ambiguità, vale la pena di abbreviare)
 
@@ -142,17 +142,17 @@ Adesso aggiungi il secondo file
     git add templates/bar.txt
 
 Ora, siccome ``libs/foo.txt`` e ``templates/bar.txt`` hanno lo stesso
-identico contenuto (sono entrambi vuoti!), nel ``blob storage`` entrambi
+identico contenuto (sono entrambi vuoti!), nell'``Object Database`` entrambi
 verranno conservati in un unico oggetto:
 
 .. figure:: img/blob.png
 
    
-Come vedi, nel ``blob storage`` git ha memorizzato solo il contenuto del
+Come vedi, nell'``Object Database`` git ha memorizzato solo il contenuto del
 file, non il suo nome né la sua posizione.
 
 Naturalmente, però, a noi il nome dei file e la loro posizione
-interessano eccome. Per questo, nel ``blob storage``, git memorizza
+interessano eccome. Per questo, nell'``Object Database``, git memorizza
 anche altri oggetti, chiamati ``tree`` che servono proprio a memorizzare
 il contenuto delle varie directory e i nomi dei file.
 
@@ -217,8 +217,8 @@ Sostanzialmente, non c'è molto altro che tu debba sapere del modello di
 storage di git. Ma prima di passare a vedere i vari comandi, vorrei
 introdurti ad un altro meccanismo interno: la ``staging area`` o
 ``index``. L'\ ``index`` risulta sempre misterioso a chi arriva da SVN:
-vale la pena parlarne perché, quando saprai come funzionano il
-``blob storage`` e l'\ ``index``, git non ti sembrerà più contorto e
+vale la pena parlarne perché, quando saprai come funzionano l'``Object Database`` 
+e l'\ ``index``, git non ti sembrerà più contorto e
 incomprensibile; piuttosto, ne coglierai la coerenza e lo troverai
 estremamente prevedibile.
 
@@ -239,7 +239,7 @@ Non è troppo complicato:
    ``repository``
 
 Fisicamente, l'\ ``index`` non è molto diverso dal ``repository``:
-entrambi conservano i dati nel ``blob storage``, usando le strutture che
+entrambi conservano i dati nell'``Object Database``, usando le strutture che
 hai visto prima.
 
 In questo momento, appena dopo aver completato il tuo primo ``commit``,
@@ -273,7 +273,7 @@ e aggiorna l'\ ``index`` con
 
 All'esecuzione di ``git add`` git ripete quel che aveva già fatto prima:
 analizza il contenuto di ``libs/foo.txt``, vede che c'è un contenuto che
-non ha mai registrato e quindi aggiunge al ``blob storage`` un nuovo
+non ha mai registrato e quindi aggiunge all'``Object Database`` un nuovo
 ``blob`` col nuovo contenuto del file; contestualmente, aggiorna il
 ``tree`` ``libs`` perché il puntatore chiamato ``foo.txt`` indirizzi il
 suo nuovo contenuto

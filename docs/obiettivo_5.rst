@@ -95,7 +95,7 @@ Con ``git merge bugfix`` hai chiesto a git: "*procurami un ``commit``
 che contenga tutto quello che c'è nel mio ``branch`` corrente e
 aggiungici tutte le modifiche introdotte dal ramo ``bugfix``*\ ".
 
-Prima di eseguire il merge, git guarda nel suo ``blob storage`` e cerca
+Prima di eseguire il merge, git guarda nel suo ``Object Database`` e cerca
 se per caso esista già un ``commit`` contenente entrambi i rami. Dal
 momento che non lo trova, git lo crea, fonde i due file system e poi
 assegna come genitori del nuovo ``commit`` entrambi i ``commit`` di
