@@ -77,7 +77,7 @@ chiamato ``experiment`` ed aggiuncici un ``commit``
 .. figure:: img/cherry-pick-1.png
 
 Bene: adesso prendi in considerazione la modifica che hai appena
-apportato a partire dall'ultimo ``commit`` di ``dev``\ e supponi che ti
+apportato a partire dall'ultimo ``commit`` di ``dev`` e supponi che ti
 interessi applicare la stessa modifica anche al ramo ``master``. Con il
 comando ``cherry-pick`` puoi chiedere a git di calcolare le modifiche
 introdotte dal tuo ``commit`` e riapplicarle da qualche altra parte, per
