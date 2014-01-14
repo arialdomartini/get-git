@@ -7,9 +7,13 @@ Con il comando ``checkout`` hai imparato a spostarti da un ``commit``
 all'altro
 
 Tutto quello di cui hai bisogno è la chiave del ``commit`` sul quale
-vuoi atterrare >\ **git log --oneline --all**\  >deaddd3 Ecco il commit
-C >2a17c43 Commit B, Il mio secondo commit >56674fb commit A, il mio
-primo commit
+vuoi atterrare 
+
+.. code-block:: bash
+    git log --oneline --all
+    deaddd3 Ecco il commit C
+    2a17c43 Commit B, Il mio secondo commit
+    56674fb commit A, il mio primo commit
 
 .. figure:: img/repo1.png
 
