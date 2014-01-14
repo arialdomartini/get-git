@@ -28,10 +28,10 @@ i ``commit`` memorizzati nel ``repository``
     56674fb commit A, il mio primo commit
 
 Attenzione! Siccome nel ``commit`` vengono memorizzati anche la data e
-l'autore, le tue chiavi risulteranno diverse dalle mie.
+l'autore, le tue chiavi risulteranno diverse dalle mie. Sul mio 
+``repository`` la chiave del ``commit A`` è ``56674fb``. 
 
-Sul mio ``repository`` la chiave del ``commit A`` è ``56674fb``. Bene:
-torniamo indietro al passato, al momento del ``commit`` ``A``
+Bene: torniamo indietro al passato, al momento del ``commit`` ``A``
 
 .. code-block:: bash
 
