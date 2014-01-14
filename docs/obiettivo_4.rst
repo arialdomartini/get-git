@@ -166,7 +166,7 @@ quello col commento ``feature``
 
 .. figure:: img/bug-3.png
 
-Vedi? È stato aggiunto a ``feature``, che poi è avanzato in avanti.
+Vedi? Il ``commit`` è stato aggiunto a ``feature``, che poi è avanzato in avanti.
 Prosegui colsecondo ``commit``, saltando il ``commit`` incriminato
 
 .. code-block:: bash
