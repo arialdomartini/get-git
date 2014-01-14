@@ -32,7 +32,7 @@ all'altro non è poi difficile. Per esempio, puoi ricavarle con
 
 Con ``git diff from to`` chiedi a git "*qual è l'elenco delle modifiche
 ai file che devo applicare a ``from`` perché il progetto diventi
-identico a quello contenuto fotografato da ``to``*\ "?
+identico a quello fotografato in ``to``*\ "?
 
 Con un po' di immaginazione puoi pensare che le linee tra i ``commit``
 rappresentino le modifiche che tu hai apportato ai file e alle directory
