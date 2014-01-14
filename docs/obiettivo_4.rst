@@ -167,7 +167,7 @@ quello col commento ``feature``
 .. figure:: img/bug-3.png
 
 Vedi? Il ``commit`` è stato aggiunto a ``feature``, che poi è avanzato in avanti.
-Prosegui colsecondo ``commit``, saltando il ``commit`` incriminato
+Prosegui con il secondo ``commit``, saltando il ``commit`` incriminato
 
 .. code-block:: bash
 
