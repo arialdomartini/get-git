@@ -5,7 +5,7 @@ Obiettivo 4: fare i giocolieri con i ``commit``
 
 Come hai visto, git riesce a conservare la storia delle modifiche dei
 file senza mai salvarne le differenze. All'inizio della guida ti avevo
-anticipato come SVN e di git manifestassero un comportamento
+anticipato come SVN e git manifestassero un comportamento
 diametralmente opposto su questo punto
 
 -  SVN memorizza i delta e, all'occorrenza, ricostruisce lo stato
