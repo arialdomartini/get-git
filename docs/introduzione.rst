@@ -105,7 +105,7 @@ all'uso.
 
 Se vuoi, installa anche un client grafico. Io ti suggerisco
 `SmartGit <http://www.syntevo.com/smartgithg/>`__, che è gratuito per
-progetti OpenSource. Altrimenti appoggiati al tool ``gitx`` che trovi in
+progetti OpenSource. Altrimenti appoggiati al tool ``gitk`` che trovi in
 bundle insieme all'installazione di git.
 
 Fantastico. Partiamo.
