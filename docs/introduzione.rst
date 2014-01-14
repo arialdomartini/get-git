@@ -24,7 +24,7 @@ uso fare dell'\ ``index``.
 
 La mia impressione è che, una volta capito il modello interno (che è
 sorprendentemente semplice!), tutto git appaia improvvisamente lineare e
-coerente: non c'è davvero alcun motivo per cui il ``rebase`` dovrebbe
+coerente: non c'è davvero alcun motivo per cui il ``rebase`` debba
 essere un argomento misterioso.
 
 Questa guida prova a spiegarti git seguendo un percorso contrario a

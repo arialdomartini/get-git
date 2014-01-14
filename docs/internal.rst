@@ -284,7 +284,8 @@ Prosegui aggiungendo un nuovo file ``doh.html`` alla root del progetto
 
 .. code-block:: bash
 
-    echo "happy happy joy joy" > doh.html git add doh.html
+    echo "happy happy joy joy" > doh.html
+    git add doh.html
 
 Come prima: git aggiunge un nuovo ``blob`` object col contenuto del file
 e, contestualmente, aggiunge nel ``tree`` "/" un nuovo puntatore
