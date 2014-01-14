@@ -28,8 +28,9 @@ Provalo davvero:
 
 .. code-block:: bash
 
-    echo "ei fu siccome immobile" > README.md git add README.md git
-    commit -m "Ecco il commit C"
+    echo "ei fu siccome immobile" > README.md
+    git add README.md 
+    git commit -m "Ecco il commit C"
 
 .. figure:: img/repo1.png
 
