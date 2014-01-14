@@ -35,7 +35,7 @@ Provalo davvero:
 .. figure:: img/repo1.png
 
 Hai ottenuto una diramazione, senza ricorrere al meccanismo di copia dei
-file utilizzato da SVN al momento deella creazione di un branch: il
+file utilizzato da SVN al momento della creazione di un branch: il
 modello a chiave/valore e puntatori di git rende molto economico
 rappresentare una linea di sviluppo che diverge.
 
