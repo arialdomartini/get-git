@@ -43,7 +43,7 @@ torniamo indietro al passato, al momento del ``commit`` ``A``
     ls
     libs    templates
 
-Effettivamente, a parte un misterioso e prolisso messaggio di con cui
+Effettivamente, a parte un misterioso e prolisso messaggio nel quale
 git si lamenta di essere in ``'detached HEAD' state`` (poi chiariremo
 questo punto), il file system è tornato allo stato del primo commit e,
 infatti, il file ``doh.html`` è scomparso.

@@ -271,6 +271,11 @@ e aggiorna l'\ ``index`` con
 
     git add libs/foo.txt
 
+Ecco un'altra differenza con svn: in svn ``add`` serve a mettere sotto 
+versionamento un file e va eseguito una sola volta; in git serve
+a salvare un file dentro l'``index`` ed è un'operazione che va ripetuta
+ad ogni ``commit``.
+
 All'esecuzione di ``git add`` git ripete quel che aveva già fatto prima:
 analizza il contenuto di ``libs/foo.txt``, vede che c'è un contenuto che
 non ha mai registrato e quindi aggiunge all'``Object Database`` un nuovo
