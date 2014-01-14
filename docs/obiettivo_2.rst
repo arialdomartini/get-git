@@ -48,7 +48,7 @@ considerazioni che sei sempre stato abituato a fare con SVN in git
 potrebbero non valere.
 
 La seconda potrebbe un po' sorprenderti: le due linee di sviluppo
-divergenti che hai appena visto non sono ``branch``. In git i rami sono
+divergenti che hai appena visto non sono ``branch``. In git i ``branch`` sono
 dei puntatori dotati di nome, o delle etichette. Te ne parlerò nel
 prossimo paragrafo, ma abituati già a ripeterti: in git i ``branch`` non
 sono rami di sviluppo.
