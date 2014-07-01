@@ -330,7 +330,7 @@ che ho fatto nel mio ramo come se lo avessi staccato dall'ultimo commit
 di sviluppo, ma non costringermi a spostare i commit uno per uno con
 cherry-pick*\ "
 
-Il risulato è
+Il risultato è
 
 .. figure:: img/rebase-6.png
 
