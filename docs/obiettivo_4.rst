@@ -110,7 +110,7 @@ A partire da ``master`` crea un ramo ``feature`` e aggiungici 3
     git commit -m "feature"
     
     touch orribile-baco && git add orribile-baco
-    commit -m "orrore e raccapriccio"
+    git commit -m "orrore e raccapriccio"
     
     touch altra-feature && git add altra-feature
     git commit -m "altra feature"
