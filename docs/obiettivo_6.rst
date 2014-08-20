@@ -649,7 +649,7 @@ personalmente non accetteresti mai: a parte la scomodità di doversi
 interrompere solo perché un collega vuole spedirti del suo codice,
 comunque non vorresti che l'avanzamento dei tuoi rami fosse
 completamente fuori dal tuo controllo, alla mercé di chiunque. Perché,
-alla fine, il remo ``experiment`` si sposterebbe in avanti contro la tua
+alla fine, il ramo ``experiment`` si sposterebbe in avanti contro la tua
 volontà, e lo stesso potrebbe accadere a tutti gli altri rami di cui non
 hai fatto ``checkout``.
 
