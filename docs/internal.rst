@@ -265,7 +265,7 @@ Proviamo a fare delle modifiche al file ``foo.txt``
 
     echo "nel mezzo del cammin" >> libs/foo.txt
 
-e aggiorna l'\ ``index`` con
+e aggiornare l'\ ``index`` con
 
 .. code-block:: bash
 
