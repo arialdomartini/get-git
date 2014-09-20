@@ -33,7 +33,7 @@ strumenti che utilizzerai più spesso è ``merge``
 Ci sono solo 3 particolarità sulle quali credo valga la pena di
 soffermarsi. La prima è che il ``merge`` di git funziona spaventosamente
 bene. Merito del modello di storage di git: durante i merge git non deve
-stare ad impazzire, come SVN, per capire se un delta sia già stata
+stare ad impazzire, come SVN, per capire se un delta sia già stato
 applicato o no, perché parte dal confronto di fotografie del progetto.
 Ma non entriamo nel dettaglio: goditi la potenza di ``git merge`` e
 dimentica tutte le difficoltà che hai sempre incontrato con SVN.
@@ -81,7 +81,7 @@ Supponi, per esempio, che sia tu, una volta completato il tuo lavoro di
 bugfixing sull'apposito ramo, a chiedere ai tuoi colleghi di integrare
 il tuo lavoro nel loro.
 
-Per integrare il ``bugfix`` in ``sviluppo`` i tuoi colleghi potrebbe
+Per integrare il ``bugfix`` in ``sviluppo`` i tuoi colleghi potrebbero
 fare
 
 .. code-block:: bash
