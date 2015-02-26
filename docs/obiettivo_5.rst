@@ -101,7 +101,7 @@ momento che non lo trova, git lo crea, fonde i due file system e poi
 assegna come genitori del nuovo ``commit`` entrambi i ``commit`` di
 provenienza. In effetti, il risultato è un nuovo ``commit`` che ha due
 genitori. Nota anche che l'etichetta del tuo ramo, ``sviluppo`` si è
-spostata sul nuovo ``commit``. Non dovrebbe essere una sopresa: il
+spostata sul nuovo ``commit``. Non dovrebbe essere una sorpresa: il
 ``branch`` corrente è pensato per seguirti, ``commit`` dopo ``commit``.
 
 Il ``fast-forward merge``
@@ -122,7 +122,7 @@ Per risponderti, ripeti il ragionamento che abbiamo fatto in occasione
 del precedente ``merge``: stai chiedendo a git "*procurami un ``commit``
 che contenga sia il mio ramo corrente ``dev`` che il ramo
 ``sviluppo``*\ ". git consulterebbe i ``commit`` nel suo database per
-asicurarsi che un ``commit`` con queste caratteristiche sia già
+assicurarsi che un ``commit`` con queste caratteristiche sia già
 presente.
 
 E lo troverebbe! Guarda il ``commit`` puntato proprio dal ramo
@@ -151,7 +151,7 @@ Prova a confrontare la storia prima e dopo il merge
 Vedi cosa è accaduto? Che l'etichetta ``dev`` è stata *spinta in
 avanti*.
 
-Ecco: hai appenao visto un caso di ``fast-forward``. Tieni a mente
+Ecco: hai appena visto un caso di ``fast-forward``. Tieni a mente
 questo comportamento: di tanto in tanto capita di averne a che fare,
 soprattutto quando vuoi evitare che avvenga. Per esempio, in questa
 occasione il ``fast-forward`` non è molto espressivo: si è creata una
