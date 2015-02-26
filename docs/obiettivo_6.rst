@@ -118,7 +118,7 @@ Prova, invece, a spedire il ramo
     Total 14 (delta 3), reused 0 (delta 0) To ../repo-remoto
     [new branch] experiment -> experiment
 
-Wow! Qualcosa è sucesso! Di tutti i messaggi di risposta, quello più
+Wow! Qualcosa è successo! Di tutti i messaggi di risposta, quello più
 interessante in questo momento è l'ultimo
 
 .. code-block:: bash
@@ -131,7 +131,7 @@ Ti aiuto a interpretare quello che è successo:
    ``foobar`` il ramo ``experiment``
 -  per eseguire il comando git ha preso in considerazione il tuo ramo
    ``experiment`` ed ha ricavato l'elenco di tutti i ``commit``
-   raggiunbibili da quel ramo (come al solito: sono tutti i ``commit``
+   raggiungibili da quel ramo (come al solito: sono tutti i ``commit``
    che puoi trovare partendo da ``experiment`` e seguendo a ritroso nel
    tempo qualsiasi percorso tu possa percorrere)
 -  git ha poi contattato il ``repository`` remoto ``foobar`` per sapere
@@ -206,7 +206,7 @@ ramo ``experiment`` sul ``repository`` remoto, e tu non ne sapresti
 niente, perché il tuo ``repository`` non è collegato in tempo reale con
 i suoi ``remote``, ma si sincronizza solo quando ci interagisci con gli
 appositi comandi. Per cui, il ``commit`` puntato da
-``foobar/experiment`` è da intendersi come l'ultma posizione nota del
+``foobar/experiment`` è da intendersi come l'ultima posizione nota del
 ramo ``experiment`` su ``foobar``.
 
 Ricevere aggiornamenti con ``fetch``
@@ -326,7 +326,7 @@ i suoi ambienti aggiungendo la colonna ``remote`` e l'azione di
 
 .. figure:: img/push-fetch.png
 
-Sviuppo non lineare
+Sviluppo non lineare
 ===================
 
 Proviamo a complicare la situazione. Vorrei mostrarti un caso che ti
@@ -655,7 +655,7 @@ hai fatto ``checkout``.
 
 È evidente che debba esistere una soluzione radicale a questo problema.
 
-La soluzione è sorprentemente semplice: **non permettere ad altri di
+La soluzione è sorprendentemente semplice: **non permettere ad altri di
 accedere al tuo ``repository``**.
 
 Potresti trovarla una soluzione un po' sommaria, ma devi riconoscere che
