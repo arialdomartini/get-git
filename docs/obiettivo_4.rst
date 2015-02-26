@@ -63,7 +63,7 @@ Il coltellino svizzero: ``cherry-pick``
 altro punto del ``repository``.
 
 Vediamolo subito con un esempio. A partire da ``dev`` crea un ``branch``
-chiamato ``experiment`` ed aggiuncici un ``commit``
+chiamato ``experiment`` ed aggiungici un ``commit``
 
 .. code-block:: bash
 
@@ -175,7 +175,7 @@ Prosegui con il secondo ``commit``, saltando il ``commit`` incriminato
 
 .. figure:: img/bug-4.png
 
-Et voilà. Hai ricostruiro il ramo di sviluppo saltando il ``commit``
+Et voilà. Hai ricostruito il ramo di sviluppo saltando il ``commit``
 sbagliato. Resta un ramo orfano, cioè, senza alcun ``branch``: verrà
 cancellato prima o poi dal garbage collector di git. Oltretutto, i rami
 orfani di solito non vengono mostrati dagli editor grafici, per cui, a
