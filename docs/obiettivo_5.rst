@@ -151,7 +151,7 @@ Prova a confrontare la storia prima e dopo il merge
 Vedi cosa è accaduto? Che l'etichetta ``dev`` è stata *spinta in
 avanti*.
 
-Ecco: hai appenao visto un caso di ``fast-forward``. Tieni a mente
+Ecco: hai appena visto un caso di ``fast-forward``. Tieni a mente
 questo comportamento: di tanto in tanto capita di averne a che fare,
 soprattutto quando vuoi evitare che avvenga. Per esempio, in questa
 occasione il ``fast-forward`` non è molto espressivo: si è creata una
