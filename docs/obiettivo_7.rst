@@ -110,7 +110,7 @@ nel ``repository`` ufficiale se non dopo una tua revisione ed
 accettazione del codice.
 
 Una possibilità potrebbe essere quella di decidere che sia il *tuo*
-``repository`` quello ufficial, così da organizzare i tool di Continuous
+``repository`` quello ufficiale, così da organizzare i tool di Continuous
 Integration e di Deployment perché prelevino il codice da lì. Oppure,
 potresti ripensare all'euristica
 
