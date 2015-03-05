@@ -73,7 +73,7 @@ Per accedere alla *man page* di ``merge`` ti basta invocare
 e altrettanto puoi fare per gli altri comandi.
 
 Ma non spaventarti: non avrai bisogno di leggere la documentazione di tutti i comandi:
-usa le *man page* come *reference guide* da consultare all'occorreza, quando avrai
+usa le *man page* come *reference guide* da consultare all'occorrenza, quando avrai
 bisogno di dettagli su un comando specifico.
 
 

@@ -64,7 +64,7 @@ Ora: verrebbe già più spontaneo eleggere il ``repository``
 ``integrazione`` come il ``repository`` ufficiale, non trovi?
 
 A rigore, non c'è fisicamente niente che caratterizzi il repository
-``integrazione`` come\ ``repository`` centrale: tecnicamente è del tutto
+``integrazione`` come \ ``repository`` centrale: tecnicamente è del tutto
 equivalente agli altri due. L'idea di fondo che è che il ruolo e
 l'importanza di un ``repository`` rispetto ad un altro sia una questione
 sociale e organizzativa, non imposta da vincoli o limiti tecnologici:
@@ -117,7 +117,7 @@ potresti ripensare all'euristica
     utilizza una topologia di ``repository`` che rispecchi il reale
     flusso di lavoro e i reali ruoli funzionali esistenti nel team
 
-e decidere di aggiungere un nuovo ``repositorty`` con il ruolo di
+e decidere di aggiungere un nuovo ``repository`` con il ruolo di
 *archivio ufficiale* del codice pronto ad andare in produzione e
 restringere l'accesso in scrittura solo a te
 
@@ -209,12 +209,12 @@ costretti ad implementare usando convenzioni sui nomi e sugli usi dei
 branch, in git sono molto facilmente modellabili con topologie di
 ``repository``. È un vero peccato quando un team che abbia adottato git
 cerchi di riprodurre un controllo del workflow con gli stessi sistemi di
-SVN, perché farà un grande sforzo per otteere molto meno di quel che git
+SVN, perché farà un grande sforzo per ottenere molto meno di quel che git
 potrebbe fornire.
 
 Ti accorgerai, invece, di come convenga quasi sempre modellare la rete
 di ``repository`` in modo che rifletta il workflow e l'organizazione
-gerarchica del tuo team. Per esempio, non è raro che in grande
+gerarchica del tuo team. Per esempio, non è raro che in grandi
 organizzazioni il flusso di lavoro sia abbastanza articolato da
 richiedere più team, con una distribuzione gerarchica dei ruoli e delle
 responsabilità: potrebbe esserci un responsabile del progetto a cui

@@ -34,7 +34,7 @@ Eliminare un file
 
 Rammenti che per aggiungere un file nell'\ ``index`` hai usato il
 comando ``git add``? Ecco: quando cancelli dal ``file system`` un file
-già tracciato da git, perché includere la cancellazione nel ``commit``
+già tracciato da git, per includere la cancellazione nel ``commit``
 devi cancellare il file anche dall'\ ``index`` con
 
 
@@ -126,7 +126,7 @@ Lo stato in cui ``HEAD`` non punta ad un ``branch`` viene chiamato
 ``detached head``.
 
 Ora, non c'è niente di particolarmente sbagliato nello staccarsi da un
-``branch`` e mettersi in ``detached head state``: capita di avere
+``branch`` e mettersi in ``detached head state``: capita di averne
 bisogno. Ma spesso procura qualche grattacapo, soprattutto se non ci si
 accorge di esservi entrati. Per questo git mette in guardia.
 
@@ -150,7 +150,7 @@ e aggiungici un ``commit``
 
 .. figure:: img/amend-1.png
 
-Ma no, che figure! Hai scritto "ho" senza l'acca!
+Ma no, che figura! Hai scritto "ho" senza l'acca!
 
 Puoi rimediare *sovrascrivendo* il tuo ultimo ``commit`` con l'ozione
 ``--amend`` di ``commit``
@@ -187,13 +187,15 @@ Torna indietro di un ``commit``
 
 .. figure:: img/amend-4.png
 
-Recuperano le modifiche apportate in ``feature``, senza committarle
+Recupera le modifiche apportate in ``feature``, senza committarle
 
 .. code-block:: bash
 
     git cherry-pick feature --no-commit
 
 e poi committale con il messaggio corretto
+
+.. code-block:: bash
 
     git commit -am "ho aggiunto qualcosa"
 
