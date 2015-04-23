@@ -24,7 +24,7 @@ Cioè, si creerebbe questa situazione
     A---B
      \
       C     
-Provalo davvero:
+Prova:
 
 .. code-block:: bash
 
@@ -33,9 +33,11 @@ Provalo davvero:
     git commit -m "Ecco il commit C"
 
 Visualizza il risultato con 
+
 .. code-block:: bash
 
     gitk --all
+
 
 .. figure:: img/repo1.png
 
