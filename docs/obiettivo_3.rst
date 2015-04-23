@@ -19,9 +19,9 @@ vuoi atterrare
 
 .. code-block:: bash
 
-    git checkout 56674fb   # vai al ``commit A``
     git checkout 2a17c43   # vai al ``commit B``
     git checkout deaddd3   # vai al ``commit C``
+    git checkout 56674fb   # vai al ``commit A``
 
 Però, bisogna ammetterlo: gestire i ``commit`` ``A``, ``B`` e ``C``
 dovendoli chiamare ``56674fb``, ``2a17c43`` e ``deaddd3`` è di una
@@ -30,7 +30,9 @@ scomodità unica.
 git risolve il problema facendo quel che farebbe ogni programmatore di
 buon senso: dal momento che quei numeri sono dei puntatori ad oggetti,
 git permette di usare delle variabili per conservarne il valore.
-Assegnare un valore ad una variabile è semplice:
+Assegnare un valore ad una variabile è semplice. Se hai eseguito
+correttamente l'ultimo checkout, dovresti essere sul `commit A`.
+Bene, a questo punto esegui:
 
 .. code-block:: bash
 
@@ -39,7 +41,9 @@ Assegnare un valore ad una variabile è semplice:
 .. figure:: img/bob.png
 
 Vedi l'etichetta ``bob`` proprio in corrispondenza del ``commit A``? Sta
-ad indicare che l'etichetta ``bob`` punta a quel ``commit``.
+ad indicare che ``bob`` punta proprio a quel ``commit``. Vedila come se
+fosse una variabile alla quale hai assegnato il valore della chiave del
+`commit A`.
 
 Quando crei un'etichetta, se non specifichi un valore, git userà la
 chiave del ``commit`` sul quale ti trovi al momento
