@@ -17,11 +17,8 @@ vuoi atterrare
 
 .. figure:: img/repo1.png
 
-.. code-block:: bash
-
-    git checkout 2a17c43   # vai al ``commit B``
-    git checkout deaddd3   # vai al ``commit C``
-    git checkout 56674fb   # vai al ``commit A``
+Se volessi andare sul `commit B` dovresti lanciare ``git checkout 2a17c43``,
+per tornare al `commit C` dovresti invece usare ``git checkout deaddd3`` e così via.
 
 Però, bisogna ammetterlo: gestire i ``commit`` ``A``, ``B`` e ``C``
 dovendoli chiamare ``56674fb``, ``2a17c43`` e ``deaddd3`` è di una
@@ -31,12 +28,12 @@ git risolve il problema facendo quel che farebbe ogni programmatore di
 buon senso: dal momento che quei numeri sono dei puntatori ad oggetti,
 git permette di usare delle variabili per conservarne il valore.
 Assegnare un valore ad una variabile è semplice. Se hai eseguito
-correttamente l'ultimo checkout, dovresti essere sul `commit A`.
+correttamente l'ultimo checkout, dovresti essere sul `commit C`.
 Bene, a questo punto esegui:
 
 .. code-block:: bash
 
-    git branch bob 56674fb
+    git branch bob 56674fb # qui sto usando la chiave del commit A
 
 .. figure:: img/bob.png
 
