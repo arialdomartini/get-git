@@ -32,6 +32,11 @@ Provalo davvero:
     git add README.md 
     git commit -m "Ecco il commit C"
 
+Visualizza il risultato con 
+.. code-block:: bash
+
+    gitk --all
+
 .. figure:: img/repo1.png
 
 Hai ottenuto una diramazione, senza ricorrere al meccanismo di copia dei
