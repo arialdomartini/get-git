@@ -48,4 +48,35 @@ git si lamenta di essere in ``'detached HEAD' state`` (poi chiariremo
 questo punto), il file system è tornato allo stato del primo commit e,
 infatti, il file ``doh.html`` è scomparso.
 
+Se provi a lanciare di nuovo `gitk` riceverai un'altra sorpresa: apparentemente,
+il `commit B` è scomparso. Ma non temere: git lo sta solo nascondendo. Per visualizzare
+tutti i commit, usa l'opzione `--all` di `gitk`
+
+.. code-block:: bash
+                
+    gitk --all
+
+Questo accade perché, generalmente, le interfacce grafiche di git cercano
+di mostrare solo i commit significativi, nascondendo ogni elementof superfluo.
+Gitk, per esempio, mostra solo i commit che appartengono alla linea  di sviluppo che
+conduce alla posizione corrente, omettendo il proseguio della linea di sviluppo (cioè
+il suo futuro) e eventuali altre diramazioni.
+Nel caso della nostra storia, dal punto di vista del
+`commit A`, il `commit B` appartiene al futuro e a meno che non si chieda
+esplicitamente di visualizzarlo verrà omesso dalla visualizzazione.
+
+Di seguito, ogni volta che dovessi stupirti perché ti sembra che git
+abbia fatto scomparire qualche commit, rassicurati lanciando
+
+.. code-block:: bash
+                
+    gitk --all
+
+oppure
+
+.. code-block:: bash
+                
+    git log --graph --all --oneline
+
+se preferisci non abbandonare la shell.
 :ref:`Indice <indice>` :: :ref:`Obiettivo 2: divergere <obiettivo_2>`
