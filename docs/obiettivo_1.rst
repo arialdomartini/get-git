@@ -57,7 +57,7 @@ tutti i commit, usa l'opzione `--all` di `gitk`
     gitk --all
 
 Questo accade perché, generalmente, le interfacce grafiche di git cercano
-di mostrare solo i commit significativi, nascondendo ogni elementof superfluo.
+di mostrare solo i commit significativi, nascondendo ogni elemento superfluo.
 Gitk, per esempio, mostra solo i commit che appartengono alla linea  di sviluppo che
 conduce alla posizione corrente, omettendo il proseguio della linea di sviluppo (cioè
 il suo futuro) e eventuali altre diramazioni.
