@@ -99,12 +99,12 @@ Prova a *staccarti* dal ``branch`` ``bob``, restando sempre sul medesimo
     You are in 'detached HEAD' state. You can look around, make experimental
     changes and commit them, and you can discard any commits you make in this
     state without impacting any branches by performing another checkout.
-    
+
     If you want to create a new branch to retain commits you create, you may
     do so (now or later) by using -b with the checkout command again. Example:
-    
+
     git checkout -b new_branch_name
-    
+
     HEAD is now at dbf9b91... ** inside a code block doesn't work: removed
 
 git si lamenta un po'. O meglio: ti avvisa che non sei *attaccato* ad un
@@ -152,7 +152,7 @@ e aggiungici un ``commit``
 
 Ma no, che figura! Hai scritto "ho" senza l'acca!
 
-Puoi rimediare *sovrascrivendo* il tuo ultimo ``commit`` con l'ozione
+Puoi rimediare *sovrascrivendo* il tuo ultimo ``commit`` con l'opzione
 ``--amend`` di ``commit``
 
 .. code-block:: bash
