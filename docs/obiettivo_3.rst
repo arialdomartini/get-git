@@ -188,7 +188,7 @@ pongono una domanda differente:
 "*il ``commit A`` è raggiungibile da ``master``?*\ "
 
 Cioè: percorrendo a ritroso la storia dei ``commit`` partendo da
-``master``, si passa da ``A``? Se la risposta è *sì* si può afferamere
+``master``, si passa da ``A``? Se la risposta è *sì* si può affermare
 che ``master`` contenga le modifiche introdotte da ``A``.
 
 Una cosa che i fan di Mercurial e di SVN potrebbero trovare
