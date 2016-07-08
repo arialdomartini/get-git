@@ -151,7 +151,7 @@ David Wheeler che recita
     indirection*
 
 In git potrebbe valere una legge simile: quando hai un problema di
-workflow, prova a modellare la tua opologia di ``repository``
+workflow, prova a modellare la tua topologia di ``repository``
 aggiungendo un nuovo livello di indirezione.
 
 Applicato al nostro caso, potremmo pensare di fornire a te e al tuo
@@ -230,6 +230,6 @@ Nota che quando i diagrammi delle topologie sono particolarmente
 articolati, si rappresentano solo i ``repository`` pubblici, dando per
 scontato che ogni persona adibita al controllo di quel ``repository``
 pubblico (cioè, fornita dei diritti di ``push``) avrà un ``repository``
-privato sulal propria macchina locale.
+privato sulla propria macchina locale.
 
 :ref:`Indice <indice>` :: :ref:`Daily git <dailygit>`
