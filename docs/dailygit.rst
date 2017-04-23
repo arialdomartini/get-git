@@ -87,7 +87,7 @@ Quindi: ``HEAD`` punta a ``bob``. A sua volta ``bob`` punta al
     dd15c2bee7059de07c4d74cf5f264b906d332e30
 
 Prova a *staccarti* dal ``branch`` ``bob``, restando sempre sul medesimo
-``commit``; cioè, fai un ``checkout`` usando direttaente la chiave del
+``commit``; cioè, fai un ``checkout`` usando direttamente la chiave del
 ``commit`` ``A``
 
 .. code-block:: bash
@@ -119,7 +119,7 @@ Se ripeti
     cat .git/HEAD
     dd15c2bee7059de07c4d74cf5f264b906d332e30
 
-scopri che, effetticamente, ``HEAD`` sta puntando direttamente al
+scopri che, effettivamente, ``HEAD`` sta puntando direttamente al
 ``commit`` e non ad un ``branch``
 
 Lo stato in cui ``HEAD`` non punta ad un ``branch`` viene chiamato
