@@ -220,6 +220,7 @@ Cioè: aggiungi un ``commit`` sul ramo ``experiment`` di ``foobar``
 .. code-block:: bash
 
     cd ../repo-remoto
+    git checkout experiment
     touch x
     git add x
     git commit -m "un contributo dal tuo collega" 
