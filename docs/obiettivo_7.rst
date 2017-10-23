@@ -41,7 +41,7 @@ finalmente il fucile ed usarlo come una clava*\ ". Diciamo pure che non
 In questo capitoletto proveremo piuttosto ad esplorare altre
 implementazioni meno banali.
 
-Partiamo da un'euristica che io ho sempre trovo molto efficace:
+Partiamo da un'euristica che io ho sempre trovato molto efficace:
 
     utilizza una topologia di ``repository`` che rispecchi il reale
     flusso di lavoro e i reali ruoli funzionali esistenti nel team
@@ -87,7 +87,7 @@ creato solo il database, senza il ``file system``, per cui non sarà
 possibile fare ``add`` e ``checkout``
 
 Invece, sui due ``repository`` personali, potresti configurare ad arte i
-permessi di accesso, restringendoliai soli proprietari; tu sarai il solo
+permessi di accesso, restringendoli ai soli proprietari; tu sarai il solo
 a poter leggere e scrivere sul tuo ``repository`` personale, e non avrai
 modo di accedere a quello del tuo collega; e vice versa. Vi perdete la
 possibilità di spedirvi ``branch`` senza passare dal ``repository``
@@ -199,10 +199,10 @@ la convenzione sociale a stabilire a quale uso destinare ogni
 
 Si potrebbe immaginare la topologia dei ``repository`` come un sistema
 di vasche comunicanti; in ogni vasca si può far fluire selettivamente il
-codice da una o più altre vasche comunicante; ad ogni persona che
+codice da una o più altre vasche comunicanti; ad ogni persona che
 ricopra un determinato ruolo nel flusso di lavoro viene dato il
 controllo esclusivo della chiusa che apre o chiude il flusso di codice
-nella propri vasca.
+nella propria vasca.
 
 In linea generale: tutti i tipi di workflow che prima con SVN si era
 costretti ad implementare usando convenzioni sui nomi e sugli usi dei
