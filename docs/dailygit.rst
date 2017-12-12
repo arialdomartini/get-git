@@ -261,7 +261,7 @@ che significa "*vai sul ``commit`` padre di ``HEAD``*\ ", cioè sul
 
 .. figure:: img/reset-1.png
 
-Adesso puoi spostare ``feature`` nel punto ti trovi: per farlo, puoi
+Adesso puoi spostare ``feature`` nel punto in cui ti trovi: per farlo, puoi
 creare un branch ``feature`` nel punto dove ti trovi, sovrascrivendo la
 posizione attuale di ``feature`` con l'opzione ``-f`` di ``branch``
 
